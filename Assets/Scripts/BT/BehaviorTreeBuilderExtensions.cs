@@ -7,4 +7,9 @@ public static class BehaviorTreeBuilderExtensions
     {
         return builder.AddNode(new AgentDestination{ Name = name, target = target });
     }
+
+    public static BehaviorTreeBuilder MoveToGoal(this BehaviorTreeBuilder builder, Vector3 goalPosition)
+    {
+        return builder.AddNode(new MoveToGoalAction { goalPosition = goalPosition });
+    }
 }

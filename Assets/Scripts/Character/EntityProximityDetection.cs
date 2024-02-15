@@ -11,16 +11,19 @@ public class EntityProximityDetection : MonoBehaviour
     [SerializeField] float frequency; // how long to wait between searches
     [SerializeField] float startDelay; // how long to wait before starting the search
     [SerializeField] bool stopSearch = false;
+    bool searching = false;
 
     public UnityEvent<Transform> TargetFound;
+    public Transform Target;
 
     public void StartSearch()
     {
         StartCoroutine(SearchForTargets());
+
     }
     private IEnumerator SearchForTargets()
     {
-        Debug.Log("Search started");
+        //Debug.Log("Search started");
         yield return new WaitForSeconds(startDelay);
 
         while (!stopSearch)
@@ -32,9 +35,10 @@ public class EntityProximityDetection : MonoBehaviour
                 {
                     if (hit.CompareTag(target))
                     {
-                        Debug.Log($"{target} found");
+                        //Debug.Log($"{target} found");
                         stopSearch = true;
                         TargetFound.Invoke(hit.gameObject.transform);
+                        Target = hit.gameObject.transform;
                     }
                 }
             }

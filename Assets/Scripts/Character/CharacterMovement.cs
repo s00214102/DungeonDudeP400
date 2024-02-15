@@ -7,7 +7,7 @@ using UnityEngine.Events;
 [RequireComponent(typeof(NavMeshAgent))]
 public class CharacterMovement : MonoBehaviour
 {
-    NavMeshAgent agent;
+    public NavMeshAgent agent;
     protected bool isMoving = false;
     public float StoppingRange = 1.0f;
 
@@ -23,7 +23,7 @@ public class CharacterMovement : MonoBehaviour
        
     }
 
-    bool HasReachedDestination()
+    public bool HasReachedDestination()
     {
         float dist = Vector3.Distance(transform.position, agent.destination);
 

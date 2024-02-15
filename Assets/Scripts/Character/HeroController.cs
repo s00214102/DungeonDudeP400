@@ -15,7 +15,6 @@ public enum HeroState
 }
 public class HeroController : BaseStateMachine
 {
-
     private NavMeshAgent agent;
 
     public HeroState CurrentState;
