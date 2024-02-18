@@ -47,6 +47,8 @@ public class EntityProximityDetectionBT : MonoBehaviour
             if (target.Health.isDead)
             {
                 Targets.Remove(target);
+                if (target == closestTarget)
+                    closestTarget = null;
             }
             else
             {

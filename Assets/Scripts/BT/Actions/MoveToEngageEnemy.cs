@@ -18,6 +18,7 @@ public class MoveToEngageEnemy : ActionBase
     }
     protected override TaskStatus OnUpdate()
     {
+        _controller.ChangeStateImage(1); // inefficient to do this each tick but its temporary
         // set the destination and begin moving
         // is the path not being generated, and are we not at the goal
         if (!_movement.agent.pathPending && EnemyIsNotTheCurrentDestination())

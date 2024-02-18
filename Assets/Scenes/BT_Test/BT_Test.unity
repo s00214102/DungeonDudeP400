@@ -1413,6 +1413,18 @@ MonoBehaviour:
   angleY: 0
   radius: 5
   invertY: 0
+--- !u!114 &331297800 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2918200806390032893, guid: 247aaac84635e484790faffd651d0500,
+    type: 3}
+  m_PrefabInstance: {fileID: 8088225509392397582}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &349901742
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -14132,7 +14144,7 @@ PrefabInstance:
     - target: {fileID: 3443287670917456598, guid: 247aaac84635e484790faffd651d0500,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 2.22
+      value: 6.63
       objectReference: {fileID: 0}
     - target: {fileID: 3443287670917456598, guid: 247aaac84635e484790faffd651d0500,
         type: 3}
@@ -14142,7 +14154,7 @@ PrefabInstance:
     - target: {fileID: 3443287670917456598, guid: 247aaac84635e484790faffd651d0500,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 23.08
+      value: -2.29
       objectReference: {fileID: 0}
     - target: {fileID: 3443287670917456598, guid: 247aaac84635e484790faffd651d0500,
         type: 3}
@@ -14199,6 +14211,52 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7155131461435167171, guid: 247aaac84635e484790faffd651d0500,
+        type: 3}
+      propertyPath: StateImage
+      value: 
+      objectReference: {fileID: 331297800}
+    - target: {fileID: 7155131461435167171, guid: 247aaac84635e484790faffd651d0500,
+        type: 3}
+      propertyPath: StateImages.Array.size
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7155131461435167171, guid: 247aaac84635e484790faffd651d0500,
+        type: 3}
+      propertyPath: StateImages.Array.data[0]
+      value: 
+      objectReference: {fileID: 21300000, guid: ebfc9f1802fc1d042abb932da6874c87,
+        type: 3}
+    - target: {fileID: 7155131461435167171, guid: 247aaac84635e484790faffd651d0500,
+        type: 3}
+      propertyPath: StateImages.Array.data[1]
+      value: 
+      objectReference: {fileID: 21300000, guid: 21b5a9fd2793439409c1a413f5810bb7,
+        type: 3}
+    - target: {fileID: 7155131461435167171, guid: 247aaac84635e484790faffd651d0500,
+        type: 3}
+      propertyPath: StateImages.Array.data[2]
+      value: 
+      objectReference: {fileID: 21300000, guid: 500b1835cbe26f94eac6cf3e73142315,
+        type: 3}
+    - target: {fileID: 7155131461435167171, guid: 247aaac84635e484790faffd651d0500,
+        type: 3}
+      propertyPath: StateImages.Array.data[3]
+      value: 
+      objectReference: {fileID: 21300000, guid: 5b2d22c95ad9a7e40b8f8473ee11717c,
+        type: 3}
+    - target: {fileID: 7155131461435167171, guid: 247aaac84635e484790faffd651d0500,
+        type: 3}
+      propertyPath: StateImages.Array.data[4]
+      value: 
+      objectReference: {fileID: 21300000, guid: e44d5747009a8a24c81fb86134754e1b,
+        type: 3}
+    - target: {fileID: 7155131461435167171, guid: 247aaac84635e484790faffd651d0500,
+        type: 3}
+      propertyPath: StateImages.Array.data[5]
+      value: 
+      objectReference: {fileID: 21300000, guid: 80829f8a77345f446b4f2b3ad3792add,
+        type: 3}
     m_RemovedComponents:
     - {fileID: 7222270778374922956, guid: 247aaac84635e484790faffd651d0500, type: 3}
     m_RemovedGameObjects: []

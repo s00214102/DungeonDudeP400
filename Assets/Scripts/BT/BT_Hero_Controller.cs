@@ -4,6 +4,7 @@ using UnityEngine;
 using CleverCrow.Fluid.BTs.Tasks;
 using CleverCrow.Fluid.BTs.Trees;
 using UnityEngine.AI;
+using UnityEngine.UI;
 
 public class BT_Hero_Controller : MonoBehaviour
 {
@@ -15,7 +16,8 @@ public class BT_Hero_Controller : MonoBehaviour
     [HideInInspector] public EntityProximityDetectionBT _detection;
 
     public HeroData HeroData;
-
+    [SerializeField] Sprite[] StateImages = new Sprite[4];
+    [SerializeField] Image StateImage;
     Vector3 goal;
     private void Awake()
     {
@@ -54,11 +56,10 @@ public class BT_Hero_Controller : MonoBehaviour
                 .Sequence("Find Goal")
                     .Condition("Is Goal Not Reached", IsGoalNotReached)
                     .MoveToGoal(goal)
-
-                    .Sequence("Celebrate")
-                        .Condition("Is Goal Reached", IsGoalReached)
-                        .Do("Play Celebration Animation", PlayCelebrationAnimation)
-                    .End()
+                .End()
+                .Sequence("Celebrate")
+                    .Condition("Is Goal Reached", IsGoalReached)
+                    .Do("Play Celebration Animation", PlayCelebrationAnimation)
                 .End()
             .End()
         .Build();
@@ -131,6 +132,14 @@ public class BT_Hero_Controller : MonoBehaviour
     private TaskStatus PlayCelebrationAnimation() 
     {
         Debug.Log("CELEBRATION!");
+        ChangeStateImage(4);
         return TaskStatus.Success; 
+    }
+    public void ChangeStateImage(int state)
+    {
+        if(StateImage!=null)
+            StateImage.sprite = StateImages[state];
+        else
+            Debug.Log("Image not found, cant change state sprite. Make a reference to the Image in the Editor.");
     }
 }

@@ -13,6 +13,7 @@ public class AttackTargetAction : ActionBase
     }
     protected override TaskStatus OnUpdate()
     {
+        _controller.ChangeStateImage(2); // inefficient to do this each tick but its temporary
         // update checks if we should keep attacking
         // if the target isnt dead then return success
         // if the target is dead then return failure
