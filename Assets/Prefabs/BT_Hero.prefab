@@ -206,7 +206,9 @@ GameObject:
   - component: {fileID: 985294785051570939}
   - component: {fileID: 6288151024436789511}
   - component: {fileID: 3456659351452423086}
-  - component: {fileID: 608837712045541048}
+  - component: {fileID: 7155131461435167171}
+  - component: {fileID: 8674086974583595744}
+  - component: {fileID: 7222270778374922956}
   m_Layer: 0
   m_Name: BT_Hero
   m_TagString: Untagged
@@ -337,11 +339,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 353c8cb1125486b42a8cadace874a4ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  agent: {fileID: 0}
   StoppingRange: 2
   DestinationReached:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &608837712045541048
+--- !u!114 &7155131461435167171
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -350,14 +353,38 @@ MonoBehaviour:
   m_GameObject: {fileID: 3768120636971430383}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4ffd21ecf4966d246b82aab8931e53f4, type: 3}
+  m_Script: {fileID: 11500000, guid: cff9e8742390db947b20011459eaacba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _attack: {fileID: 0}
+  HeroData: {fileID: 11400000, guid: 48d96175a47fcc94f8fd9c067d5e5942, type: 2}
+--- !u!114 &8674086974583595744
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3768120636971430383}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5443243b38dd0254c87b45541477c545, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attacking: 0
+--- !u!114 &7222270778374922956
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3768120636971430383}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 40e77825c296d524f9e55774e8a6da2b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   target: Enemy
   range: 4
   frequency: 0.2
   startDelay: 0
-  stopSearch: 0
-  TargetFound:
-    m_PersistentCalls:
-      m_Calls: []
+  Targets: []

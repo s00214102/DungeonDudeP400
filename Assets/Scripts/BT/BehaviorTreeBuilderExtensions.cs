@@ -12,4 +12,12 @@ public static class BehaviorTreeBuilderExtensions
     {
         return builder.AddNode(new MoveToGoalAction { goalPosition = goalPosition });
     }
+    public static BehaviorTreeBuilder MoveToEngageEnemy(this BehaviorTreeBuilder builder)
+    {
+        return builder.AddNode(new MoveToEngageEnemy{});
+    }
+    public static BehaviorTreeBuilder AttackTarget(this BehaviorTreeBuilder builder)
+    {
+        return builder.AddNode(new AttackTargetAction { });
+    }
 }

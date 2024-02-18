@@ -14,7 +14,7 @@ public class EntityProximityDetection : MonoBehaviour
     bool searching = false;
 
     public UnityEvent<Transform> TargetFound;
-    public Transform Target;
+    public GameObject Target;
 
     public void StartSearch()
     {
@@ -38,7 +38,7 @@ public class EntityProximityDetection : MonoBehaviour
                         //Debug.Log($"{target} found");
                         stopSearch = true;
                         TargetFound.Invoke(hit.gameObject.transform);
-                        Target = hit.gameObject.transform;
+                        Target = hit.gameObject;
                     }
                 }
             }

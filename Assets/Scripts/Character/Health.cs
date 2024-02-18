@@ -6,9 +6,10 @@ using UnityEngine.Events;
 public class Health : MonoBehaviour
 {
     // set max health from the entities contoller class !!!
-    [SerializeField]private int MaxHealth;
-    private int CurrentHealth;
+    [SerializeField] private int MaxHealth;
+    [SerializeField] private int CurrentHealth;
     private GameObject dpuObject;
+    public bool isDead = false; // tag as destroyed when hp reaches 0, these entities can be temporarily disable and then pernamentaly destroyed later
 
     private void Awake()
     {
@@ -34,7 +35,9 @@ public class Health : MonoBehaviour
         if (CurrentHealth <= 0)
         {
             EntityDied.Invoke();
-            Destroy(this.gameObject);
+            isDead = true;
+            gameObject.SetActive(false);
+            //Destroy(this.gameObject);
         }
 
         // damage number stuff

@@ -12,72 +12,65 @@ public class BT_Hero_Controller : MonoBehaviour
     private NavMeshAgent _agent;
     private Animator _animator;
     private CharacterMovement _movement;
-    private EntityProximityDetection _detection;
+    [HideInInspector] public EntityProximityDetectionBT _detection;
+
     public HeroData HeroData;
 
     Vector3 goal;
     private void Awake()
     {
+        if(HeroData == null)
+        {
+            Debug.Log($"HeroData missing for {gameObject.name}.");
+            return;
+        }
         _agent = GetComponent<NavMeshAgent>();
         _animator = GetComponent<Animator>();
         _movement = GetComponent<CharacterMovement>();
-        _detection = GetComponent<EntityProximityDetection>();
+        _detection = GetComponent<EntityProximityDetectionBT>();
 
         goal = GameObject.Find("Goal").transform.position;
-
-        // Priorities
-        // Engage the enemy
-        // Flee if low health
-        // Find the goal
-        // Celebrate
-
-        //_tree = new BehaviorTreeBuilder(gameObject)
-        //    .Selector("Root Selector")
-        //        .Sequence("Engage Enemy")
-        //            .Condition("Is Enemy Detected", IsEnemyDetected)
-        //            .Do("Move To Enemy", MoveToEnemy)
-        //            .Condition("Is In Attack Range", IsInAttackRange)
-        //            .Do("Attack Enemy", AttackEnemy)
-        //        .End()
-        //        .Sequence("Flee")
-        //            .Condition("Is Health Low", IsHealthLow)
-        //            .Do("Navigate To Safe Zone", NavigateToSafeZone)
-        //        .End()
-        //        .Sequence("Find Goal")
-        //            .Condition("Is Goal Not Reached", IsGoalNotReached)
-        //            .Do("Move To Goal", MoveToGoal)
-        //        .End()
-        //        .Sequence("Celebrate")
-        //            .Condition("Is Goal Reached", IsGoalReached)
-        //            .Do("Play Celebration Animation", PlayCelebrationAnimation)
-        //        .End()
-        //    .End()
-        //    .Build();
 
         _tree = new BehaviorTreeBuilder(gameObject)
             .Selector("Root Selector")
 
-                .Sequence("Engage Enemy")
-                    .Condition("Is Enemy Detected", IsEnemyDetected)
-                    .MoveToGoal(_detection.Target.position)
-                    .Condition("Is In Attack Range", IsInAttackRange)
-                    .Do("Attack Enemy", AttackEnemy)
+                .RepeatUntilFailure()
+                    .Sequence("Engage Enemy")
+                        .Condition("Is the Enemy Detected?", IsEnemyDetected)
+                        .MoveToEngageEnemy()
+                        .Condition("In Attack Range?", () => !IsEnemyInAttackRange())
+                    .End()
                 .End()
 
-                .Sequence("Celebrate")
-                    .Condition("Is Goal Reached", IsGoalReached)
-                    .Do("Play Celebration Animation", PlayCelebrationAnimation)
+                .RepeatUntilFailure()
+                    .Sequence("Attack Enemy")
+                        .Condition("In Attack Range?", IsEnemyInAttackRange)
+                        .Condition("Is the Enemy Alive?", IsEnemyAlive)
+                        .AttackTarget()
+                        .WaitTime(HeroData.AttackRate)
+                    .End()
                 .End()
 
                 .Sequence("Find Goal")
                     .Condition("Is Goal Not Reached", IsGoalNotReached)
                     .MoveToGoal(goal)
+
+                    .Sequence("Celebrate")
+                        .Condition("Is Goal Reached", IsGoalReached)
+                        .Do("Play Celebration Animation", PlayCelebrationAnimation)
+                    .End()
                 .End()
-                
             .End()
         .Build();
-    }
 
+        // Runs all child nodes at the same time until they all return Success.
+        // Exits and stops all running nodes if ANY of them return Failure.
+        //.Parallel()
+        //// Both of these tasks will run every frame
+        //.Do(() => { return TaskStatus.Continue; })
+        //.Do(() => { return TaskStatus.Continue; })
+        //.End()
+    }
     private void Update()
     {
         _tree.Tick();
@@ -94,19 +87,35 @@ public class BT_Hero_Controller : MonoBehaviour
     }
     private bool IsEnemyDetected()
     {
-        if (_detection.Target != null)
+        if (_detection.closestTarget != null)
             return true;
         else
             return false;
     }
-    private bool IsInAttackRange() 
+    private bool IsEnemyInAttackRange()
     {
-        float dist = Vector3.Distance(transform.position, _detection.Target.position);
-        return dist <= 1;
+        if (_detection.closestTarget == null)
+            return false;
+
+        float dist = Vector3.Distance(transform.position, _detection.closestTarget.transform.position);
+        //Debug.Log($"Current distance: {dist} / {HeroData.AttackRange}");
+        return dist <= HeroData.AttackRange;
     }
+    private bool IsEnemyAlive()
+    {
+        return _detection.closestTarget.gameObject.activeInHierarchy;
+    }
+    private Health enemyHealth;
+    private bool attacking = false;
     private TaskStatus AttackEnemy() 
     {
-        Debug.Log("Attacking target");
+        //Debug.Log("Attacking target");
+        // if not already attacking, start attacking
+        //if (!_attack.attacking && _detection.closestTarget.gameObject.activeInHierarchy==true)
+        //{
+        //    Debug.Log("BT_Hero_Controller - StartAttacking");
+        //    //_attack.StartAttacking(_detection.closestTarget);
+        //}
         return TaskStatus.Success; 
     }
     private bool IsHealthLow() 
