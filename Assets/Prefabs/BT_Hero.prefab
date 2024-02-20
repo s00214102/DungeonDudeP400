@@ -208,8 +208,8 @@ GameObject:
   - component: {fileID: 3456659351452423086}
   - component: {fileID: 7155131461435167171}
   - component: {fileID: 8674086974583595744}
-  - component: {fileID: 7222270778374922956}
-  m_Layer: 0
+  - component: {fileID: 4027784436369850840}
+  m_Layer: 6
   m_Name: BT_Hero
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -230,7 +230,7 @@ Transform:
   m_Children:
   - {fileID: 856534314895992174}
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &1210420760013265856
 MeshFilter:
@@ -326,7 +326,7 @@ NavMeshAgent:
   m_Height: 2
   m_BaseOffset: 1
   m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 4
+  m_ObstacleAvoidanceType: 0
 --- !u!114 &3456659351452423086
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -356,8 +356,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cff9e8742390db947b20011459eaacba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _attack: {fileID: 0}
+  _detection: {fileID: 0}
   HeroData: {fileID: 11400000, guid: 48d96175a47fcc94f8fd9c067d5e5942, type: 2}
+  StateImages:
+  - {fileID: 21300000, guid: ebfc9f1802fc1d042abb932da6874c87, type: 3}
+  - {fileID: 21300000, guid: 21b5a9fd2793439409c1a413f5810bb7, type: 3}
+  - {fileID: 21300000, guid: 500b1835cbe26f94eac6cf3e73142315, type: 3}
+  - {fileID: 21300000, guid: 5b2d22c95ad9a7e40b8f8473ee11717c, type: 3}
+  - {fileID: 21300000, guid: e44d5747009a8a24c81fb86134754e1b, type: 3}
+  - {fileID: 21300000, guid: 80829f8a77345f446b4f2b3ad3792add, type: 3}
+  StateImage: {fileID: 2918200806390032893}
 --- !u!114 &8674086974583595744
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -371,7 +379,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attacking: 0
---- !u!114 &7222270778374922956
+--- !u!114 &4027784436369850840
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -387,4 +395,7 @@ MonoBehaviour:
   range: 4
   frequency: 0.2
   startDelay: 0
+  closestTargetStartDelay: 0.1
+  closestTargetFrequency: 0.5
   Targets: []
+  closestTarget: {fileID: 0}
