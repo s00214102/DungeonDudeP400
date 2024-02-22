@@ -13,12 +13,15 @@ public class BT_Hero_Controller : MonoBehaviour
     private NavMeshAgent _agent;
     private Animator _animator;
     private CharacterMovement _movement;
+    private BT_Hero_Manager _director;
     [HideInInspector] public EntityProximityDetectionBT _detection;
 
     public HeroData HeroData;
     [SerializeField] Sprite[] StateImages = new Sprite[4];
     [SerializeField] Image StateImage;
     Vector3 goal;
+    // if a director component is found in parent, directed = true, and tree.Tick is not run in this components Update()
+    private bool directed = false;
     private void Awake()
     {
         if(HeroData == null)
@@ -30,6 +33,11 @@ public class BT_Hero_Controller : MonoBehaviour
         _animator = GetComponent<Animator>();
         _movement = GetComponent<CharacterMovement>();
         _detection = GetComponent<EntityProximityDetectionBT>();
+        _director = GetComponentInParent<BT_Hero_Manager>();
+        if (_director != null)
+            directed = true;
+        else
+            directed = false;
 
         goal = GameObject.Find("Goal").transform.position;
 
@@ -73,6 +81,12 @@ public class BT_Hero_Controller : MonoBehaviour
         //.End()
     }
     private void Update()
+    {
+        if(!directed)
+            _tree.Tick();
+    }
+    // called by the director component if it exists
+    public void DirectorUpdate()
     {
         _tree.Tick();
     }
