@@ -24,10 +24,23 @@ public class HeroController : BaseStateMachine
     [HideInInspector] public EntityProximityDetection Detection;
     [SerializeField] Sprite[] StateImages = new Sprite[4];
     [SerializeField] Image StateImage;
+    private FSM_Hero_Manager _manager;
+    private bool _managed = false;
 
     //[HideInInspector] 
     public Transform Target; // set when a target is detected in explore, used to move to in engage, used to attack in attack
 
+    private void Awake()
+    {
+        _manager = GetComponentInParent<FSM_Hero_Manager>();
+        if (_manager != null)
+        {
+            _managed = true;
+            _manager.AddHero(this.gameObject);
+        }
+        else
+            _managed = false;
+    }
     void Start()
     {
         CharacterMovement = GetComponent<CharacterMovement>();
@@ -38,10 +51,22 @@ public class HeroController : BaseStateMachine
 
         SetState(0);
     }
+    public void ManagerUpdate()
+    {
+        if (_managed)
+        {
+            if (CurrentImplimentation != null)
+                CurrentImplimentation.Update();
+        }
+
+    }
     private void Update()
     {
-        if (CurrentImplimentation != null)
-            CurrentImplimentation.Update();
+        if (!_managed)
+        {
+            if (CurrentImplimentation != null)
+                CurrentImplimentation.Update();
+        }
     }
 
     #region StateMachine

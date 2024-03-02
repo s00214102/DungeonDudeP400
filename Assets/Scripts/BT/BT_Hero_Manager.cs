@@ -7,6 +7,8 @@ using UnityEngine;
 public class BT_Hero_Manager : MonoBehaviour
 {
     private List<BT_Hero_Controller> Heroes = new();
+    int tracker = 0;
+    int batchsize = 10;
 
     private void Awake()
     {
@@ -22,7 +24,14 @@ public class BT_Hero_Manager : MonoBehaviour
         // simplest implementation, simply call each update function in one go
         foreach (var hero in Heroes)
         {
+            float startTime = Time.time;
+            Debug.Log("start compute time: " + startTime);
             hero.DirectorUpdate();
+            float endTime = Time.time;
+            Debug.Log("end compute time: " + endTime);
+            //float totalTime = endTime - startTime;
+
+            //Debug.Log("Total compute time: "+totalTime);
         }
     }
 }

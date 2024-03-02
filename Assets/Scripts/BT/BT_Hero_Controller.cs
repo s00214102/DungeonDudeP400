@@ -88,7 +88,8 @@ public class BT_Hero_Controller : MonoBehaviour
     // called by the director component if it exists
     public void DirectorUpdate()
     {
-        _tree.Tick();
+        if (directed)
+            _tree.Tick();
     }
     private bool IsGoalReached()
     {
