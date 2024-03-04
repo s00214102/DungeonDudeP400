@@ -8,7 +8,7 @@ using UnityEngine.Events;
 public class CharacterMovement : MonoBehaviour
 {
     public NavMeshAgent agent;
-    protected bool isMoving = false;
+    public bool isMoving = false;
     public float StoppingRange = 1.0f;
 
     public UnityEvent DestinationReached;
@@ -20,7 +20,7 @@ public class CharacterMovement : MonoBehaviour
 
     protected virtual void Start()
     {
-       
+
     }
 
     public bool HasReachedDestination()
@@ -52,9 +52,9 @@ public class CharacterMovement : MonoBehaviour
 
     protected virtual void Update()
     {
-        if(isMoving)
+        if (isMoving)
         {
-            if(HasReachedDestination())
+            if (HasReachedDestination())
             {
                 isMoving = false;
                 agent.isStopped = true;//persists, must switch back to false later
