@@ -33,4 +33,8 @@ public class Goal_Wander : Goal_Base
     {
         return true;
     }
+    public override string ToString()
+    {
+        return $"Wander priority: {currentPriority}";
+    }
 }

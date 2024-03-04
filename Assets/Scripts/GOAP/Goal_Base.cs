@@ -14,12 +14,12 @@ public interface IGoal
 public class Goal_Base : MonoBehaviour, IGoal
 {
     protected CharacterMovement movement;
-    protected EntityProximityDetection detection;
+    protected EntityProximityDetectionBT detection;
 
     private void Awake()
     {
         movement = GetComponent<CharacterMovement>();
-        detection = GetComponent<EntityProximityDetection>();
+        detection = GetComponent<EntityProximityDetectionBT>();
     }
 
     private void Start()
@@ -34,26 +34,26 @@ public class Goal_Base : MonoBehaviour, IGoal
 
     public virtual bool CanRun()
     {
-        throw new System.NotImplementedException();
+        return false;
     }
 
     public virtual int OnCalculatePriority()
     {
-        throw new System.NotImplementedException();
+        return 0;
     }
 
     public virtual void OnGoalActivated()
     {
-        throw new System.NotImplementedException();
+
     }
 
     public virtual void OnGoalDeactivated()
     {
-        throw new System.NotImplementedException();
+
     }
 
     public virtual void OnTickGoal()
     {
-        throw new System.NotImplementedException();
+
     }
 }

@@ -2,17 +2,31 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NewBehaviourScript : MonoBehaviour
+public class Goal_Engage : Goal_Base
 {
-    // Start is called before the first frame update
-    void Start()
+    private int EngagePriority = 60;
+    private int currentPriority = 0;
+
+    public override int OnCalculatePriority()
     {
-        
+        return currentPriority;
     }
 
-    // Update is called once per frame
-    void Update()
+    public override void OnTickGoal()
     {
-        
+        currentPriority = 0;
+        if (detection.closestTarget != null)
+            currentPriority = EngagePriority;
+    }
+
+    public override bool CanRun()
+    {
+        if (detection.closestTarget == null)
+            return false;
+        return true;
+    }
+    public override string ToString()
+    {
+        return $"Engage priority: {currentPriority}";
     }
 }

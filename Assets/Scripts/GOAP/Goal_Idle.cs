@@ -13,4 +13,8 @@ public class Goal_Idle : Goal_Base
     {
         return true;
     }
+    public override string ToString()
+    {
+        return $"Idle priority: {Priority}";
+    }
 }

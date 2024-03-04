@@ -81397,9 +81397,11 @@ GameObject:
   - component: {fileID: 278730203069666375}
   - component: {fileID: 5490056092388013781}
   - component: {fileID: 8487370468300614378}
-  - component: {fileID: 5521921321257218249}
+  - component: {fileID: 8487370468300614382}
   - component: {fileID: 8487370468300614380}
   - component: {fileID: 8487370468300614379}
+  - component: {fileID: 8487370468300614383}
+  - component: {fileID: 8487370468300614381}
   m_Layer: 6
   m_Name: GOAP_Hero
   m_TagString: Untagged
@@ -81467,27 +81469,6 @@ NavMeshAgent:
   m_BaseOffset: 1
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 3
---- !u!114 &5521921321257218249
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2623713846067831198}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4ffd21ecf4966d246b82aab8931e53f4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  target: Enemy
-  range: 4
-  frequency: 0.2
-  startDelay: 0
-  stopSearch: 0
-  TargetFound:
-    m_PersistentCalls:
-      m_Calls: []
-  Target: {fileID: 0}
 --- !u!223 &5524993640403861708
 Canvas:
   m_ObjectHideFlags: 0
@@ -81693,3 +81674,54 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Priority: 10
+--- !u!114 &8487370468300614381
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2623713846067831198}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b8b4159e69115f842bc84d9f9a4cd1e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Goals: []
+  displayRect:
+    serializedVersion: 2
+    x: 10
+    y: 10
+    width: 300
+    height: 20
+--- !u!114 &8487370468300614382
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2623713846067831198}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 40e77825c296d524f9e55774e8a6da2b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: Enemy
+  range: 4
+  frequency: 1
+  startDelay: 0
+  closestTargetStartDelay: 0
+  closestTargetFrequency: 1
+  Targets: []
+  closestTarget: {fileID: 0}
+--- !u!114 &8487370468300614383
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2623713846067831198}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 150b604f5e2243644ae5890abe57e7f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
