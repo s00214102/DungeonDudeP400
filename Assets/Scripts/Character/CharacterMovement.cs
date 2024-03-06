@@ -12,15 +12,11 @@ public class CharacterMovement : MonoBehaviour
     public float StoppingRange = 1.0f;
 
     public UnityEvent DestinationReached;
+    protected virtual void OnDestinationReached() { DestinationReached?.Invoke(); }
 
     private void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
-    }
-
-    protected virtual void Start()
-    {
-
     }
 
     public bool HasReachedDestination()
@@ -29,8 +25,6 @@ public class CharacterMovement : MonoBehaviour
 
         return dist <= StoppingRange;
     }
-
-    protected virtual void OnDestinationReached() { DestinationReached?.Invoke(); }
 
     public virtual void MoveTo(GameObject target, float stopRange)
     {
@@ -62,5 +56,24 @@ public class CharacterMovement : MonoBehaviour
                 OnDestinationReached();
             }
         }
+    }
+    // find a random walkable location on the nav mesh within a range
+    public bool MoveToRandomLocation(float range)
+    {
+        // Generate a random direction and distance
+        Vector3 randomDirection = Random.insideUnitSphere * range;
+        randomDirection += transform.position;
+        NavMeshHit hit;
+        Vector3 targetPosition = Vector3.zero;
+
+        // Try to find a nearby point on the NavMesh
+        if (NavMesh.SamplePosition(randomDirection, out hit, range, NavMesh.AllAreas))
+        {
+            targetPosition = hit.position;
+            MoveTo(targetPosition, StoppingRange);
+            return true;
+        }
+
+        return false;
     }
 }
