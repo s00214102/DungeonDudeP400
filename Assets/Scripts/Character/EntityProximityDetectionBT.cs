@@ -34,10 +34,10 @@ public class EntityProximityDetectionBT : MonoBehaviour
     private void FindClosestTarget()
     {
         //Debug.Log("Finding closest target.");
-        if (Targets == null || Targets.Count<=0)
+        if (Targets == null || Targets.Count <= 0)
             return;
 
-        if(Targets.Count==1)
+        if (Targets.Count == 1)
             closestTarget = Targets[0];
 
         float minDistance = Mathf.Infinity;
@@ -46,9 +46,10 @@ public class EntityProximityDetectionBT : MonoBehaviour
             // clean up
             if (target.Health.isDead)
             {
+                //if (target == closestTarget)
+                closestTarget = null;
                 Targets.Remove(target);
-                if (target == closestTarget)
-                    closestTarget = null;
+                return;
             }
             else
             {
@@ -86,6 +87,6 @@ public class EntityProximityDetectionBT : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.green;
-        Gizmos.DrawWireSphere(transform.position,range);
+        Gizmos.DrawWireSphere(transform.position, range);
     }
 }

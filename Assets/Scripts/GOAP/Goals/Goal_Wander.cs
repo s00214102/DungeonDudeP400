@@ -6,26 +6,28 @@ using UnityEngine;
 public class Goal_Wander : Goal_Base
 {
     [SerializeField] int minPriority = 0;
-    [SerializeField] int maxPriority = 30;
+    [SerializeField] int maxPriority = 12;
     [SerializeField] float priorityBuildRate = 1f;
-    [SerializeField] float priorityDecayRate = 0.1f;
+    [SerializeField] float priorityDecayRate = 0.5f;
     float currentPriority = 0f;
 
     public override int OnCalculatePriority()
     {
+        Debug.Log("Wander prio: " + Mathf.FloorToInt(currentPriority));
         return Mathf.FloorToInt(currentPriority);
     }
 
     public override void OnTickGoal()
     {
-        if (movement.isMoving)
+        if (movement.isMoving && currentPriority > 0)
             currentPriority -= priorityDecayRate * Time.deltaTime;
-        else
+        else if (currentPriority < maxPriority)
             currentPriority += priorityBuildRate * Time.deltaTime;
     }
 
-    public override void OnGoalActivated()
+    public override void OnGoalActivated(Action_Base _linkedAction)
     {
+        base.OnGoalActivated(_linkedAction);
         currentPriority = maxPriority;
     }
 

@@ -1,36 +1,45 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
 // pick a location, go there, once there, pick a new location
 public class Action_Wander : Action_Base
 {
-	System.Type[] SupportedGoals = new System.Type[] { typeof(Goal_Wander) };
-	public override System.Type[] GetSupportedGoals()
+	[SerializeField] int WanderRange = 5;
+	List<System.Type> SupportedGoals = new List<System.Type> { typeof(Goal_Wander) };
+	public override List<System.Type> GetSupportedGoals()
 	{
 		return SupportedGoals;
 	}
 	public override float GetCost()
 	{
-		return 0f;
+		return 1f;
 	}
-	public virtual void OnActivated()
+	public override void OnActivated(Goal_Base _linkedGoal)
 	{
-		// pick a location
+		goap_debug.ChangeActionImage(1);
+		base.OnActivated(_linkedGoal);
 		movement.DestinationReached.AddListener(ReachedDestination);
+		Wander();
 	}
 
 	private void ReachedDestination()
 	{
-		throw new NotImplementedException();
+		movement.StopMoving();
+		Wander();
 	}
-
-	public virtual void OnDeactived()
+	private void Wander()
 	{
-
+		if (movement.isMoving)
+			return;
+		if (!movement.MoveToRandomLocation(WanderRange))
+			Wander();
 	}
-	public virtual void OnTick()
+	public override void OnDeactived()
 	{
-		// are we there yet? y?- OnActivated()
+		base.OnDeactived();
+		movement.StopMoving();
+		movement.DestinationReached.RemoveAllListeners();
 	}
 }

@@ -7,7 +7,7 @@ public interface IGoal
     int OnCalculatePriority();
     bool CanRun();
     void OnTickGoal();
-    void OnGoalActivated();
+    void OnGoalActivated(Action_Base _LinkedAction);
     void OnGoalDeactivated();
 }
 
@@ -15,11 +15,14 @@ public class Goal_Base : MonoBehaviour, IGoal
 {
     protected CharacterMovement movement;
     protected EntityProximityDetectionBT detection;
+    protected Action_Base LinkedAction;
+    protected GOAP_Hero_Data data;
 
     private void Awake()
     {
         movement = GetComponent<CharacterMovement>();
         detection = GetComponent<EntityProximityDetectionBT>();
+        data = GetComponent<GOAP_Hero_Data>();
     }
 
     private void Start()
@@ -42,14 +45,14 @@ public class Goal_Base : MonoBehaviour, IGoal
         return 0;
     }
 
-    public virtual void OnGoalActivated()
+    public virtual void OnGoalActivated(Action_Base _LinkedAction)
     {
-
+        LinkedAction = _LinkedAction;
     }
 
     public virtual void OnGoalDeactivated()
     {
-
+        LinkedAction = null;
     }
 
     public virtual void OnTickGoal()

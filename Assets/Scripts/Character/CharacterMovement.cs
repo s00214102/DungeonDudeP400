@@ -30,6 +30,10 @@ public class CharacterMovement : MonoBehaviour
     {
         MoveTo(target.transform.position, stopRange);
     }
+    public virtual void MoveTo(Vector3 position)
+    {
+        MoveTo(position, StoppingRange);
+    }
     public void MoveTo(Vector3 position, float stopRange)
     {
         if (agent.SetDestination(position))
@@ -43,16 +47,18 @@ public class CharacterMovement : MonoBehaviour
             isMoving = false;
         }
     }
-
+    public void StopMoving()
+    {
+        isMoving = false;
+        agent.isStopped = true; //persists, must switch back to false later
+    }
     protected virtual void Update()
     {
         if (isMoving)
         {
             if (HasReachedDestination())
             {
-                isMoving = false;
-                agent.isStopped = true;//persists, must switch back to false later
-
+                StopMoving();
                 OnDestinationReached();
             }
         }
