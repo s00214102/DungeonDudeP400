@@ -14,7 +14,7 @@ public class BT_Hero_Controller : MonoBehaviour
     private Animator _animator;
     private CharacterMovement _movement;
     private BT_Hero_Manager _director;
-    [HideInInspector] public EntityProximityDetectionBT _detection;
+    [HideInInspector] public EntityProximityDetection _detection;
 
     public HeroData HeroData;
     [SerializeField] Sprite[] StateImages = new Sprite[4];
@@ -24,7 +24,7 @@ public class BT_Hero_Controller : MonoBehaviour
     private bool directed = false;
     private void Awake()
     {
-        if(HeroData == null)
+        if (HeroData == null)
         {
             Debug.Log($"HeroData missing for {gameObject.name}.");
             return;
@@ -32,7 +32,7 @@ public class BT_Hero_Controller : MonoBehaviour
         _agent = GetComponent<NavMeshAgent>();
         _animator = GetComponent<Animator>();
         _movement = GetComponent<CharacterMovement>();
-        _detection = GetComponent<EntityProximityDetectionBT>();
+        _detection = GetComponent<EntityProximityDetection>();
         _director = GetComponentInParent<BT_Hero_Manager>();
         if (_director != null)
             directed = true;
@@ -82,7 +82,7 @@ public class BT_Hero_Controller : MonoBehaviour
     }
     private void Update()
     {
-        if(!directed)
+        if (!directed)
             _tree.Tick();
     }
     // called by the director component if it exists
@@ -123,7 +123,7 @@ public class BT_Hero_Controller : MonoBehaviour
     }
     private Health enemyHealth;
     private bool attacking = false;
-    private TaskStatus AttackEnemy() 
+    private TaskStatus AttackEnemy()
     {
         //Debug.Log("Attacking target");
         // if not already attacking, start attacking
@@ -132,27 +132,27 @@ public class BT_Hero_Controller : MonoBehaviour
         //    Debug.Log("BT_Hero_Controller - StartAttacking");
         //    //_attack.StartAttacking(_detection.closestTarget);
         //}
-        return TaskStatus.Success; 
+        return TaskStatus.Success;
     }
-    private bool IsHealthLow() 
-    { 
-        /* Implement health check */ 
-        return false; 
+    private bool IsHealthLow()
+    {
+        /* Implement health check */
+        return false;
     }
-    private TaskStatus NavigateToSafeZone() 
-    { 
-        /* Implement flee logic */ 
-        return TaskStatus.Success; 
+    private TaskStatus NavigateToSafeZone()
+    {
+        /* Implement flee logic */
+        return TaskStatus.Success;
     }
-    private TaskStatus PlayCelebrationAnimation() 
+    private TaskStatus PlayCelebrationAnimation()
     {
         Debug.Log("CELEBRATION!");
         ChangeStateImage(4);
-        return TaskStatus.Success; 
+        return TaskStatus.Success;
     }
     public void ChangeStateImage(int state)
     {
-        if(StateImage!=null)
+        if (StateImage != null)
             StateImage.sprite = StateImages[state];
         else
             Debug.Log("Image not found, cant change state sprite. Make a reference to the Image in the Editor.");

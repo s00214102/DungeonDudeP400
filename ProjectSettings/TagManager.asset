@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Enemy
   - Hero
+  - Treasure
+  - Angel
   layers:
   - Default
   - TransparentFX

@@ -7,13 +7,13 @@ using UnityEngine;
 public class MoveToEngageEnemy : ActionBase
 {
     private CharacterMovement _movement;
-    private EntityProximityDetectionBT _detection;
+    private EntityProximityDetection _detection;
     private BT_Hero_Controller _controller;
 
     protected override void OnInit()
     {
         _movement = Owner.GetComponent<CharacterMovement>();
-        _detection = Owner.GetComponent<EntityProximityDetectionBT>();
+        _detection = Owner.GetComponent<EntityProximityDetection>();
         _controller = Owner.GetComponent<BT_Hero_Controller>();
     }
     protected override TaskStatus OnUpdate()

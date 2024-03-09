@@ -14,15 +14,19 @@ public interface IGoal
 public class Goal_Base : MonoBehaviour, IGoal
 {
     protected CharacterMovement movement;
-    protected EntityProximityDetectionBT detection;
+    protected HeroProximityDetection detection;
+    protected HeroKnowledge knowledge;
+    protected Health health;
     protected Action_Base LinkedAction;
     protected GOAP_Hero_Data data;
 
     private void Awake()
     {
         movement = GetComponent<CharacterMovement>();
-        detection = GetComponent<EntityProximityDetectionBT>();
+        detection = GetComponent<HeroProximityDetection>();
+        knowledge = GetComponent<HeroKnowledge>();
         data = GetComponent<GOAP_Hero_Data>();
+        health = GetComponent<Health>();
     }
 
     private void Start()

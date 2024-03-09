@@ -9,24 +9,19 @@ using UnityEngine.Events;
 // this EntityProximityDection system is particular to the BT setup
 // it start scanning at the beginning and does stop
 // it adds and removes entities from the list as they come and go
-public class EntityProximityDetectionBT : MonoBehaviour
+public class EntityProximityDetectionBT_old : MonoBehaviour
 {
-    [SerializeField] string target; // name of the tag on the entity you want to search for
-    [SerializeField] float range; // the range of detection
-    [SerializeField] float frequency; // how long to wait between searches
-    [SerializeField] float startDelay; // how long to wait before starting the search
-    //[SerializeField] bool stopSearch = false;
-    //bool searching = false;
-    [SerializeField] float closestTargetStartDelay;
-    [SerializeField] float closestTargetFrequency; // wait between closest target calculation
-    //public UnityEvent<Transform> TargetFound;
+    [SerializeField] string target = "name of target"; // name of the tag on the entity you want to search for
+    [SerializeField] float range = 1; // the range of detection
+    [SerializeField] float frequency = 1; // how long to wait between searches
+    [SerializeField] float startDelay = 0; // how long to wait before starting the search
+    [SerializeField] float closestTargetStartDelay = 0; // how long to wait before starting the search
+    [SerializeField] float closestTargetFrequency = 1; // wait between closest target calculation
     [SerializeField] private List<Entity> Targets = new List<Entity>();
     public Entity closestTarget; // closest 
 
     public void Start()
     {
-        //StartCoroutine(SearchForTargets());
-        //StartCoroutine(FindClosestTarget());
         InvokeRepeating("SearchForTargets", startDelay, frequency);
         InvokeRepeating("FindClosestTarget", closestTargetStartDelay, closestTargetFrequency);
     }
@@ -61,13 +56,10 @@ public class EntityProximityDetectionBT : MonoBehaviour
                 }
             }
         }
-
     }
 
     private void SearchForTargets()
     {
-        //Debug.Log("Searching for targets.");
-
         var hits = Physics.OverlapSphere(transform.position, range);
         if (hits.Length > 0)
         {
@@ -75,15 +67,21 @@ public class EntityProximityDetectionBT : MonoBehaviour
             {
                 if (hit.CompareTag(target))
                 {
-                    //Debug.Log($"{target} found");
-                    //TargetFound.Invoke(hit.gameObject.transform);
-                    Entity entity = hit.GetComponent<Entity>();
-                    if (!Targets.Contains(entity))
-                        Targets.Add(entity);
+                    Entity entity;
+                    if (hit.TryGetComponent<Entity>(out entity))
+                    {
+                        if (!Targets.Contains(entity))
+                        {
+                            Targets.Add(entity);
+                        }
+                    }
+                    else
+                        Debug.Log($"{hit.name} missing Entity component?");
                 }
             }
         }
     }
+
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.green;

@@ -15,13 +15,13 @@ public class Goal_Engage : Goal_Base
     public override void OnTickGoal()
     {
         currentPriority = 0;
-        if (detection.closestTarget != null)
+        if (knowledge.closestTarget != null)
             currentPriority = EngagePriority;
     }
 
     public override bool CanRun()
     {
-        if (detection.closestTarget == null)
+        if (knowledge.closestTarget == null)
             return false;
         return true;
     }

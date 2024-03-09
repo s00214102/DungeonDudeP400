@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FSM_Hero_Manager : MonoBehaviour
+public class FSM_Manager : MonoBehaviour
 {
-    [SerializeField]private List<HeroController> Heroes = new();
+    [SerializeField] private List<HeroController> Heroes = new();
 
     private void Awake()
     {

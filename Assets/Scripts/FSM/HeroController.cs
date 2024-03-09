@@ -21,10 +21,10 @@ public class HeroController : BaseStateMachine
     public HeroData HeroData;
     Dictionary<HeroState, BaseState> States = new Dictionary<HeroState, BaseState>();
     [HideInInspector] public CharacterMovement CharacterMovement;
-    [HideInInspector] public EntityProximityDetection Detection;
+    [HideInInspector] public TagProximityDetection Detection;
     [SerializeField] Sprite[] StateImages = new Sprite[4];
     [SerializeField] Image StateImage;
-    private FSM_Hero_Manager _manager;
+    private FSM_Manager _manager;
     private bool _managed = false;
 
     //[HideInInspector] 
@@ -32,7 +32,7 @@ public class HeroController : BaseStateMachine
 
     private void Awake()
     {
-        _manager = GetComponentInParent<FSM_Hero_Manager>();
+        _manager = GetComponentInParent<FSM_Manager>();
         if (_manager != null)
         {
             _managed = true;
@@ -45,7 +45,7 @@ public class HeroController : BaseStateMachine
     {
         CharacterMovement = GetComponent<CharacterMovement>();
         agent = GetComponent<NavMeshAgent>();
-        Detection = GetComponent<EntityProximityDetection>();
+        Detection = GetComponent<TagProximityDetection>();
 
         InitiliazeStates();
 
@@ -107,7 +107,7 @@ public class HeroController : BaseStateMachine
     {
         enemy = Target.GetComponent<Health>();
         //StartCoroutine("AttackTarget");
-        InvokeRepeating("AttackTarget",0,HeroData.AttackRate);
+        InvokeRepeating("AttackTarget", 0, HeroData.AttackRate);
     }
     public void StopAttacking()
     {

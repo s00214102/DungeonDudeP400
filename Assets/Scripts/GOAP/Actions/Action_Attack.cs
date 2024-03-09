@@ -19,8 +19,8 @@ public class Action_Attack : Action_Base
 		goap_debug.ChangeActionImage(5);
 		base.OnActivated(_linkedGoal);
 		// cache the targets Health component
-		if (detection.closestTarget != null)
-			enemyHealth = detection.closestTarget.GetComponent<Health>();
+		if (knowledge.closestTarget != null)
+			enemyHealth = knowledge.closestTarget.GetComponent<Health>();
 		InvokeRepeating("AttackTarget", 0, data.HeroData.AttackRate);
 	}
 	public override void OnDeactived()

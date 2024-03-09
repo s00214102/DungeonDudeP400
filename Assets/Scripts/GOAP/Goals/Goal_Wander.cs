@@ -13,7 +13,6 @@ public class Goal_Wander : Goal_Base
 
     public override int OnCalculatePriority()
     {
-        Debug.Log("Wander prio: " + Mathf.FloorToInt(currentPriority));
         return Mathf.FloorToInt(currentPriority);
     }
 
