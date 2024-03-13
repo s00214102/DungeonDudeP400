@@ -11,7 +11,7 @@ public enum HeroClass
     Priest
 }
 
-[CreateAssetMenu(fileName = "Hero Stats", menuName = "Data/Hero")]
+[CreateAssetMenu(fileName = "Hero Stats", menuName = "Data/Hero Stats")]
 public class HeroData : ScriptableObject
 {
     public int HitPoints;

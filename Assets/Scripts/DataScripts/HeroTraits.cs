@@ -18,16 +18,16 @@ public enum HeroArchetype
 	Coward,
 }
 
-[CreateAssetMenu(fileName = "Hero Traits", menuName = "Data/Hero")]
+[CreateAssetMenu(fileName = "Hero Traits", menuName = "Data/Hero Traits")]
 public class HeroTraits : ScriptableObject
 {
-	public int Bravery;     // how easy do they scare?
-	public int Greed;       // loot prioritisation
-	public int Altruism;    // do they help their team mates?
-	public int Wisdom;      // how much can they remember?
-	public int Curiosity;   // do they explore?
-	public int Loyalty;     // do they stick with their fellow heroes?
-	public int Aggression;  // attack prioritisation
-	public int Caution;     // do they move cautiously checking for traps?
+	[Range(0, 3)] public int Bravery;     // how easy do they scare?
+	[Range(0, 3)] public int Greed;       // loot prioritisation
+	[Range(0, 3)] public int Altruism;    // do they help their team mates?
+	[Range(0, 3)] public int Wisdom;      // how much can they remember?
+	[Range(0, 3)] public int Curiosity;   // do they explore?
+	[Range(0, 3)] public int Loyalty;     // do they stick with their fellow heroes?
+	[Range(0, 3)] public int Aggression;  // attack prioritisation
+	[Range(0, 3)] public int Caution;     // do they move cautiously checking for traps?
 	public HeroArchetype HeroArchetype;
 }
