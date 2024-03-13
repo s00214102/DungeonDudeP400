@@ -1,5 +1,3 @@
-
-
 using UnityEngine;
 
 static public class Helper

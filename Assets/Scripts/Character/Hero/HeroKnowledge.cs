@@ -8,6 +8,8 @@ public class HeroKnowledge : MonoBehaviour
 
 	public List<TreasureMemory> Treasures = new List<TreasureMemory>();
 
+	// make this generic, Remember(Memory memory)
+	// create a base Memory class, holds a gameobject and a location
 	public void RememberTreasure(Treasure treasure, Vector3 location)
 	{
 		// Check if this treasure is already remembered
