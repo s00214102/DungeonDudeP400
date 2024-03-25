@@ -33,6 +33,6 @@ public class Goal_Celebrate : Goal_Base
 	}
 	public override string ToString()
 	{
-		return $"Goal_Celebrate: {CelebratePriority}";
+		return $"Goal_Celebrate: {currentPriority}";
 	}
 }

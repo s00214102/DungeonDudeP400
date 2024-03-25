@@ -55,18 +55,24 @@ public class hero_knowledge
 	{
 		// SETUP: the treasure is programmatically added to the heroes memory
 		// then the treasure object  is deleted from the scene
+		// the hero should prioritise looting and go to the treasure
 		// when the hero reaches where the treasure was, they should forget it
-		SceneManager.LoadScene("test_scene_name", LoadSceneMode.Single);
+		SceneManager.LoadScene("TestKnowledgeForgetTreasure", LoadSceneMode.Single);
 		yield return new WaitForSeconds(0.2f);
 
 		GameObject hero = GameObject.Find("GOAP_Hero");
 		Assert.IsNotNull(hero, $"GameObject with name GOAP_Hero not found.");
+
+		GameObject treasure = GameObject.Find("Treasure");
+		Assert.IsNotNull(treasure, $"GameObject with name Treasure not found.");
 
 		HeroProximityDetection detection = hero.GetComponent<HeroProximityDetection>();
 		Assert.IsNotNull(detection, $"HeroProximityDetection component not found.");
 
 		HeroKnowledge knowledge = hero.GetComponent<HeroKnowledge>();
 		Assert.IsNotNull(knowledge, $"HeroKnowledge component not found.");
+
+		knowledge.Remember("Treasure", treasure, treasure.transform.position);
 
 		Time.timeScale = 10.0f;
 		float time = 0;

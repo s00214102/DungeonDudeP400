@@ -18,29 +18,33 @@ public class angel_healing
 	public IEnumerator remembers_angel_and_heals_when_low_hp()
 	{
 		hero = GameObject.FindWithTag("Hero");
-		yield return new WaitForSeconds(0.1f);
 		Assert.IsNotNull(hero, $"GameObject with tag Hero not found.");
 
 		GOAP_Planner planner = hero.GetComponent<GOAP_Planner>();
-		yield return new WaitForSeconds(0.1f);
 		Assert.IsNotNull(planner, $"GOAP_Planner component not found.");
 
 		HeroKnowledge knowledge = hero.GetComponent<HeroKnowledge>();
-		yield return new WaitForSeconds(0.1f);
-		Assert.IsNotNull(planner, $"HeroKnowledge component not found.");
+		Assert.IsNotNull(knowledge, $"HeroKnowledge component not found.");
 
 		GameObject angel = knowledge.RecallObjectByName("Angel");
-		yield return new WaitForSeconds(0.1f);
-		Assert.IsNotNull(planner, $"Angel memory not found.");
+		Assert.IsNotNull(angel, $"Angel memory not found.");
 
 		Health health = hero.GetComponent<Health>();
-		yield return new WaitForSeconds(0.1f);
-		Assert.IsNotNull(planner, $"Health component not found.");
+		Assert.IsNotNull(health, $"Health component not found.");
+
+		Goal_Heal heal_goal = hero.GetComponent<Goal_Heal>();
+		Assert.IsNotNull(heal_goal, $"Goal_Heal component not found.");
+
+		Action_Heal action_Heal = hero.GetComponent<Action_Heal>();
+		Assert.IsNotNull(action_Heal, $"Action_Heal component not found.");
+
+		bool action_heal_finished = false;
+		action_Heal.Healed.AddListener(() => { action_heal_finished = true; });
 
 		Time.timeScale = 10.0f;
 		float time = 0;
 		bool hpDropped = false;
-		while (hpDropped && (health.CurrentHealth > 20 || time < 5))
+		while (!hpDropped && (health.CurrentHealth > 20 || time < 15))
 		{
 			time += Time.fixedDeltaTime;
 			yield return new WaitForFixedUpdate();
@@ -48,12 +52,12 @@ public class angel_healing
 		hpDropped = true;
 		Assert.IsTrue(health.CurrentHealth <= 20, $"Health did not drop low. {health.CurrentHealth}");
 
-		// heal action is taken
-		//Assert.IsTrue(planner.ActiveAction is Action_Heal, $"Heal action not taken. {planner.ActiveAction}");
+		// heal action is taken - planner.ActiveAction is Action_Heal
+		Assert.IsTrue(heal_goal.Priority > 0, $"Heal priority not greater than 0. {heal_goal.Priority}");
 
 		// health is full again
 		time = 0;
-		while (health.CurrentHealth != health.MaxHealth || time < 5)
+		while (health.CurrentHealth != health.MaxHealth && time < 25)
 		{
 			time += Time.fixedDeltaTime;
 			yield return new WaitForFixedUpdate();
@@ -61,5 +65,6 @@ public class angel_healing
 		// Reset timeScale
 		Time.timeScale = 1.0f;
 		Assert.IsTrue(health.CurrentHealth == health.MaxHealth, $"Health not full. {health.CurrentHealth}");
+		Assert.IsTrue(action_heal_finished, $"Healed event didnt fire.");
 	}
 }

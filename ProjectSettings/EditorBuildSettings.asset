@@ -35,4 +35,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Tests/TestKnowledgeForgetTreasure.unity
     guid: d7a5b487144a75b458e9847ff0b19339
+  - enabled: 1
+    path: Assets/Scenes/Tests/TestHeroGoalLoot.unity
+    guid: be09d926cfc409b4cbc307e9d95c149c
   m_configObjects: {}

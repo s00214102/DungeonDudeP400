@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Goal_Heal : Goal_Base
 {
-	[SerializeField] private int Priority = 0; // Define the priority of this goal
+	public int Priority = 0; // Define the priority of this goal
 
 	public override int OnCalculatePriority()
 	{
@@ -20,7 +20,7 @@ public class Goal_Heal : Goal_Base
 	public override void OnTickGoal()
 	{
 		// if the hero doesnt know of any healing, priority = 0
-		var result = knowledge.RecallPositionByName("angel");
+		var result = knowledge.RecallPositionByName("Angel");
 		if (!result.found)
 		{
 			Priority = 0;

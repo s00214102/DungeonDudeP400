@@ -6,7 +6,7 @@ using UnityEngine;
 // looting priority is tied to a heroes greed (personality trait)
 public class Goal_Loot : Goal_Base
 {
-	[SerializeField] private int Priority = 0; // Define the priority of this goal
+	public int Priority = 0; // Define the priority of this goal
 
 	public override int OnCalculatePriority()
 	{
@@ -20,7 +20,12 @@ public class Goal_Loot : Goal_Base
 
 	public override void OnTickGoal()
 	{
-		// Implement goal logic here
+		var result = knowledge.RecallPositionByName("Treasure");
+		if (!result.found)
+		{
+			Priority = 0;
+			return;
+		}
 	}
 
 	public override void OnGoalActivated(Action_Base _LinkedAction)

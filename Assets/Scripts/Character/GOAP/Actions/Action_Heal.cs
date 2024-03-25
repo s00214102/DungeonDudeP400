@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 // for now the hero heals via the Angel_Healer, which is manually cached in the inspector
 // in reality they should search for any healing method and remember it
@@ -9,6 +10,10 @@ public class Action_Heal : Action_Base
 {
 	GameObject AngelHealerObject;
 	List<System.Type> SupportedGoals = new List<System.Type> { typeof(Goal_Heal) };
+
+	public UnityEvent Healed;
+	private void OnHealed() { Healed?.Invoke(); }
+
 	public override List<System.Type> GetSupportedGoals()
 	{
 		return SupportedGoals;
@@ -25,10 +30,10 @@ public class Action_Heal : Action_Base
 		// Additional activation code here
 		goap_debug.ChangeActionImage(2);
 		// try to get healing position
-		var result = knowledge.RecallPositionByName("angel");
+		var result = knowledge.RecallPositionByName("Angel");
 		if (result.found)
 		{
-			AngelHealerObject = knowledge.RecallObjectByName("angel");
+			AngelHealerObject = knowledge.RecallObjectByName("Angel");
 			movement.MoveTo(result.position);
 			movement.DestinationReached.AddListener(Pray);
 		}
@@ -68,6 +73,7 @@ public class Action_Heal : Action_Base
 				{
 					health.HealToFull();
 					angelHealer.UseCharge();
+					OnHealed();
 				}
 				isPraying = false;
 			}
