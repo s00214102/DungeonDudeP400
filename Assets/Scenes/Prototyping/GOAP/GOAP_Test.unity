@@ -32479,7 +32479,7 @@ MonoBehaviour:
   m_OverrideVoxelSize: 0
   m_VoxelSize: 0.13333334
   m_MinRegionArea: 2
-  m_NavMeshData: {fileID: 23800000, guid: 4f85167bd0ad11d4b88195d4714cd490, type: 2}
+  m_NavMeshData: {fileID: 23800000, guid: 26e921c912cb8bd41ab60f31689fee52, type: 2}
   m_BuildHeightMesh: 0
 --- !u!1 &844567708
 GameObject:
@@ -44413,7 +44413,7 @@ PrefabInstance:
     - target: {fileID: 4112261258655135026, guid: 9057529b612f6744fb909b246fa4d3b3,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 10.54
+      value: -1.31
       objectReference: {fileID: 0}
     - target: {fileID: 4112261258655135026, guid: 9057529b612f6744fb909b246fa4d3b3,
         type: 3}
@@ -44423,7 +44423,7 @@ PrefabInstance:
     - target: {fileID: 4112261258655135026, guid: 9057529b612f6744fb909b246fa4d3b3,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 34.83
+      value: 29.16
       objectReference: {fileID: 0}
     - target: {fileID: 4112261258655135026, guid: 9057529b612f6744fb909b246fa4d3b3,
         type: 3}
@@ -82238,6 +82238,11 @@ PrefabInstance:
     - target: {fileID: 6261791736472778925, guid: f695df8f1a20c8b4da96aadffcd62dce,
         type: 3}
       propertyPath: m_Name
+      value: Angel
+      objectReference: {fileID: 0}
+    - target: {fileID: 6261791736472778925, guid: f695df8f1a20c8b4da96aadffcd62dce,
+        type: 3}
+      propertyPath: m_TagString
       value: Angel
       objectReference: {fileID: 0}
     - target: {fileID: 7636979645798037028, guid: f695df8f1a20c8b4da96aadffcd62dce,

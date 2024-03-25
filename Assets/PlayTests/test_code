@@ -1,0 +1,19 @@
+// timeout 1
+float time = 0;
+while (time < 5)
+{
+	time += Time.fixedDeltaTime;
+	yield return new WaitForFixedUpdate();
+}
+
+// timeout 2
+float timeoutDuration = 10f; // Timeout duration in seconds
+float startTime = Time.time; // Record the start time
+while (health.CurrentHealth > 20 && Time.time - startTime < timeoutDuration)
+{
+	yield return null; // Wait for the next frame
+}
+
+// test an event
+bool destinationReached = false;
+movement.DestinationReached.AddListener(() => { destinationReached = true; });

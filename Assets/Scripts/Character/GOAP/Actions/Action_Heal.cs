@@ -7,6 +7,7 @@ using UnityEngine;
 // they may have seen an angel healer, or know of another teammate that can heal, or maybe they have a potion
 public class Action_Heal : Action_Base
 {
+	GameObject AngelHealerObject;
 	List<System.Type> SupportedGoals = new List<System.Type> { typeof(Goal_Heal) };
 	public override List<System.Type> GetSupportedGoals()
 	{
@@ -23,8 +24,15 @@ public class Action_Heal : Action_Base
 		base.OnActivated(_linkedGoal);
 		// Additional activation code here
 		goap_debug.ChangeActionImage(2);
-		movement.MoveTo(data.Angel.position);
-		movement.DestinationReached.AddListener(Pray);
+		// try to get healing position
+		var result = knowledge.RecallPositionByName("angel");
+		if (result.found)
+		{
+			AngelHealerObject = knowledge.RecallObjectByName("angel");
+			movement.MoveTo(result.position);
+			movement.DestinationReached.AddListener(Pray);
+		}
+
 	}
 	private void Pray()
 	{
@@ -47,12 +55,15 @@ public class Action_Heal : Action_Base
 	private float prayTimeToCount = 5;
 	public override void OnTick()
 	{
+		if (AngelHealerObject == null)
+			return;
+
 		if (isPraying)
 		{
 			prayTimer += (1.0f * Time.deltaTime);
 			if (prayTimer >= prayTimeToCount)
 			{
-				Angel_Healer angelHealer = data.Angel.GetComponent<Angel_Healer>();
+				Angel_Healer angelHealer = AngelHealerObject.GetComponent<Angel_Healer>();
 				if (angelHealer.CanHeal())
 				{
 					health.HealToFull();

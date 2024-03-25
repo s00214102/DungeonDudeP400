@@ -53,14 +53,14 @@ public class HeroProximityDetection : MonoBehaviour
                         Debug.Log($"{hit.name} missing Entity component?");
                 }
                 // Treasure search
-                // first look for tag, then try to get the Treasure component from the object, then remember it
                 if (hit.CompareTag("Treasure"))
                 {
-                    Treasure treasure;
-                    if (hit.TryGetComponent<Treasure>(out treasure))
-                        knowledge.RememberTreasure(treasure, treasure.transform.position);
-                    else
-                        Debug.Log("Failed to get treasure component");
+                    knowledge.Remember("Treasure", hit.gameObject, hit.gameObject.transform.position);
+                }
+                // Angel search
+                if (hit.CompareTag("Angel"))
+                {
+                    knowledge.Remember("Angel", hit.gameObject, hit.gameObject.transform.position);
                 }
             }
         }

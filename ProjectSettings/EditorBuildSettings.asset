@@ -8,4 +8,31 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Prototyping/FSM/FSM_Test.unity
     guid: 99c9720ab356a0642a771bea13969a05
+  - enabled: 1
+    path: Assets/Scenes/Tests/TestLoadScene.unity
+    guid: bc145e7797c91154aba80cb34e91f832
+  - enabled: 1
+    path: Assets/Scenes/Tests/TestCharacterMovement.unity
+    guid: 5421e4a750964814b876f82caed132e5
+  - enabled: 1
+    path: Assets/Scenes/Tests/TestAngelHealing.unity
+    guid: dd7a432812c3a8f45abee182635600b9
+  - enabled: 1
+    path: Assets/Scenes/Tests/TestHeroProximityDetection.unity
+    guid: effcf3e7590365e40973857028087760
+  - enabled: 1
+    path: Assets/Scenes/Tests/TestHealthDamage.unity
+    guid: b3232a0fcab98eb4fb83faa786bd00ea
+  - enabled: 1
+    path: Assets/Scenes/Tests/TestHealthDie.unity
+    guid: d8eab4fb4e31b394b9ae3999535a8d4b
+  - enabled: 1
+    path: Assets/Scenes/Tests/TestKnowledgeRememberTreasure.unity
+    guid: 21810cc31477f8a4ab9bb951186bd24e
+  - enabled: 1
+    path: Assets/Scenes/Tests/TestKnowledgeRememberEnemy.unity
+    guid: fc1f8f55668e2664b98d8cbfa041afff
+  - enabled: 1
+    path: Assets/Scenes/Tests/TestKnowledgeForgetTreasure.unity
+    guid: d7a5b487144a75b458e9847ff0b19339
   m_configObjects: {}

@@ -16,6 +16,7 @@ public enum HeroArchetype
 	LoneWolf,
 	Strategist,
 	Coward,
+	Default
 }
 
 [CreateAssetMenu(fileName = "Hero Traits", menuName = "Data/Hero Traits")]

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using GluonGui.Dialog;
 using UnityEngine;
 
 public class Goal_Heal : Goal_Base
@@ -18,9 +19,17 @@ public class Goal_Heal : Goal_Base
 
 	public override void OnTickGoal()
 	{
-		// healing gets a higher priority as the characters health drops
+		// if the hero doesnt know of any healing, priority = 0
+		var result = knowledge.RecallPositionByName("angel");
+		if (!result.found)
+		{
+			Priority = 0;
+			return;
+		}
 
+		// healing gets a higher priority as the characters health drops
 		float percentMissing = (((float)health.MaxHealth - (float)health.CurrentHealth) / (float)health.MaxHealth) * 100;
+
 		//Debug.Log(percentMissing);
 		Priority = Mathf.FloorToInt(percentMissing);
 	}

@@ -7,7 +7,8 @@ public class GOAP_Planner : MonoBehaviour
 	Action_Base[] Actions;
 
 	[SerializeField] Goal_Base ActiveGoal;
-	[SerializeField] Action_Base ActiveAction;
+	[SerializeField] private Action_Base activeAction;
+	public Action_Base ActiveAction { get => activeAction; }
 
 	private void Awake()
 	{
@@ -54,41 +55,41 @@ public class GOAP_Planner : MonoBehaviour
 		if (ActiveGoal == null)
 		{
 			ActiveGoal = bestGoal;
-			ActiveAction = bestAction;
+			activeAction = bestAction;
 
 			if (ActiveGoal != null)
-				ActiveGoal.OnGoalActivated(ActiveAction);
-			if (ActiveAction != null)
-				ActiveAction.OnActivated(ActiveGoal);
+				ActiveGoal.OnGoalActivated(activeAction);
+			if (activeAction != null)
+				activeAction.OnActivated(ActiveGoal);
 
 		}
 		// no change in goal?
 		else if (ActiveGoal == bestGoal)
 		{
 			// action changed?
-			if (ActiveAction != bestAction)
+			if (activeAction != bestAction)
 			{
-				ActiveAction.OnDeactived();
-				ActiveAction = bestAction;
-				ActiveAction.OnActivated(ActiveGoal);
+				activeAction.OnDeactived();
+				activeAction = bestAction;
+				activeAction.OnActivated(ActiveGoal);
 			}
 
 		} // new goal or no valid goal?
 		else if (ActiveGoal != bestGoal)
 		{
 			ActiveGoal.OnGoalDeactivated();
-			ActiveAction.OnDeactived();
+			activeAction.OnDeactived();
 
 			ActiveGoal = bestGoal;
-			ActiveAction = bestAction;
+			activeAction = bestAction;
 
 			if (ActiveGoal != null)
-				ActiveGoal.OnGoalActivated(ActiveAction);
-			if (ActiveAction != null)
-				ActiveAction.OnActivated(ActiveGoal);
+				ActiveGoal.OnGoalActivated(activeAction);
+			if (activeAction != null)
+				activeAction.OnActivated(ActiveGoal);
 		}
 		// finally tick the active action
-		if (ActiveAction != null)
-			ActiveAction.OnTick();
+		if (activeAction != null)
+			activeAction.OnTick();
 	}
 }
