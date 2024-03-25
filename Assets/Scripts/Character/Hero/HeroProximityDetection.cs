@@ -55,12 +55,12 @@ public class HeroProximityDetection : MonoBehaviour
                 // Treasure search
                 if (hit.CompareTag("Treasure"))
                 {
-                    knowledge.Remember("Treasure", hit.gameObject, hit.gameObject.transform.position);
+                    knowledge.Remember("Treasure", hit.gameObject, hit.gameObject.transform.position, true);
                 }
                 // Angel search
                 if (hit.CompareTag("Angel"))
                 {
-                    knowledge.Remember("Angel", hit.gameObject, hit.gameObject.transform.position);
+                    knowledge.Remember("Angel", hit.gameObject, hit.gameObject.transform.position, true);
                 }
             }
         }

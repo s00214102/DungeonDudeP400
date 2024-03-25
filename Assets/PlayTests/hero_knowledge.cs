@@ -38,13 +38,13 @@ public class hero_knowledge
 		// when the treasure is detected, HeroProximityDetection will call knowledge.Remember("Treasure"...)
 		Time.timeScale = 10.0f;
 		float time = 0;
-		while (knowledge.Memories.Count == 0 && time < 5)
+		while (knowledge.ItemMemories.Count == 0 && time < 5)
 		{
 			time += Time.fixedDeltaTime;
 			yield return new WaitForFixedUpdate();
 		}
 		Time.timeScale = 1.0f;
-		HeroMemory memory = knowledge.Memories.Find(memory => memory.ObjectType == "Treasure");
+		ItemMemory memory = knowledge.ItemMemories.Find(memory => memory.ObjectType == "Treasure");
 		Assert.IsNotNull(memory.ObjectType, "treasure memory memory.ObjectType  is null.");
 		Assert.IsNotNull(memory.GameObject, "treasure memory memory.GameObject is null.");
 	}
@@ -72,7 +72,7 @@ public class hero_knowledge
 		HeroKnowledge knowledge = hero.GetComponent<HeroKnowledge>();
 		Assert.IsNotNull(knowledge, $"HeroKnowledge component not found.");
 
-		knowledge.Remember("Treasure", treasure, treasure.transform.position);
+		knowledge.Remember("Treasure", treasure, treasure.transform.position, true);
 
 		Time.timeScale = 10.0f;
 		float time = 0;

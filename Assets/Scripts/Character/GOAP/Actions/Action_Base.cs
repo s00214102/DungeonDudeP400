@@ -10,6 +10,7 @@ public class Action_Base : MonoBehaviour
 	protected Health health;
 	protected GOAP_Debug goap_debug;
 	protected Goal_Base LinkedGoal;
+	protected Inventory inventory;
 
 	private void Awake()
 	{
@@ -19,6 +20,7 @@ public class Action_Base : MonoBehaviour
 		data = GetComponent<GOAP_Hero_Data>();
 		goap_debug = GetComponent<GOAP_Debug>();
 		health = GetComponent<Health>();
+		inventory = GetComponent<Inventory>();
 	}
 	public virtual List<System.Type> GetSupportedGoals()
 	{
