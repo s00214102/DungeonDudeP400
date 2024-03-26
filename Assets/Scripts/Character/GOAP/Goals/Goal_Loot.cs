@@ -20,7 +20,8 @@ public class Goal_Loot : Goal_Base
 
 	public override void OnTickGoal()
 	{
-		var result = knowledge.RecallPositionByName("Treasure");
+		// if a useable treasure item cant be found, set priority to 0
+		var result = knowledge.RecallFirstUsableItem("Treasure");
 		if (!result.found)
 		{
 			Priority = 0;

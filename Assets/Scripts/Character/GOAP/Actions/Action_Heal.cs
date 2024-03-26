@@ -30,11 +30,11 @@ public class Action_Heal : Action_Base
 		// Additional activation code here
 		goap_debug.ChangeActionImage(2);
 		// try to get angel position
-		var result = knowledge.RecallPositionByName("Angel");
+		var result = knowledge.RecallClosestUsableItem("Angel");
 		if (result.found)
 		{
-			AngelHealerObject = knowledge.RecallObjectByName("Angel");
-			movement.MoveTo(result.position);
+			AngelHealerObject = result.item.GameObject;
+			movement.MoveTo(AngelHealerObject.transform.position);
 			movement.DestinationReached.AddListener(Pray);
 		}
 	}
@@ -75,10 +75,11 @@ public class Action_Heal : Action_Base
 					OnHealed();
 					// if they use the last charge should they know/remember there are no more charges?
 				}
-				else{
+				else
+				{
 					// this angel can no longer heal
 					// remember this
-					knowledge.Remember("Angel", AngelHealerObject,AngelHealerObject.transform.position, false);
+					knowledge.RememberItem("Angel", AngelHealerObject, false);
 					//TODO having tried to use something and failed they should become angry
 					// dont make a goal/action for this, make some reusable code/ienumerable 
 					// change the state image and play an animation of them stomping their foot

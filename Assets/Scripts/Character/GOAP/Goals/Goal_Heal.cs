@@ -20,7 +20,7 @@ public class Goal_Heal : Goal_Base
 	public override void OnTickGoal()
 	{
 		// if the hero doesnt know of any healing, priority = 0
-		var result = knowledge.RecallPositionByName("Angel");
+		var result = knowledge.RecallFirstItemPosition("Angel");
 		if (!result.found)
 		{
 			Priority = 0;

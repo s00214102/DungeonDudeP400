@@ -1,9 +1,10 @@
 using System;
 using UnityEngine;
 
-public struct ItemMemory
+[Serializable]
+public class ItemMemory
 {
-	private string objectType;
+	[SerializeField] private string objectType;
 	public string ObjectType { get => objectType; set => objectType = value; }
 
 	private GameObject gameObject;
@@ -12,7 +13,8 @@ public struct ItemMemory
 	private Vector3 lastKnownLocation;
 	public Vector3 LastKnownLocation { get => lastKnownLocation; set => lastKnownLocation = value; }
 
-	public bool itemIsUsable;
+	[SerializeField] private bool itemIsUsable;
+	public bool ItemIsUsable { get => itemIsUsable; set => itemIsUsable = value; }
 
 	public ItemMemory(string objectType, GameObject gameObject, Vector3 lastKnownLocation, bool itemIsUsable)
 	{

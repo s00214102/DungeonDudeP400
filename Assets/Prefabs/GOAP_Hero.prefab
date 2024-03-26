@@ -104,6 +104,7 @@ GameObject:
   - component: {fileID: 207873283091907808}
   - component: {fileID: 5416733691673071119}
   - component: {fileID: 6772580263836245763}
+  - component: {fileID: 4157892980854949841}
   - component: {fileID: 142851222693443848}
   - component: {fileID: 6344359177510650934}
   - component: {fileID: 4081595295650149864}
@@ -112,7 +113,9 @@ GameObject:
   - component: {fileID: 3029541430636632158}
   - component: {fileID: 3000512847987957764}
   - component: {fileID: 4495989096356744531}
+  - component: {fileID: 5700118842201857986}
   - component: {fileID: 4603613459818604225}
+  - component: {fileID: 5299260543174347276}
   - component: {fileID: 2089143765705171956}
   - component: {fileID: 4493202282102929446}
   - component: {fileID: 3763978336299170134}
@@ -146,7 +149,7 @@ Transform:
   - {fileID: 2018302593597844459}
   - {fileID: 6044638844695789460}
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &240735153692186581
 MeshFilter:
@@ -278,6 +281,18 @@ MonoBehaviour:
   startDelay: 0
   closestTargetStartDelay: 0
   closestTargetFrequency: 1
+--- !u!114 &4157892980854949841
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4333739488811297658}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b32ef0ee871edfd4881f58b4bf2eddef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &142851222693443848
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -291,8 +306,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HeroData: {fileID: 11400000, guid: 48d96175a47fcc94f8fd9c067d5e5942, type: 2}
+  HeroTraits: {fileID: 11400000, guid: 93cd277754951f34f920c28672e6b7ec, type: 2}
   goalTransform: {fileID: 0}
-  Angel: {fileID: 0}
 --- !u!114 &6344359177510650934
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -306,7 +321,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ActiveGoal: {fileID: 0}
-  ActiveAction: {fileID: 0}
+  activeAction: {fileID: 0}
 --- !u!114 &4081595295650149864
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -385,6 +400,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CelebratePriority: 100
+--- !u!114 &5700118842201857986
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4333739488811297658}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ed0c8a0a2ac61f449b5715403ace26b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Priority: 0
 --- !u!114 &4603613459818604225
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -398,6 +426,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Priority: 0
+--- !u!114 &5299260543174347276
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4333739488811297658}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9cef9b3126919ad49ae392347c44a903, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Looted:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &2089143765705171956
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -483,6 +526,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d77c79b8589904489f64e7c68dd1453, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Healed:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &4418177927841097623
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -558,7 +604,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Entities: []
   closestTarget: {fileID: 0}
-  Treasures: []
 --- !u!1 &4575418606774756367
 GameObject:
   m_ObjectHideFlags: 0

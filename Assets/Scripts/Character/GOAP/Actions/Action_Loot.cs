@@ -7,10 +7,10 @@ public class Action_Loot : Action_Base
 {
 	GameObject LootObject;
 	List<System.Type> SupportedGoals = new List<System.Type> { typeof(Goal_Loot) };
-	
+
 	public UnityEvent Looted;
 	private void OnLooted() { Looted?.Invoke(); }
-	
+
 	public override List<System.Type> GetSupportedGoals()
 	{
 		return SupportedGoals;
@@ -24,14 +24,14 @@ public class Action_Loot : Action_Base
 	public override void OnActivated(Goal_Base _linkedGoal)
 	{
 		base.OnActivated(_linkedGoal);
-		// Additional activation code here
+
 		goap_debug.ChangeActionImage(2);
-		// try to get healing position
-		var result = knowledge.RecallPositionByName("Treasure");
+
+		var result = knowledge.RecallFirstUsableItem("Treasure");
 		if (result.found)
 		{
-			LootObject = knowledge.RecallObjectByName("Treasure");
-			movement.MoveTo(result.position);
+			LootObject = result.item.GameObject;
+			movement.MoveTo(result.item.LastKnownLocation);
 			movement.DestinationReached.AddListener(Loot);
 		}
 	}
@@ -52,7 +52,7 @@ public class Action_Loot : Action_Base
 		lootTimer = 0;
 	}
 
-private bool isLooting = false;
+	private bool isLooting = false;
 	private float lootTimer = 0;
 	private float lootTimeToCount = 2;
 	public override void OnTick()
@@ -66,14 +66,18 @@ private bool isLooting = false;
 			if (lootTimer >= lootTimeToCount)
 			{
 				// if the treasure has loot, loot it
-				// otherwise hero is angry/disapointed and they forget the loot
-				// how to stop them detecting it again?
+
 				Treasure treasure = LootObject.GetComponent<Treasure>();
 				if (treasure.HasLoot())
 				{
 					inventory.AddItem(treasure.LootItem());
-					OnLooted();
 				}
+				else
+				{
+					//TODO hero is angry/disapointed that there was no loot
+					knowledge.ForgetItem(treasure.gameObject);
+				}
+				OnLooted();
 				isLooting = false;
 			}
 		}

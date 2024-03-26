@@ -26,8 +26,11 @@ public class angel_healing
 		HeroKnowledge knowledge = hero.GetComponent<HeroKnowledge>();
 		Assert.IsNotNull(knowledge, $"HeroKnowledge component not found.");
 
-		GameObject angel = knowledge.RecallObjectByName("Angel");
-		Assert.IsNotNull(angel, $"Angel memory not found.");
+		var result = knowledge.RecallClosestUsableItem("Angel");
+		Assert.IsTrue(result.found, $"Angel memory not found.");
+
+		GameObject angel = result.item.GameObject;
+		Assert.IsNotNull(angel, $"Angel gameobject is null.");
 
 		Health health = hero.GetComponent<Health>();
 		Assert.IsNotNull(health, $"Health component not found.");

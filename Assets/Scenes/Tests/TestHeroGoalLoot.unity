@@ -4291,6 +4291,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1870117543507162974, guid: 9057529b612f6744fb909b246fa4d3b3,
+        type: 3}
+      propertyPath: randomlyGenerateLoot
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4112261258655135026, guid: 9057529b612f6744fb909b246fa4d3b3,
         type: 3}
       propertyPath: m_RootOrder
@@ -5153,17 +5158,6 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 142851222693443848, guid: afd881a39de004540b84e05f23e33c5c,
         type: 3}
-      propertyPath: Angel
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 142851222693443848, guid: afd881a39de004540b84e05f23e33c5c,
-        type: 3}
-      propertyPath: HeroTraits
-      value: 
-      objectReference: {fileID: 11400000, guid: 93cd277754951f34f920c28672e6b7ec,
-        type: 2}
-    - target: {fileID: 142851222693443848, guid: afd881a39de004540b84e05f23e33c5c,
-        type: 3}
       propertyPath: goalTransform
       value: 
       objectReference: {fileID: 891719457}
@@ -5226,11 +5220,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: GOAP_Hero
-      objectReference: {fileID: 0}
-    - target: {fileID: 4333739488811297658, guid: afd881a39de004540b84e05f23e33c5c,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6044638844623522110, guid: afd881a39de004540b84e05f23e33c5c,
         type: 3}
