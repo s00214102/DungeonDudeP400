@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class HeroKnowledge : MonoBehaviour
 {
+	//TODO make a function for adding entities
 	public List<Entity> Entities = new List<Entity>();
 	public Entity closestTarget;
 	public List<ItemMemory> ItemMemories = new List<ItemMemory>();

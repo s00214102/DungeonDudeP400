@@ -20,12 +20,35 @@ public class Goal_Loot : Goal_Base
 
 	public override void OnTickGoal()
 	{
-		// if a useable treasure item cant be found, set priority to 0
+		// try to find lootable treasure
 		var result = knowledge.RecallFirstUsableItem("Treasure");
+		// if a useable treasure item cant be found, set priority to 0
 		if (!result.found)
 		{
 			Priority = 0;
 			return;
+		}
+		else
+		{
+			// if lootable treasure is known, calculate priority based on greed
+			switch (data.HeroTraits.Greed)
+			{
+				case 0:
+					Priority = 10;
+					break;
+				case 1:
+					Priority = 30;
+					break;
+				case 2:
+					Priority = 70;
+					break;
+				case 3:
+					Priority = 999;
+					break;
+				default:
+					Priority = 0;
+					break;
+			}
 		}
 	}
 

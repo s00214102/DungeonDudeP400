@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 986e43e130d73c74da27eda2265047b9, type: 3}
-  m_Name: Fearless
+  m_Name: Coward
   m_EditorClassIdentifier: 
-  Bravery: 3
-  Greed: 0
+  Bravery: 0
+  Greed: 1
   Altruism: 1
-  Wisdom: 0
+  Wisdom: 2
   Curiosity: 2
   Loyalty: 1
-  Aggression: 3
-  Caution: 0
-  HeroArchetype: 0
+  Aggression: 0
+  Caution: 3
+  HeroArchetype: 10

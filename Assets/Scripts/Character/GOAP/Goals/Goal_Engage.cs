@@ -4,19 +4,38 @@ using UnityEngine;
 
 public class Goal_Engage : Goal_Base
 {
-    private int EngagePriority = 60;
-    private int currentPriority = 0;
+    private int Priority = 0;
 
     public override int OnCalculatePriority()
     {
-        return currentPriority;
+        return Priority;
     }
 
     public override void OnTickGoal()
     {
-        currentPriority = 0;
+        Priority = 0;
+
         if (knowledge.closestTarget != null)
-            currentPriority = EngagePriority;
+        {
+            switch (data.HeroTraits.Aggression)
+            {
+                case 0:
+                    Priority = 10;
+                    break;
+                case 1:
+                    Priority = 30;
+                    break;
+                case 2:
+                    Priority = 70;
+                    break;
+                case 3:
+                    Priority = 999;
+                    break;
+                default:
+                    Priority = 0;
+                    break;
+            }
+        }
     }
 
     public override bool CanRun()
@@ -27,6 +46,6 @@ public class Goal_Engage : Goal_Base
     }
     public override string ToString()
     {
-        return $"Engage priority: {currentPriority}";
+        return $"Engage priority: {Priority}";
     }
 }

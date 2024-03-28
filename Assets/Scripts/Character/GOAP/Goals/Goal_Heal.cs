@@ -19,6 +19,8 @@ public class Goal_Heal : Goal_Base
 
 	public override void OnTickGoal()
 	{
+		//TODO if the hero has a healing potion they will use that
+
 		// if the hero doesnt know of any healing, priority = 0
 		var result = knowledge.RecallFirstItemPosition("Angel");
 		if (!result.found)
@@ -27,11 +29,32 @@ public class Goal_Heal : Goal_Base
 			return;
 		}
 
+		int traitPriorityBonus = 0; // a value added onto the final priority as a bonus based on hero caution
+		switch (data.HeroTraits.Caution)
+		{
+			case 0:
+				traitPriorityBonus = 0;
+				break;
+			case 1:
+				traitPriorityBonus = 10;
+				break;
+			case 2:
+				traitPriorityBonus = 20;
+				break;
+			case 3:
+				traitPriorityBonus = 30;
+				break;
+			default:
+				Priority = 0;
+				break;
+		}
+
 		// healing gets a higher priority as the characters health drops
 		float percentMissing = (((float)health.MaxHealth - (float)health.CurrentHealth) / (float)health.MaxHealth) * 100;
 
 		//Debug.Log(percentMissing);
 		Priority = Mathf.FloorToInt(percentMissing);
+		Priority += traitPriorityBonus;
 	}
 
 	public override void OnGoalActivated(Action_Base _LinkedAction)

@@ -7,39 +7,90 @@ using UnityEngine.TestTools;
 
 public class goap_loot
 {
+	private GameObject hero;
+	private HeroKnowledge knowledge;
+	private Inventory inventory;
+	private Goal_Loot lootGoal;
+	private Action_Loot lootAction;
+	private GOAP_Hero_Data data;
+	private PlayTestHelper testHelper;
+	private GOAP_Planner planner;
+	private HeroTraits greedyTrait;
+	private GameObject treasureObj;
+	private Treasure treasure;
 
+
+	private IEnumerator Setup()
+	{
+		var operation = SceneManager.LoadSceneAsync("TestHeroGoalLoot", LoadSceneMode.Single);
+		float maxLoadingTime = 10f;
+		float startTime = Time.time;
+		// Wait until the scene is fully loaded or timeout occurs
+		while (!operation.isDone)
+		{
+			// Check if the loading operation exceeds the maximum waiting time
+			if (Time.time - startTime >= maxLoadingTime)
+			{
+				Debug.LogError("Scene loading timed out.");
+				yield break; // Exit the coroutine
+			}
+			yield return null;
+		}
+
+		hero = GameObject.Find("GOAP_Hero");
+		Assert.IsNotNull(hero, $"GameObject with name GOAP_Hero not found.");
+
+		knowledge = hero.GetComponent<HeroKnowledge>();
+		Assert.IsNotNull(knowledge, $"HeroKnowledge component not found.");
+
+		inventory = hero.GetComponent<Inventory>();
+		Assert.IsNotNull(inventory, $"Inventory component not found.");
+
+		lootGoal = hero.GetComponent<Goal_Loot>();
+		Assert.IsNotNull(lootGoal, $"Goal_Loot component not found.");
+
+		lootAction = hero.GetComponent<Action_Loot>();
+		Assert.IsNotNull(lootAction, $"Action_Loot component not found.");
+
+		data = hero.GetComponent<GOAP_Hero_Data>();
+		Assert.IsNotNull(data, $"GOAP_Hero_Data component not found.");
+
+		planner = hero.GetComponent<GOAP_Planner>();
+		Assert.IsNotNull(planner, $"GOAP_Planner component not found.");
+
+		testHelper = GameObject.Find("TestHelper").GetComponent<PlayTestHelper>();
+		Assert.IsNotNull(testHelper, $"PlayTestHelper not found.");
+
+		greedyTrait = testHelper.greedyPersonality;
+		Assert.IsNotNull(greedyTrait, $"Greedy trait not found.");
+
+		data.AssignTrait(greedyTrait);
+		Assert.IsTrue(data.HeroTraits == greedyTrait, "Heroes current trait is not the greedy trait.");
+
+		treasureObj = GameObject.Find("Treasure");
+		Assert.IsNotNull(treasureObj, $"GameObject with name Treasure not found.");
+
+		treasure = treasureObj.GetComponent<Treasure>();
+		Assert.IsNotNull(treasure, $"Treasure component not found.");
+
+
+		yield break;
+	}
 	[UnityTest]
 	public IEnumerator can_loot_treasure()
 	{
-		// SETUP: get the hero and the loot goal component
-		SceneManager.LoadScene("TestHeroGoalLoot", LoadSceneMode.Single);
-		yield return new WaitForSeconds(0.2f);
+		yield return Setup();
 
-		GameObject hero = GameObject.Find("GOAP_Hero");
-		Assert.IsNotNull(hero, $"GameObject with name GOAP_Hero not found.");
-
-		HeroKnowledge knowledge = hero.GetComponent<HeroKnowledge>();
-		Assert.IsNotNull(knowledge, $"HeroKnowledge component not found.");
-
-		Inventory inventory = hero.GetComponent<Inventory>();
-		Assert.IsNotNull(inventory, $"Inventory component not found.");
-
-		Goal_Loot loot_goal = hero.GetComponent<Goal_Loot>();
-		Assert.IsNotNull(loot_goal, $"Goal_Loot component not found.");
-
-		Action_Loot loot_action = hero.GetComponent<Action_Loot>();
-		Assert.IsNotNull(loot_action, $"Action_Loot component not found.");
-
-		GameObject treasure = GameObject.Find("Treasure");
-		Assert.IsNotNull(treasure, $"GameObject with name Treasure not found.");
+		treasure.randomlyGenerateLoot = false;
+		treasure.AddItem("Ruby");
 
 		// manually add the treasure object to the heroes memories
-		knowledge.RememberItem("Treasure", treasure, true);
+		knowledge.RememberItem("Treasure", treasureObj, true);
 		// set the loot priority very high so the loot goal/action is chosen
-		loot_goal.Priority = 999;
+		lootGoal.Priority = 999;
 		// loot event from Action_Loot is used to know they finished looting
 		bool action_loot_finished = false;
-		loot_action.Looted.AddListener(() => { action_loot_finished = true; });
+		lootAction.Looted.AddListener(() => { action_loot_finished = true; });
 		// give enough time for the hero to get to the treasure and loot it
 		// they should finish looting within the time
 		Time.timeScale = 10.0f;
@@ -60,17 +111,7 @@ public class goap_loot
 		// SETUP 
 		// hero walks towards goal and encounters the treasure
 		// the treasure is added as a memory in HeroKnowledge
-		SceneManager.LoadScene("TestKnowledgeRememberTreasure", LoadSceneMode.Single);
-		yield return new WaitForSeconds(0.2f);
-		GameObject hero = GameObject.Find("GOAP_Hero");
-		Assert.IsNotNull(hero, $"GameObject with name GOAP_Hero not found.");
-
-		// HeroProximityDetection is required for remembering things since they need to be detected first
-		HeroProximityDetection detection = hero.GetComponent<HeroProximityDetection>();
-		Assert.IsNotNull(detection, $"HeroProximityDetection component not found.");
-
-		HeroKnowledge knowledge = hero.GetComponent<HeroKnowledge>();
-		Assert.IsNotNull(knowledge, $"HeroKnowledge component not found.");
+		yield return Setup();
 
 		// wait for the hero to remember the treasure
 		// when the treasure is detected, HeroProximityDetection will call knowledge.Remember("Treasure"...)
@@ -93,36 +134,16 @@ public class goap_loot
 		// SETUP: 
 		// the hero should prioritise looting and go to the treasure
 		// when the hero finishes looting and finds the treasure item not useable, they should forget it
-		SceneManager.LoadScene("TestKnowledgeForgetTreasure", LoadSceneMode.Single);
-		yield return new WaitForSeconds(0.2f);
-
-		GameObject hero = GameObject.Find("GOAP_Hero");
-		Assert.IsNotNull(hero, $"GameObject with name GOAP_Hero not found.");
-
-		GameObject treasure = GameObject.Find("Treasure");
-		treasure.GetComponent<Treasure>().randomlyGenerateLoot = false;
-		Assert.IsNotNull(treasure, $"GameObject with name Treasure not found.");
-
-		HeroProximityDetection detection = hero.GetComponent<HeroProximityDetection>();
-		Assert.IsNotNull(detection, $"HeroProximityDetection component not found.");
-
-		HeroKnowledge knowledge = hero.GetComponent<HeroKnowledge>();
-		Assert.IsNotNull(knowledge, $"HeroKnowledge component not found.");
-
-		Goal_Loot loot_goal = hero.GetComponent<Goal_Loot>();
-		Assert.IsNotNull(loot_goal, $"Goal_Loot component not found.");
-
-		Action_Loot loot_action = hero.GetComponent<Action_Loot>();
-		Assert.IsNotNull(loot_action, $"Action_Loot component not found.");
+		yield return Setup();
 
 		// the treasure is programmatically added to the heroes memory
 		// the treasure in this scene has no loot in it, so when the hero tries to loot from it they should remember it passing false
-		knowledge.RememberItem("Treasure", treasure, true);
+		knowledge.RememberItem("Treasure", treasureObj, true);
 
 		// the hero prioritises looting and so moves to the treasures last known location
-		loot_goal.Priority = 999;
+		lootGoal.Priority = 999;
 		bool action_loot_finished = false;
-		loot_action.Looted.AddListener(() => { action_loot_finished = true; });
+		lootAction.Looted.AddListener(() => { action_loot_finished = true; });
 
 		Time.timeScale = 10.0f;
 		float time = 0;
@@ -138,41 +159,20 @@ public class goap_loot
 		// treasure memory bool should be false
 		Assert.IsTrue(knowledge.ItemMemories[0].ItemIsUsable == false, $"Item is still useable, itemIsUsable should be false, but was {knowledge.ItemMemories[0].ItemIsUsable}.");
 	}
-	//TODO test for loot goal priority reset
+	// Goal_Loot resets priority to 0 when finding the treasure no longer useable
 	[UnityTest]
 	public IEnumerator priority_reset_after_fail()
 	{
-		#region Setup
-		// the hero should prioritise looting and go to the treasure
-		// when the hero finishes looting the loot goal priority should be back to 0
-		SceneManager.LoadScene("TestKnowledgeForgetTreasure", LoadSceneMode.Single);
-		yield return new WaitForSeconds(0.2f);
-
-		GameObject hero = GameObject.Find("GOAP_Hero");
-		Assert.IsNotNull(hero, $"GameObject with name GOAP_Hero not found.");
-
-		GameObject treasure = GameObject.Find("Treasure");
-		treasure.GetComponent<Treasure>().randomlyGenerateLoot = false;
-		Assert.IsNotNull(treasure, $"GameObject with name Treasure not found.");
-
-		HeroKnowledge knowledge = hero.GetComponent<HeroKnowledge>();
-		Assert.IsNotNull(knowledge, $"HeroKnowledge component not found.");
-
-		Goal_Loot loot_goal = hero.GetComponent<Goal_Loot>();
-		Assert.IsNotNull(loot_goal, $"Goal_Loot component not found.");
-
-		Action_Loot loot_action = hero.GetComponent<Action_Loot>();
-		Assert.IsNotNull(loot_action, $"Action_Loot component not found.");
-		#endregion
+		yield return Setup();
 
 		// the treasure is programmatically added to the heroes memory
 		// the treasure in this scene has no loot in it, so when the hero tries to loot from it they should remember it passing false
-		knowledge.RememberItem("Treasure", treasure, true);
+		knowledge.RememberItem("Treasure", treasureObj, true);
 
 		// the hero prioritises looting and so moves to the treasures last known location
-		loot_goal.Priority = 999;
+		lootGoal.Priority = 999;
 		bool action_loot_finished = false;
-		loot_action.Looted.AddListener(() => { action_loot_finished = true; });
+		lootAction.Looted.AddListener(() => { action_loot_finished = true; });
 
 		Time.timeScale = 10.0f;
 		float time = 0;
@@ -184,36 +184,54 @@ public class goap_loot
 		Assert.IsTrue(action_loot_finished, "Did not finish looting.");
 
 		time = 0;
-		while (loot_goal.Priority != 0 && time < 10)
+		while (lootGoal.Priority != 0 && time < 10)
 		{
 			time += Time.fixedDeltaTime;
 			yield return new WaitForFixedUpdate();
 		}
 		Time.timeScale = 1.0f;
 		// loot goal priority should be reset back to 0
-		Assert.IsTrue(loot_goal.Priority == 0, $"Unexpected value: {loot_goal.Priority}, should be 0.");
+		Assert.IsTrue(lootGoal.Priority == 0, $"Unexpected value: {lootGoal.Priority}, should be 0.");
 	}
-	//TODO: as a hero if i remember multiple things of a type, i want to remember the closest one
+	// when using the last charge, the hero remembers that this treasure is no longer useable
 	[UnityTest]
-	public IEnumerator remembering_multiple_treasures_chooses_the_closest()
+	public IEnumerator remember_not_useable_on_using_last_charge()
 	{
-		// SETUP
-		SceneManager.LoadScene("test_scene_name", LoadSceneMode.Single);
-		yield return new WaitForSeconds(0.2f);
-		GameObject hero = GameObject.Find("GOAP_Hero");
-		Assert.IsNotNull(hero, $"GameObject with name GOAP_Hero not found.");
+		//TODO: Write this test
+		yield return Setup();
 
-		HeroProximityDetection detection = hero.GetComponent<HeroProximityDetection>();
-		Assert.IsNotNull(detection, $"HeroProximityDetection component not found.");
+		treasure.randomlyGenerateLoot = false;
+		treasure.AddItem("Ruby");
+
+		// manually add the treasure object to the heroes memories
+		knowledge.RememberItem("Treasure", treasureObj, true);
+		// set the loot priority very high so the loot goal/action is chosen
+		lootGoal.Priority = 999;
+		// loot event from Action_Loot is used to know they finished looting
+		bool action_loot_finished = false;
+		lootAction.Looted.AddListener(() => { action_loot_finished = true; });
 
 		Time.timeScale = 10.0f;
 		float time = 0;
-		while (time < 5)
+		while (!action_loot_finished && time < 10)
 		{
 			time += Time.fixedDeltaTime;
 			yield return new WaitForFixedUpdate();
 		}
 		Time.timeScale = 1.0f;
-		Assert.IsTrue(false, "condition not met.");
+		// when the hero uses the last charge of the treasure item, 
+		// they should remember / set useable to false
+		Assert.IsFalse(knowledge.ItemMemories[0].ItemIsUsable, "The treasure item is still useable, should have been set by not useable in Action_Loot.");
+
+		// the loot action should not be taken again after looting has finished the first time
+		Time.timeScale = 10.0f;
+		time = 0;
+		while ((planner.ActiveAction is Action_Loot) && time < 10)
+		{
+			time += Time.fixedDeltaTime;
+			yield return new WaitForFixedUpdate();
+		}
+		Time.timeScale = 1.0f;
+		Assert.IsFalse(planner.ActiveAction is Action_Loot, "ActiveAction is of type Action_Loot, the hero should not use this action again as there are no more viable options to loot in the scene.");
 	}
 }

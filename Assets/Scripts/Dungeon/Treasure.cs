@@ -4,7 +4,7 @@ using UnityEngine;
 public class Treasure : MonoBehaviour
 {
     [SerializeField] private List<Item> Loot = new List<Item>();
-    public bool randomlyGenerateLoot = true;
+    public bool randomlyGenerateLoot = false;
 
     private void Start()
     {
@@ -32,5 +32,10 @@ public class Treasure : MonoBehaviour
         Item loot = Loot[0];
         Loot.RemoveAt(0);
         return loot;
+    }
+    public void AddItem(string itemName)
+    {
+        Item item = new Item() { ItemName = itemName };
+        Loot.Add(item);
     }
 }

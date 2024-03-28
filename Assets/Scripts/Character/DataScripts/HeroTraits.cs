@@ -28,7 +28,7 @@ public class HeroTraits : ScriptableObject
 	[Range(0, 3)] public int Wisdom;      // how much can they remember?
 	[Range(0, 3)] public int Curiosity;   // do they explore?
 	[Range(0, 3)] public int Loyalty;     // do they stick with their fellow heroes?
-	[Range(0, 3)] public int Aggression;  // attack prioritisation
-	[Range(0, 3)] public int Caution;     // do they move cautiously checking for traps?
+	[Range(0, 3)] public int Aggression;  // engage enemy prioritisation
+	[Range(0, 3)] public int Caution;     // how low will they let their HP get?
 	public HeroArchetype HeroArchetype;
 }

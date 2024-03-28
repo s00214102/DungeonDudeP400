@@ -41,4 +41,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Tests/TestKnowledgeRecallTreasure.unity
     guid: 1b338934e8c107747a74c6c25ef62e73
+  - enabled: 1
+    path: Assets/Scenes/Tests/TestHeroTraitGreed.unity
+    guid: ad2511a51ab21bd47bdc339b3bca1b5a
   m_configObjects: {}

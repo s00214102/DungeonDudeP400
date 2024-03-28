@@ -20,7 +20,6 @@ public class Action_Loot : Action_Base
 	{
 		return 0f;
 	}
-
 	public override void OnActivated(Goal_Base _linkedGoal)
 	{
 		base.OnActivated(_linkedGoal);
@@ -66,11 +65,13 @@ public class Action_Loot : Action_Base
 			if (lootTimer >= lootTimeToCount)
 			{
 				// if the treasure has loot, loot it
-
 				Treasure treasure = LootObject.GetComponent<Treasure>();
 				if (treasure.HasLoot())
 				{
 					inventory.AddItem(treasure.LootItem());
+					// after looting the last item, the hero will remember there are no more (item no longer useable)
+					if (!treasure.HasLoot())
+						knowledge.ForgetItem(treasure.gameObject);
 				}
 				else
 				{
