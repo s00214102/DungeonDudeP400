@@ -111,7 +111,17 @@ public class goap_loot
 		// SETUP 
 		// hero walks towards goal and encounters the treasure
 		// the treasure is added as a memory in HeroKnowledge
-		yield return Setup();
+		SceneManager.LoadScene("TestKnowledgeRememberTreasure", LoadSceneMode.Single);
+		yield return new WaitForSeconds(0.2f);
+		GameObject hero = GameObject.Find("GOAP_Hero");
+		Assert.IsNotNull(hero, $"GameObject with name GOAP_Hero not found.");
+
+		// HeroProximityDetection is required for remembering things since they need to be detected first
+		HeroProximityDetection detection = hero.GetComponent<HeroProximityDetection>();
+		Assert.IsNotNull(detection, $"HeroProximityDetection component not found.");
+
+		HeroKnowledge knowledge = hero.GetComponent<HeroKnowledge>();
+		Assert.IsNotNull(knowledge, $"HeroKnowledge component not found.");
 
 		// wait for the hero to remember the treasure
 		// when the treasure is detected, HeroProximityDetection will call knowledge.Remember("Treasure"...)

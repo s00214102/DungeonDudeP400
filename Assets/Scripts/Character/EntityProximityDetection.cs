@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using PlasticGui.WorkspaceWindow;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
@@ -15,7 +16,8 @@ public class EntityProximityDetection : MonoBehaviour
     [SerializeField] float startDelay = 0; // how long to wait before starting the search
     [SerializeField] float closestTargetStartDelay = 0; // how long to wait before starting the search
     [SerializeField] float closestTargetFrequency = 1; // wait between closest target calculation
-    [SerializeField] private List<Entity> Entities = new List<Entity>();
+    [SerializeField] private List<Entity> entities = new List<Entity>();
+    public List<Entity> Entities {get=>entities;}
     public Entity closestTarget; // closest 
 
     public void Start()
@@ -36,9 +38,9 @@ public class EntityProximityDetection : MonoBehaviour
                     Entity entity;
                     if (hit.TryGetComponent<Entity>(out entity))
                     {
-                        if (!Entities.Contains(entity))
+                        if (!entities.Contains(entity))
                         {
-                            Entities.Add(entity);
+                            entities.Add(entity);
                         }
                     }
                     else
@@ -51,21 +53,21 @@ public class EntityProximityDetection : MonoBehaviour
     private void FindClosestTarget()
     {
         //Debug.Log("Finding closest target.");
-        if (Entities == null || Entities.Count <= 0)
+        if (entities == null || entities.Count <= 0)
             return;
 
-        if (Entities.Count == 1)
-            closestTarget = Entities[0];
+        if (entities.Count == 1)
+            closestTarget = entities[0];
 
         float minDistance = Mathf.Infinity;
-        foreach (var target in Entities)
+        foreach (var target in entities)
         {
             // clean up
             if (target.Health.isDead)
             {
                 //if (target == closestTarget)
                 closestTarget = null;
-                Entities.Remove(target);
+                entities.Remove(target);
                 return;
             }
             else

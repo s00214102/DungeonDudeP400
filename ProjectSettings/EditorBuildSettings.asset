@@ -44,4 +44,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Tests/TestHeroTraitGreed.unity
     guid: ad2511a51ab21bd47bdc339b3bca1b5a
+  - enabled: 1
+    path: Assets/Scenes/Tests/TestHeroGoalFlee.unity
+    guid: bb1264d9390904649a3050d829b8a431
   m_configObjects: {}
