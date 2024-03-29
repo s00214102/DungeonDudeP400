@@ -8,18 +8,15 @@ using UnityEngine.TestTools;
 public class goap_flee
 {
 	private GameObject hero;
-    private GameObject enemy;
-    private Health enemy_health;
-	private HeroKnowledge knowledge;
-	private Inventory inventory;
-	private Goal_Loot lootGoal;
-	private Action_Loot lootAction;
-	private GOAP_Hero_Data data;
-	private PlayTestHelper testHelper;
+	private GameObject enemy;
+	private Health enemy_health;
+	private Entity enemy_entity;
+	private EntityProximityDetection enemy_detection;
+	private HeroStatus heroStatus;
 	private GOAP_Planner planner;
-	private HeroTraits greedyTrait;
-	private GameObject treasureObj;
-	private Treasure treasure;
+	private Goal_Flee goal_Flee;
+	private Action_Flee action_Flee;
+	private HeroKnowledge knowledge;
 
 	private IEnumerator Setup()
 	{
@@ -41,58 +38,139 @@ public class goap_flee
 		hero = GameObject.Find("GOAP_Hero");
 		Assert.IsNotNull(hero, $"GameObject with name GOAP_Hero not found.");
 
-        enemy = GameObject.Find("FearTotem");
-        Assert.IsNotNull(enemy, $"GameObject with name FearTotem not found.");
+		heroStatus = hero.GetComponent<HeroStatus>();
+		Assert.IsNotNull(heroStatus, $"heroStatus component not found.");
+
+		enemy = GameObject.Find("FearTotem");
+		Assert.IsNotNull(enemy, $"GameObject with name FearTotem not found.");
 
 		enemy_health = enemy.GetComponent<Health>();
 		Assert.IsNotNull(enemy_health, $"enemy_health component not found.");
 
-		//lootGoal = hero.GetComponent<Goal_Flee>();
-		//Assert.IsNotNull(lootGoal, $"Goal_Loot component not found.");
+		enemy_detection = enemy.GetComponent<EntityProximityDetection>();
+		Assert.IsNotNull(enemy_detection, "enemy_detection component not found.");
 
-		//lootAction = hero.GetComponent<Action_Loot>();
-		//Assert.IsNotNull(lootAction, $"Action_Loot component not found.");
+		enemy_entity = enemy.GetComponent<Entity>();
+		Assert.IsNotNull(enemy_entity, "enemy_entity component not found.");
 
-		// data = hero.GetComponent<GOAP_Hero_Data>();
-		// Assert.IsNotNull(data, $"GOAP_Hero_Data component not found.");
+		goal_Flee = hero.GetComponent<Goal_Flee>();
+		Assert.IsNotNull(goal_Flee, "goal_Flee component not found.");
 
-		// planner = hero.GetComponent<GOAP_Planner>();
-		// Assert.IsNotNull(planner, $"GOAP_Planner component not found.");
+		action_Flee = hero.GetComponent<Action_Flee>();
+		Assert.IsNotNull(action_Flee, "action_Flee component not found.");
 
-		// testHelper = GameObject.Find("TestHelper").GetComponent<PlayTestHelper>();
-		// Assert.IsNotNull(testHelper, $"PlayTestHelper not found.");
+		planner = hero.GetComponent<GOAP_Planner>();
+		Assert.IsNotNull(planner, $"GOAP_Planner component not found.");
 
-		// greedyTrait = testHelper.greedyPersonality;
-		// Assert.IsNotNull(greedyTrait, $"Greedy trait not found.");
+		knowledge = hero.GetComponent<HeroKnowledge>();
+		Assert.IsNotNull(knowledge, $"knowledge component not found.");
 
-		// data.AssignTrait(greedyTrait);
-		// Assert.IsTrue(data.HeroTraits == greedyTrait, "Heroes current trait is not the greedy trait.");
-
-		// treasureObj = GameObject.Find("Treasure");
-		// Assert.IsNotNull(treasureObj, $"GameObject with name Treasure not found.");
-
-		// treasure = treasureObj.GetComponent<Treasure>();
-		// Assert.IsNotNull(treasure, $"Treasure component not found.");
+		// give the enemy very high hp
+		enemy_health.SetMaxHealth(1000);
 
 		yield break;
 	}
 	[UnityTest]
-	public IEnumerator default_hero_flees_when_scared()
+	public IEnumerator default_hero_fear_increases_when_inside_fear_aura()
+	{
+		yield return Setup();
+		// SETUP
+		// scary enemy with lots of health so they dont die
+		// hero stands next to them
+		// their fear increases
+
+		// make sure that the fear totem has detected the hero
+		Time.timeScale = 10.0f;
+		float time = 0;
+		while (enemy_detection.Entities.Count == 0 && time < 10)
+		{
+			time += Time.fixedDeltaTime;
+			yield return new WaitForFixedUpdate();
+		}
+		Time.timeScale = 1.0f;
+		Assert.IsTrue(enemy_detection.Entities.Count > 0, "Enemy not detecting the hero.");
+
+		// the heroes fear value increases over time
+		Time.timeScale = 10.0f;
+		time = 0;
+		while (heroStatus.Fear == 0 && time < 10)
+		{
+			time += Time.fixedDeltaTime;
+			yield return new WaitForFixedUpdate();
+		}
+		Time.timeScale = 1.0f;
+		Assert.IsTrue(heroStatus.Fear > 0, "Heroes fear status did not increase.");
+	}
+	[UnityTest]
+	public IEnumerator default_hero_flees_when_fear_is_high_enough()
 	{
 		yield return Setup();
 
-        //TODO finish this test
-        // SETUP
-        // scary enemy with lots of health so they dont die
-        // hero stands next to them
-        // their fear increases
-        // this increases the flee goals priority
-        // the priority gets high enough they take flee action
-        // they go to the dungeon entrance
+		// SETUP
+		// their fear increases
+		// this increases the flee goals priority
+		// the flee goal takes priority and the flee action is the active action
+		Time.timeScale = 10.0f;
+		float time = 0;
+		while (!(planner.ActiveAction is Action_Flee) && time < 30)
+		{
+			time += Time.fixedDeltaTime;
+			yield return new WaitForFixedUpdate();
+		}
+		Time.timeScale = 1.0f;
+		Assert.IsTrue(planner.ActiveAction is Action_Flee, "Flee action was not taken.");
+	}
+	[UnityTest]
+	public IEnumerator default_hero_flees_to_the_entrance()
+	{
+		yield return Setup();
 
-        // give the enemy very high hp
-        enemy_health.SetMaxHealth(1000);
+		// when the hero reaches the entrance they should leave the dungeon
+		Time.timeScale = 10.0f;
 
+		bool action_flee_finished = false;
+		action_Flee.DungeonExited.AddListener(() => { action_flee_finished = true; });
+
+		Time.timeScale = 10.0f;
+		float time = 0;
+		while (!action_flee_finished && time < 30)
+		{
+			time += Time.fixedDeltaTime;
+			yield return new WaitForFixedUpdate();
+		}
+		Time.timeScale = 1.0f;
+		Assert.IsTrue(action_flee_finished, "Hero didnt reach the entrance.");
+	}
+	[UnityTest]
+	public IEnumerator hero_fear_lowers_passively()
+	{
+		yield return Setup();
+
+		// let the enemy raise the heroes fear
+		Time.timeScale = 10.0f;
+		float time = 0;
+		while (heroStatus.Fear == 0 && time < 10)
+		{
+			time += Time.fixedDeltaTime;
+			yield return new WaitForFixedUpdate();
+		}
+		// destroy the enemy
+		enemy_entity.DisableEntity();
+		// does the heroes fear go back down to zero?
+		while (heroStatus.Fear > 0 && time < 20)
+		{
+			time += Time.fixedDeltaTime;
+			yield return new WaitForFixedUpdate();
+		}
+		Time.timeScale = 1.0f;
+		Assert.IsTrue(heroStatus.Fear == 0, "Hero fear didnt go back down to 0.");
+	}
+	[UnityTest]
+	public IEnumerator hero_exits_dungeon()
+	{
+		yield return Setup();
+
+		//TODO the hero should leave the dungeon when reaching the entrance
 		Time.timeScale = 10.0f;
 		float time = 0;
 		while (time < 10)
@@ -101,7 +179,6 @@ public class goap_flee
 			yield return new WaitForFixedUpdate();
 		}
 		Time.timeScale = 1.0f;
-
 		Assert.IsTrue(false, "condition not met.");
 	}
 }

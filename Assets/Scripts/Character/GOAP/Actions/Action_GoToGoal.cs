@@ -9,7 +9,7 @@ public class Action_GoToGoal : Action_Base
 		return SupportedGoals;
 	}
 
-	Goal_GoToGoal GotoGoal;
+	//Goal_GoToGoal GotoGoal;
 	public override float GetCost()
 	{
 		return 0f;
@@ -17,7 +17,7 @@ public class Action_GoToGoal : Action_Base
 
 	public override void OnActivated(Goal_Base _linkedGoal)
 	{
-		GotoGoal = (Goal_GoToGoal)_linkedGoal;
+		//GotoGoal = (Goal_GoToGoal)_linkedGoal;
 		goap_debug.ChangeActionImage(2);
 		base.OnActivated(_linkedGoal);
 		// move to the goal

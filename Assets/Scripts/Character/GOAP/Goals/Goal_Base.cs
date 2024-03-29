@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Codice.Client.Commands;
 using UnityEngine;
 
 public interface IGoal
@@ -17,6 +18,7 @@ public class Goal_Base : MonoBehaviour, IGoal
     protected HeroProximityDetection detection;
     protected HeroKnowledge knowledge;
     protected Health health;
+    protected HeroStatus status;
     protected Action_Base LinkedAction;
     protected GOAP_Hero_Data data;
 
@@ -27,6 +29,7 @@ public class Goal_Base : MonoBehaviour, IGoal
         knowledge = GetComponent<HeroKnowledge>();
         data = GetComponent<GOAP_Hero_Data>();
         health = GetComponent<Health>();
+        status = GetComponent<HeroStatus>();
     }
 
     private void Start()

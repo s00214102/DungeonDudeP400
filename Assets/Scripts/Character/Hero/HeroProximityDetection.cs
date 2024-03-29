@@ -79,7 +79,7 @@ public class HeroProximityDetection : MonoBehaviour
         foreach (var target in knowledge.Entities)
         {
             // clean up
-            if (target.Health.isDead)
+            if (target.Health.isDead || target.isDestroyed)
             {
                 //if (target == closestTarget)
                 knowledge.closestTarget = null;

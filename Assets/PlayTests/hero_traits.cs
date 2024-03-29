@@ -218,4 +218,69 @@ public class hero_traits
 		Time.timeScale = 1.0f;
 		Assert.IsTrue(planner.ActiveAction is Action_Heal, "ActiveAction is not of type Action_Heal, the hero should prioritise healing over the other options since they have the coward personality type.");
 	}
+	[UnityTest]
+	public IEnumerator brave_hero_prioritises_attacking()
+	{
+		//TODO: hero with the fearless archetype (bravery 3)
+		// should prioritise attacking over fleeing
+		#region setup
+		SceneManager.LoadScene("TestHeroGoalFlee", LoadSceneMode.Single);
+		yield return new WaitForSeconds(0.2f);
+
+		GameObject hero = GameObject.Find("GOAP_Hero");
+		Assert.IsNotNull(hero, $"GameObject with name GOAP_Hero not found.");
+
+		HeroStatus heroStatus = hero.GetComponent<HeroStatus>();
+		Assert.IsNotNull(heroStatus, $"heroStatus component not found.");
+
+		GameObject enemy = GameObject.Find("FearTotem");
+		Assert.IsNotNull(enemy, $"GameObject with name FearTotem not found.");
+
+		Health enemy_health = enemy.GetComponent<Health>();
+		Assert.IsNotNull(enemy_health, $"enemy_health component not found.");
+
+		EntityProximityDetection enemy_detection = enemy.GetComponent<EntityProximityDetection>();
+		Assert.IsNotNull(enemy_detection, "enemy_detection component not found.");
+
+		Entity enemy_entity = enemy.GetComponent<Entity>();
+		Assert.IsNotNull(enemy_entity, "enemy_entity component not found.");
+
+		Goal_Flee goal_Flee = hero.GetComponent<Goal_Flee>();
+		Assert.IsNotNull(goal_Flee, "goal_Flee component not found.");
+
+		Action_Flee action_Flee = hero.GetComponent<Action_Flee>();
+		Assert.IsNotNull(action_Flee, "action_Flee component not found.");
+
+		GOAP_Planner planner = hero.GetComponent<GOAP_Planner>();
+		Assert.IsNotNull(planner, $"GOAP_Planner component not found.");
+
+		HeroKnowledge knowledge = hero.GetComponent<HeroKnowledge>();
+		Assert.IsNotNull(knowledge, $"knowledge component not found.");
+
+		GOAP_Hero_Data data = hero.GetComponent<GOAP_Hero_Data>();
+		Assert.IsNotNull(data, $"GOAP_Hero_Data component not found.");
+
+		// give the enemy very high hp
+		enemy_health.SetMaxHealth(1000);
+		// set the heroes trait to fearless
+		PlayTestHelper testHelper = GameObject.Find("TestHelper").GetComponent<PlayTestHelper>();
+		Assert.IsNotNull(testHelper, $"PlayTestHelper not found.");
+		HeroTraits braveTrait = testHelper.bravePersonality;
+		Assert.IsNotNull(braveTrait, $"Brave trait not found.");
+
+		data.AssignTrait(braveTrait);
+		Assert.IsTrue(data.HeroTraits == braveTrait, "Heroes current trait is not the brave trait.");
+
+		#endregion
+
+		Time.timeScale = 10.0f;
+		float time = 0;
+		while (!(planner.ActiveAction is Action_Flee) && time < 20)
+		{
+			time += Time.fixedDeltaTime;
+			yield return new WaitForFixedUpdate();
+		}
+		Time.timeScale = 1.0f;
+		Assert.IsTrue(!(planner.ActiveAction is Action_Flee), "The hero fled.");
+	}
 }

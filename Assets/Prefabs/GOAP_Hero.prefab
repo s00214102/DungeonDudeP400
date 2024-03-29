@@ -115,6 +115,7 @@ GameObject:
   - component: {fileID: 4495989096356744531}
   - component: {fileID: 5700118842201857986}
   - component: {fileID: 4603613459818604225}
+  - component: {fileID: 6076377008878842286}
   - component: {fileID: 5299260543174347276}
   - component: {fileID: 2089143765705171956}
   - component: {fileID: 4493202282102929446}
@@ -123,10 +124,12 @@ GameObject:
   - component: {fileID: 7421465315648383695}
   - component: {fileID: 8463412585482004980}
   - component: {fileID: 5636170893864489618}
+  - component: {fileID: 2356337818217166803}
   - component: {fileID: 4418177927841097623}
   - component: {fileID: 370028848704623508}
   - component: {fileID: 7345338134873218958}
   - component: {fileID: 6045534299364879929}
+  - component: {fileID: 2934180254228399709}
   m_Layer: 6
   m_Name: GOAP_Hero
   m_TagString: Hero
@@ -426,6 +429,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Priority: 0
+--- !u!114 &6076377008878842286
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4333739488811297658}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f17612db4d17e548bcc2797c2d6d490, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Priority: 0
+  maxPriority: 120
 --- !u!114 &5299260543174347276
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -514,6 +531,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c6c5e519443e4942b5512ab8446b765, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  AttackFinished:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &5636170893864489618
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -529,6 +549,18 @@ MonoBehaviour:
   Healed:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &2356337818217166803
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4333739488811297658}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b77462051e761694d9413d9bdc6785d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &4418177927841097623
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -604,6 +636,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Entities: []
   closestTarget: {fileID: 0}
+  ItemMemories: []
+  Entrance: {fileID: 0}
+--- !u!114 &2934180254228399709
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4333739488811297658}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 108bd69bfab919244bca91cadee1de99, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fear: 0
 --- !u!1 &4575418606774756367
 GameObject:
   m_ObjectHideFlags: 0

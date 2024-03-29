@@ -36,4 +36,12 @@ public class hero_proximity_detection
 		bool result = knowledge.closestTarget.gameObject == closestEnemy;
 		Assert.IsTrue(result, "The closest enemy found was not what was expected.");
 	}
+	[UnityTest]
+	public IEnumerator entities_can_be_destroyed()
+	{
+		//TODO destroying entities interferes with iteration over the list
+		// write a test to make sure entities can be destroyed
+		yield return new WaitForSeconds(0.1f);
+
+	}
 }

@@ -8,7 +8,13 @@ public class HeroKnowledge : MonoBehaviour
 	public List<Entity> Entities = new List<Entity>();
 	public Entity closestTarget;
 	public List<ItemMemory> ItemMemories = new List<ItemMemory>();
+	public GameObject Entrance;
 
+	private void Start()
+	{
+		// find the dungeon exit/entrance
+		Entrance = GameObject.Find("Entrance");
+	}
 	public void RememberItem(string objectType, GameObject gameObject, bool itemIsUsable)
 	{
 		// Check if this memory is already remembered

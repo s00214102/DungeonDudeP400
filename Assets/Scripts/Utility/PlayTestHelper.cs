@@ -7,4 +7,5 @@ public class PlayTestHelper : MonoBehaviour
 	public HeroTraits greedyPersonality;
 	public HeroTraits aggressivePersonality;
 	public HeroTraits catiousPersonality;
+	public HeroTraits bravePersonality;
 }
