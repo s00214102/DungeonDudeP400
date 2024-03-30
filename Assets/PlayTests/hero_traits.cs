@@ -221,7 +221,7 @@ public class hero_traits
 	[UnityTest]
 	public IEnumerator brave_hero_prioritises_attacking()
 	{
-		//TODO: hero with the fearless archetype (bravery 3)
+		//hero with the fearless archetype (bravery 3)
 		// should prioritise attacking over fleeing
 		#region setup
 		SceneManager.LoadScene("TestHeroGoalFlee", LoadSceneMode.Single);

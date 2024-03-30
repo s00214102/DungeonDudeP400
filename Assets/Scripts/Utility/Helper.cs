@@ -14,4 +14,12 @@ static public class Helper
 		float dist = Vector3.Distance(pos1, pos2);
 		return dist <= range;
 	}
+	public static void SetChildrenActive(GameObject parentObject, bool isActive)
+	{
+		foreach (Transform child in parentObject.transform)
+		{
+			child.gameObject.SetActive(isActive);
+			SetChildrenActive(child.gameObject, isActive); // Recursively call for all children
+		}
+	}
 }

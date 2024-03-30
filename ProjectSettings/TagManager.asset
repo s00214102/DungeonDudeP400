@@ -8,6 +8,7 @@ TagManager:
   - Hero
   - Treasure
   - Angel
+  - Goal
   layers:
   - Default
   - TransparentFX

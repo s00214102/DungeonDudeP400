@@ -1,0 +1,81 @@
+{
+	"items": [
+	  {
+		"itemName": "Rusty Dagger",
+		"value": 5,
+		"imagePath": ""
+	  },
+	  {
+		"itemName": "Cracked Vial",
+		"value": 8,
+		"imagePath": ""
+	  },
+	  {
+		"itemName": "Tattered Scroll",
+		"value": 4,
+		"imagePath": ""
+	  },
+	  {
+		"itemName": "Broken Chain",
+		"value": 10,
+		"imagePath": ""
+	  },
+	  {
+		"itemName": "Chipped Gemstone",
+		"value": 18,
+		"imagePath": ""
+	  },
+	  {
+		"itemName": "Silver Necklace",
+		"value": 20,
+		"imagePath": ""
+	  },
+	  {
+		"itemName": "Enchanted Ring",
+		"value": 35,
+		"imagePath": ""
+	  },
+	  {
+		"itemName": "Antique Coin",
+		"value": 25,
+		"imagePath": ""
+	  },
+	  {
+		"itemName": "Fine Tapestry",
+		"value": 30,
+		"imagePath": ""
+	  },
+	  {
+		"itemName": "Ancient Tome",
+		"value": 40,
+		"imagePath": ""
+	  },
+	  {
+		"itemName": "Golden Idol",
+		"value": 100,
+		"imagePath": ""
+	  },
+	  {
+		"itemName": "Enchanted Amulet",
+		"value": 80,
+		"imagePath": ""
+	  },
+	  {
+		"itemName": "Dragon Egg",
+		"value": 150,
+		"imagePath": ""
+	  },
+	  {
+		"itemName": "Chest of Gems",
+		"value": 200,
+		"imagePath": ""
+	  },
+	  {
+		"itemName": "Lost Artifact",
+		"value": 300,
+		"imagePath": ""
+	  }
+	],
+	"potions": []
+  }
+  

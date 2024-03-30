@@ -146,17 +146,11 @@ public class goap_flee
 	{
 		yield return Setup();
 
-		// let the enemy raise the heroes fear
+		// manually add fear to the hero status
+		heroStatus.AddFear(10);
 		Time.timeScale = 10.0f;
-		float time = 0;
-		while (heroStatus.Fear == 0 && time < 10)
-		{
-			time += Time.fixedDeltaTime;
-			yield return new WaitForFixedUpdate();
-		}
-		// destroy the enemy
-		enemy_entity.DisableEntity();
 		// does the heroes fear go back down to zero?
+		float time = 0;
 		while (heroStatus.Fear > 0 && time < 20)
 		{
 			time += Time.fixedDeltaTime;

@@ -1,0 +1,14 @@
+"filename", "language", "C#", "UnityAssemblyDefinition", "comment", "blank", "total"
+"z:\CollegeProjects\DungeonDudeP400\Assets\PlayTests\PlayTests.asmdef", "UnityAssemblyDefinition", 0, 23, 0, 0, 23
+"z:\CollegeProjects\DungeonDudeP400\Assets\PlayTests\angel_healing.cs", "C#", 58, 0, 3, 12, 73
+"z:\CollegeProjects\DungeonDudeP400\Assets\PlayTests\character_movement.cs", "C#", 33, 0, 2, 3, 38
+"z:\CollegeProjects\DungeonDudeP400\Assets\PlayTests\enemy.cs", "C#", 32, 0, 0, 2, 34
+"z:\CollegeProjects\DungeonDudeP400\Assets\PlayTests\goap_flee.cs", "C#", 139, 0, 17, 23, 179
+"z:\CollegeProjects\DungeonDudeP400\Assets\PlayTests\goap_loot.cs", "C#", 192, 0, 36, 36, 264
+"z:\CollegeProjects\DungeonDudeP400\Assets\PlayTests\health.cs", "C#", 59, 0, 4, 8, 71
+"z:\CollegeProjects\DungeonDudeP400\Assets\PlayTests\hero_knowledge.cs", "C#", 150, 0, 19, 28, 197
+"z:\CollegeProjects\DungeonDudeP400\Assets\PlayTests\hero_proximity_detection.cs", "C#", 37, 0, 3, 7, 47
+"z:\CollegeProjects\DungeonDudeP400\Assets\PlayTests\hero_traits.cs", "C#", 205, 0, 27, 54, 286
+"z:\CollegeProjects\DungeonDudeP400\Assets\PlayTests\test_scene.cs", "C#", 41, 0, 0, 4, 45
+"z:\CollegeProjects\DungeonDudeP400\Assets\PlayTests\traps.cs", "C#", 47, 0, 3, 6, 56
+"Total", "-", 993, 23, 114, 183, 1313

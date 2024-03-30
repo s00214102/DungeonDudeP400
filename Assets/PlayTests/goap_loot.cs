@@ -207,7 +207,6 @@ public class goap_loot
 	[UnityTest]
 	public IEnumerator remember_not_useable_on_using_last_charge()
 	{
-		//TODO: Write this test
 		yield return Setup();
 
 		treasure.randomlyGenerateLoot = false;
@@ -243,5 +242,22 @@ public class goap_loot
 		}
 		Time.timeScale = 1.0f;
 		Assert.IsFalse(planner.ActiveAction is Action_Loot, "ActiveAction is of type Action_Loot, the hero should not use this action again as there are no more viable options to loot in the scene.");
+	}
+	[UnityTest]
+	public IEnumerator only_one_hero_loots_at_a_time()
+	{
+		//TODO: a treasure chest is 'in use' when a hero is using it
+		// this stops other heroes from considering it
+		yield return Setup();
+
+		Time.timeScale = 10.0f;
+		float time = 0;
+		while (time < 5)
+		{
+			time += Time.fixedDeltaTime;
+			yield return new WaitForFixedUpdate();
+		}
+		Time.timeScale = 1.0f;
+		Assert.IsTrue(false, "condition not met.");
 	}
 }
