@@ -23,6 +23,11 @@ public class GameplayController : MonoBehaviour
 	private DungeonWinPhase winPhase;
 	private DungeonLosePhase losePhase;
 
+	//TODO move to its own class used to purchase monsters/traps
+	// players energy, used to purchase things
+	public int startingEnergy;
+	public int currentEnergy;
+
 	private void Awake()
 	{
 		// find the required gameobjects for each state
