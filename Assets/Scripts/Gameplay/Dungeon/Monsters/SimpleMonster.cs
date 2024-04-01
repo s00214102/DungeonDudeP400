@@ -4,7 +4,7 @@ using UnityEngine;
 [RequireComponent(typeof(Health))]
 [RequireComponent(typeof(EntityProximityDetection))]
 // simple script for stationary monsters which attack a hero when theyre in range
-public class SimpleMonster : BaseStateMachine
+public class SimpleMonster : MonoBehaviour
 {
     private enum MobState
     {
@@ -35,16 +35,13 @@ public class SimpleMonster : BaseStateMachine
     }
     void Start()
     {
-        InitiliazeStates();
 
-        SetState(0);
     }
     public void ManagerUpdate()
     {
         if (_managed)
         {
-            if (CurrentImplimentation != null)
-                CurrentImplimentation.Update();
+
         }
 
     }
@@ -52,55 +49,8 @@ public class SimpleMonster : BaseStateMachine
     {
         if (!_managed)
         {
-            if (CurrentImplimentation != null)
-                CurrentImplimentation.Update();
+
         }
     }
-    private void InitiliazeStates()
-    {
-        //States.Add(HeroState.Explore, new Hero_Explore_State(this));
-    }
-    public override void SetState(int newState)
-    {
-        CurrentState = (MobState)newState;
 
-        if (States.ContainsKey(CurrentState))
-        {
-            // if another state is running, exit before switching to new state
-            if (CurrentImplimentation != null)
-                CurrentImplimentation.Exit();
-
-            CurrentImplimentation = States[CurrentState];
-            CurrentImplimentation.Enter();
-        }
-
-        base.SetState(newState);
-    }
-}
-
-public class SimpleAttackMob_Attack_State : BaseState
-{
-    HeroController controller;
-    Health enemy;
-    public SimpleAttackMob_Attack_State(HeroController controller) : base(controller)
-    {
-        this.controller = controller;
-    }
-    public override void Enter()
-    {
-        Debug.Log("Entered attack state");
-        enemy = controller.Target.GetComponent<Health>();
-        enemy.EntityDied.AddListener(StopAttacking);
-        controller.StartAttacking();
-    }
-    private void StopAttacking()
-    {
-        controller.StopAttacking();
-        controller.SetState((int)HeroState.Explore);
-    }
-    public override void Exit()
-    {
-        enemy.EntityDied.RemoveListener(StopAttacking);
-        base.Exit();
-    }
 }

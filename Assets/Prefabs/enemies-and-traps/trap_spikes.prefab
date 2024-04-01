@@ -176,6 +176,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3991636932391457697}
   - component: {fileID: 7116157980363257749}
+  - component: {fileID: 6544156839544630273}
   m_Layer: 0
   m_Name: trap_spikes
   m_TagString: Untagged
@@ -197,7 +198,7 @@ Transform:
   m_Children:
   - {fileID: 1107131842431639194}
   m_Father: {fileID: 0}
-  m_RootOrder: 13
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &7116157980363257749
 BoxCollider:
@@ -220,6 +221,21 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 2.5, y: 1.5, z: 2.5}
   m_Center: {x: 0, y: 0.5, z: 0}
+--- !u!114 &6544156839544630273
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2850732358049896865}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8bb530b2d789c9c49b9835017b6f7395, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 10
+  uses: 1
+  disarmDifficulty: 1
 --- !u!1 &3737269683410707755
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,4 +1,3 @@
-using Codice.Client.Commands.WkTree;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -19,14 +18,11 @@ public class GameplayController : MonoBehaviour
 
 	// Components to enable/disable based on game state
 	private DungeonSetupPhase setupPhase;
-	private DungeonPlayPhase playPhase;
+	public DungeonPlayPhase playPhase;
 	private DungeonWinPhase winPhase;
 	private DungeonLosePhase losePhase;
-
-	//TODO move to its own class used to purchase monsters/traps
-	// players energy, used to purchase things
-	public int startingEnergy;
-	public int currentEnergy;
+	public DungeonPrefabSelect prefabSelect;
+	private GameObject goal;
 
 	private void Awake()
 	{
@@ -35,6 +31,9 @@ public class GameplayController : MonoBehaviour
 		playPhase = GameObject.Find("DungeonPlayPhase").GetComponent<DungeonPlayPhase>();
 		winPhase = GameObject.Find("DungeonWinPhase").GetComponent<DungeonWinPhase>();
 		losePhase = GameObject.Find("DungeonLosePhase").GetComponent<DungeonLosePhase>();
+		prefabSelect = GameObject.Find("PrefabSelectController").GetComponent<DungeonPrefabSelect>();
+		goal = GameObject.Find("Goal");
+
 		// pass a reference of the GameplayController to each
 		setupPhase.gameplayController = this;
 		playPhase.gameplayController = this;
@@ -43,6 +42,10 @@ public class GameplayController : MonoBehaviour
 	void Start()
 	{
 		InitialState();
+		// check win and lose conditions here, to be cleaner
+		// DungeonHeroSpawner has the info we need to check for win con
+		playPhase.OnWinConditionMet.AddListener(WinGame);
+		goal.GetComponent<Health>().EntityDied.AddListener(LoseGame);
 	}
 	// Called by the play/try again buttons in win and lose phase
 	public void PlayAgain()
@@ -86,6 +89,7 @@ public class GameplayController : MonoBehaviour
 		// Start the game in the setup phase
 		SetGameState(GameState.Setup);
 	}
+
 	void SetGameState(GameState newState)
 	{
 		// Deactivate components from the previous state
@@ -111,10 +115,12 @@ public class GameplayController : MonoBehaviour
 				playPhase.Begin();
 				break;
 			case GameState.Win:
+				Helper.DisableGameObject(prefabSelect.gameObject);
 				winPhase.gameObject.SetActive(true);
 				winPhase.Begin();
 				break;
 			case GameState.Lose:
+				Helper.DisableGameObject(prefabSelect.gameObject);
 				losePhase.gameObject.SetActive(true);
 				losePhase.Begin();
 				break;
@@ -126,18 +132,16 @@ public class GameplayController : MonoBehaviour
 		switch (state)
 		{
 			case GameState.Setup:
-				setupPhase.CancelInvoke();
-				setupPhase.StopAllCoroutines();
-				setupPhase.gameObject.SetActive(false);
+				Helper.DisableGameObject(setupPhase.gameObject);
 				break;
 			case GameState.Play:
-				playPhase.gameObject.SetActive(false);
+				Helper.DisableGameObject(playPhase.gameObject);
 				break;
 			case GameState.Win:
-				winPhase.gameObject.SetActive(false);
+				Helper.DisableGameObject(winPhase.gameObject);
 				break;
 			case GameState.Lose:
-				losePhase.gameObject.SetActive(false);
+				Helper.DisableGameObject(losePhase.gameObject);
 				break;
 		}
 	}

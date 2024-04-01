@@ -18,6 +18,7 @@ public class Action_Celebrate : Action_Base
 		base.OnActivated(_linkedGoal);
 		// Additional activation code here
 		goap_debug.ChangeActionImage(6);
+		//TODO make em dance
 	}
 
 	public override void OnDeactived()

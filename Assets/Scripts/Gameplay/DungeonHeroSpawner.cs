@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class DungeonPlayPhase : MonoBehaviour
+public class DungeonHeroSpawner : MonoBehaviour
 {
 	[SerializeField] private GameObject entrance;
 	[SerializeField] private GameObject heroPrefab;
@@ -18,11 +18,8 @@ public class DungeonPlayPhase : MonoBehaviour
 	public float spawnInterval = 1f; // Base spawn interval
 	public float spawnIntervalVariation = 1f; // Variation in spawn interval
 
-	[HideInInspector] public GameplayController gameplayController;
-
 	public void Begin()
 	{
-		Helper.SetChildrenActive(this.gameObject, true);
 		StartCoroutine(SpawnHeroes());
 	}
 
@@ -46,14 +43,10 @@ public class DungeonPlayPhase : MonoBehaviour
 		SpawnedHeroes.Add(hero);
 		Health heroHealth = hero.GetComponent<Health>();
 		heroHealth.EntityDied.AddListener(() => RemoveDeadHero(hero));
-		// player should gain some energy since the hero died
-		// call DungeonPrefabSelect.GainEnergy through the gameplay controller
-		heroHealth.EntityDied.AddListener(() => gameplayController.prefabSelect.GainEnergy());
 	}
 
 	private void RemoveDeadHero(GameObject hero)
 	{
-		// remove the dead hero from the list of heroes left to die
 		SpawnedHeroes.Remove(hero);
 		Health heroHealth = hero.GetComponent<Health>();
 		//TODO check if RemoveAllListeners removes all listeners everywhere or just for this component

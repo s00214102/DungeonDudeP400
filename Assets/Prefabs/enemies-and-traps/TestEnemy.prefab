@@ -39,7 +39,7 @@ Transform:
   m_Children:
   - {fileID: 1609651571369550199}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &8956479463597396822
 MeshFilter:
@@ -191,7 +191,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a256de144020ef4fa6dfa8833de8d3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackRange: 2
+  attackRange: 4
   attackDamage: 1
   attackRate: 1
 --- !u!114 &8711429294866979538

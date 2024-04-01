@@ -213,6 +213,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c050162eab4c6c547babbd2283d8e9c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Loot: []
+  randomlyGenerateLoot: 1
 --- !u!65 &6870458376405451561
 BoxCollider:
   m_ObjectHideFlags: 0

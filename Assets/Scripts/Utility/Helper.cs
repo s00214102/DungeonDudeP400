@@ -22,4 +22,27 @@ static public class Helper
 			SetChildrenActive(child.gameObject, isActive); // Recursively call for all children
 		}
 	}
+	public static void DisableGameObject(GameObject gameObject)
+	{
+		CancelInvokesAndCoroutinesRecursively(gameObject);
+		gameObject.SetActive(false);
+	}
+	// Function to cancel invokes and stop coroutines on all components of a GameObject and its children
+	public static void CancelInvokesAndCoroutinesRecursively(GameObject gameObject)
+	{
+		// Cancel invokes on all components of the GameObject
+		foreach (var component in gameObject.GetComponents<Component>())
+		{
+			if (component is MonoBehaviour monoBehaviour)
+			{
+				monoBehaviour.CancelInvoke();
+				monoBehaviour.StopAllCoroutines();
+			}
+		}
+		// Recursively cancel invokes and stop coroutines on children
+		foreach (Transform child in gameObject.transform)
+		{
+			CancelInvokesAndCoroutinesRecursively(child.gameObject);
+		}
+	}
 }

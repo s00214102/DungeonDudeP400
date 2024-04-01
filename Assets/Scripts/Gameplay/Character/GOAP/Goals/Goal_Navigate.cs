@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Goal_GoToGoal : Goal_Base
+public class Goal_Navigate : Goal_Base
 {
 	private int GotoGoalPriority = 40;
 	private int currentPriority = 0;

@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using GluonGui.Dialog;
 using UnityEngine;
 
 public class Goal_Heal : Goal_Base

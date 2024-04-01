@@ -1,9 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using PlasticGui.WorkspaceWindow;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -17,7 +14,7 @@ public class EntityProximityDetection : MonoBehaviour
     [SerializeField] float closestTargetStartDelay = 0; // how long to wait before starting the search
     [SerializeField] float closestTargetFrequency = 1; // wait between closest target calculation
     [SerializeField] private List<Entity> entities = new List<Entity>();
-    public List<Entity> Entities {get=>entities;}
+    public List<Entity> Entities { get => entities; }
     public Entity closestTarget; // closest 
 
     public void Start()

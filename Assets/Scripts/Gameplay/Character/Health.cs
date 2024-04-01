@@ -44,6 +44,7 @@ public class Health : MonoBehaviour
             healthBar.SetHealth(0);
             EntityDied.Invoke();
             isDead = true;
+
             gameObject.SetActive(false);
             //Destroy(this.gameObject);
         }

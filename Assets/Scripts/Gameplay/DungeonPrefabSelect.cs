@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.EventSystems;
@@ -5,6 +6,12 @@ using UnityEngine.InputSystem;
 
 public class DungeonPrefabSelect : MonoBehaviour
 {
+	// players energy, used to purchase things
+	[SerializeField] private int startingEnergy;
+	[SerializeField] private int currentEnergy;
+	private int costToDeduce;
+	[SerializeField] private TMP_Text txtEnergy;
+
 	[SerializeField] private GameObject zombie_Prefab;
 	[SerializeField] private GameObject hellhound_Prefab;
 	[SerializeField] private GameObject ogre_Prefab;
@@ -19,14 +26,26 @@ public class DungeonPrefabSelect : MonoBehaviour
 	private Camera cam;
 	public RectTransform selectionMenuTransform;
 	private Vector3 originalSelectionMenuPosition;
+	private Vector3 hideSelectionMenuPosition;
+	public GameObject btnHide;
+	public GameObject btnShow;
 	private void Start()
 	{
 		cam = Camera.main;
 
 		if (selectionMenuTransform != null)
-			originalSelectionMenuPosition = selectionMenuTransform.localPosition;
+		{
+			originalSelectionMenuPosition = selectionMenuTransform.anchoredPosition;
+			hideSelectionMenuPosition = originalSelectionMenuPosition;
+			hideSelectionMenuPosition.x -= 3000;
+		}
 
+		//LeanTween.move(selectionMenuTransform, new Vector3(0, 0, 0), 1);
 		Helper.SetChildrenActive(this.gameObject, true);
+		btnShow.SetActive(false);
+		// set starting text for energy
+		currentEnergy = startingEnergy;
+		txtEnergy.text = currentEnergy.ToString();
 	}
 	private void Update()
 	{
@@ -35,7 +54,9 @@ public class DungeonPrefabSelect : MonoBehaviour
 	private void SpawnPrefabOnClick()
 	{
 		// Check if the left mouse button is clicked, and is not over a UI element
-		if (Mouse.current.leftButton.wasPressedThisFrame && !EventSystem.current.IsPointerOverGameObject())
+		if (Mouse.current.leftButton.wasPressedThisFrame
+		&& !EventSystem.current.IsPointerOverGameObject()
+		&& CanAfford())
 		{
 			if (selectedPrefab != null)
 			{
@@ -50,7 +71,10 @@ public class DungeonPrefabSelect : MonoBehaviour
 					//Instantiate(selectedPrefab, rayhit.point, Quaternion.identity);
 					NavMeshHit navhit;
 					if (NavMesh.SamplePosition(rayhit.point, out navhit, Mathf.Infinity, NavMesh.AllAreas))
+					{
 						Instantiate(selectedPrefab, navhit.position, Quaternion.identity);
+						SpendEnergy();
+					}
 				}
 
 				//mousePosition = cam.ScreenToWorldPoint(mousePosition);
@@ -60,18 +84,37 @@ public class DungeonPrefabSelect : MonoBehaviour
 			}
 		}
 	}
-
+	private void SpendEnergy()
+	{
+		currentEnergy -= costToDeduce;
+		//update text field
+		txtEnergy.text = currentEnergy.ToString();
+	}
+	public void GainEnergy()
+	{
+		currentEnergy += 20;
+		txtEnergy.text = currentEnergy.ToString();
+	}
+	private bool CanAfford()
+	{
+		if (currentEnergy >= costToDeduce)
+			return true;
+		else
+			return false;
+	}
 	public void HideSelectionMenu(bool value)
 	{
 		if (value)
 		{
 			//TODO use lean tween to move the selection menu down out of sight
-
+			btnHide.SetActive(false);
+			LeanTween.move(selectionMenuTransform, hideSelectionMenuPosition, 0.3f).setOnComplete(() => btnShow.SetActive(true));
 		}
 		else
 		{
 			//TODO use lean tween to move the selection menu back into sight
-			// move back to originalSelectionMenuPosition
+			btnShow.SetActive(false);
+			LeanTween.move(selectionMenuTransform, originalSelectionMenuPosition, 0.3f).setOnComplete(() => btnHide.SetActive(true));
 		}
 	}
 
@@ -86,33 +129,42 @@ public class DungeonPrefabSelect : MonoBehaviour
 		{
 			case 0:
 				selectedPrefab = zombie_Prefab;
+				costToDeduce = 20;
 				break;
 			case 1:
 				selectedPrefab = hellhound_Prefab;
+				costToDeduce = 40;
 				break;
 			case 2:
 				selectedPrefab = ogre_Prefab;
+				costToDeduce = 80;
 				break;
 			case 3:
 				selectedPrefab = cannon_Prefab;
+				costToDeduce = 60;
 				break;
 			case 4:
 				selectedPrefab = barrier_Prefab;
+				costToDeduce = 40;
 				break;
 			case 5:
-				selectedPrefab = spikes_Prefab;
+				selectedPrefab = spikes_Prefab; costToDeduce = 30;
 				break;
 			case 6:
 				selectedPrefab = tar_Prefab;
+				costToDeduce = 60;
 				break;
 			case 7:
 				selectedPrefab = snare_Prefab;
+				costToDeduce = 80;
 				break;
 			case 8:
 				selectedPrefab = fear_totem_Prefab;
+				costToDeduce = 100;
 				break;
 			case 9:
 				selectedPrefab = mimic_Prefab;
+				costToDeduce = 200;
 				break;
 		}
 	}

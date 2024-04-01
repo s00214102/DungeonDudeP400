@@ -9,6 +9,10 @@ public class GOAP_Hero_Data : MonoBehaviour
 	{
 		GetComponent<Health>().SetMaxHealth(HeroData.HitPoints);
 	}
+	public void AssignClass(HeroData data)
+	{
+		HeroData = data;
+	}
 	public void AssignTrait(HeroTraits newTraits)
 	{
 		HeroTraits = newTraits;

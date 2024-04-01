@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Action_GoToGoal : Action_Base
+public class Action_Navigate : Action_Base
 {
-	List<System.Type> SupportedGoals = new List<System.Type> { typeof(Goal_GoToGoal) };
+	List<System.Type> SupportedGoals = new List<System.Type> { typeof(Goal_Navigate) };
 	public override List<System.Type> GetSupportedGoals()
 	{
 		return SupportedGoals;

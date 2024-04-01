@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using PlasticGui.WorkspaceWindow;
 using UnityEngine;
 
 // Inventory for a character to hold items
