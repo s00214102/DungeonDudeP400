@@ -176,7 +176,8 @@ GameObject:
   m_Component:
   - component: {fileID: 3991636932391457697}
   - component: {fileID: 7116157980363257749}
-  - component: {fileID: 6544156839544630273}
+  - component: {fileID: 4692740590847896533}
+  - component: {fileID: 3833471354821671372}
   m_Layer: 0
   m_Name: trap_spikes
   m_TagString: Untagged
@@ -198,7 +199,7 @@ Transform:
   m_Children:
   - {fileID: 1107131842431639194}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &7116157980363257749
 BoxCollider:
@@ -219,9 +220,9 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 2.5, y: 1.5, z: 2.5}
-  m_Center: {x: 0, y: 0.5, z: 0}
---- !u!114 &6544156839544630273
+  m_Size: {x: 2.5, y: 3.0587363, z: 2.5}
+  m_Center: {x: 0, y: 0.8350177, z: 0}
+--- !u!114 &4692740590847896533
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -233,9 +234,43 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8bb530b2d789c9c49b9835017b6f7395, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 10
-  uses: 1
-  disarmDifficulty: 1
+  damage: 25
+  uses: 10
+  disarmDifficulty: 2
+  targets: []
+  OnTargetAdded:
+    m_PersistentCalls:
+      m_Calls: []
+  OnTargetRemoved:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!54 &3833471354821671372
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2850732358049896865}
+  serializedVersion: 4
+  m_Mass: 0.0000001
+  m_Drag: 0
+  m_AngularDrag: 0
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 0
 --- !u!1 &3737269683410707755
 GameObject:
   m_ObjectHideFlags: 0

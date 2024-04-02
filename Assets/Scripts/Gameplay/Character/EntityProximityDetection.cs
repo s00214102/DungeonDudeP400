@@ -8,7 +8,7 @@ using UnityEngine.Events;
 public class EntityProximityDetection : MonoBehaviour
 {
     [SerializeField] string target = "name of target"; // name of the tag on the entity you want to search for
-    [SerializeField] float range = 1; // the range of detection
+    public float range = 1; // the range of detection
     [SerializeField] float frequency = 1; // how long to wait between searches
     [SerializeField] float startDelay = 0; // how long to wait before starting the search
     [SerializeField] float closestTargetStartDelay = 0; // how long to wait before starting the search
@@ -78,8 +78,6 @@ public class EntityProximityDetection : MonoBehaviour
             }
         }
     }
-
-
 
     private void OnDrawGizmos()
     {

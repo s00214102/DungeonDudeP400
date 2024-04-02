@@ -1,19 +1,20 @@
 using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine.Events;
 
 [RequireComponent(typeof(BoxCollider))]
+[RequireComponent(typeof(Rigidbody))]
 public class Trap : MonoBehaviour
 {
 	public int damage = 10;
 	public int uses = 1; // Number of uses before trap is destroyed
-	[Range(0f, 3f)] // Define the range for the slider
-	public int disarmDifficulty = 1; // Difficulty level to disarm the trap
+	[Range(0f, 3f)] public int disarmDifficulty = 1; // Difficulty level to disarm the trap
 
-	protected List<GameObject> targets = new List<GameObject>(); // List of targets in collision
+	[SerializeField] protected List<GameObject> targets = new List<GameObject>(); // List of targets in collision
 
-	// Event to signal when a new target is detected
-	public delegate void TargetDetectedHandler(GameObject target);
-	public event TargetDetectedHandler OnTargetDetected;
+	// Event signals when a target is added or removed
+	public UnityEvent<GameObject> OnTargetAdded;
+	public UnityEvent<GameObject> OnTargetRemoved;
 
 	protected virtual void OnTriggerEnter(Collider other)
 	{
@@ -22,7 +23,7 @@ public class Trap : MonoBehaviour
 			if (!targets.Contains(other.gameObject))
 			{
 				targets.Add(other.gameObject);
-				OnTargetDetected?.Invoke(other.gameObject);
+				OnTargetAdded?.Invoke(other.gameObject);
 			}
 		}
 	}
@@ -32,8 +33,10 @@ public class Trap : MonoBehaviour
 		if (other.CompareTag("Hero"))
 		{
 			targets.Remove(other.gameObject);
+			OnTargetRemoved?.Invoke(other.gameObject);
 		}
 	}
+
 	//TODO a hero can disarm a trap
 	// most heroes will just walk over the trap and take damage
 	// a hero with the ??? trait will prioritise the Disarm goal/action

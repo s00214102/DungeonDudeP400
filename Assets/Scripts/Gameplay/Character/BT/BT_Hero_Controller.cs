@@ -94,12 +94,12 @@ public class BT_Hero_Controller : MonoBehaviour
     private bool IsGoalReached()
     {
         float dist = Vector3.Distance(transform.position, goal);
-        return dist <= _movement.StoppingRange;
+        return dist <= _agent.stoppingDistance;
     }
     private bool IsGoalNotReached()
     {
         float dist = Vector3.Distance(transform.position, goal);
-        return dist > _movement.StoppingRange;
+        return dist > _agent.stoppingDistance;
     }
     private bool IsEnemyDetected()
     {

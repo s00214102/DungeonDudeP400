@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 6463244664243754102}
   - component: {fileID: 6590074709961780621}
   - component: {fileID: 224481243640261318}
+  - component: {fileID: 3590346485051564201}
   m_Layer: 0
   m_Name: trap_snare
   m_TagString: Untagged
@@ -32,7 +33,7 @@ Transform:
   m_Children:
   - {fileID: 1834335037948506745}
   m_Father: {fileID: 0}
-  m_RootOrder: 16
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &6590074709961780621
 BoxCollider:
@@ -53,8 +54,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 2, y: 2, z: 2}
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!114 &224481243640261318
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -70,6 +71,41 @@ MonoBehaviour:
   damage: 10
   uses: 3
   disarmDifficulty: 2
+  targets: []
+  OnTargetAdded:
+    m_PersistentCalls:
+      m_Calls: []
+  OnTargetRemoved:
+    m_PersistentCalls:
+      m_Calls: []
+  snareTime: 3
+--- !u!54 &3590346485051564201
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4919574519576910484}
+  serializedVersion: 4
+  m_Mass: 0.0000001
+  m_Drag: 0
+  m_AngularDrag: 0
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 0
 --- !u!1001 &2233332978778658194
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -82,6 +118,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_RootOrder
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 709bbb855dfbea44ca063cbe2bc1a69a,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 709bbb855dfbea44ca063cbe2bc1a69a,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 709bbb855dfbea44ca063cbe2bc1a69a,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.7
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 709bbb855dfbea44ca063cbe2bc1a69a,
         type: 3}

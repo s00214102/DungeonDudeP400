@@ -1,10 +1,12 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Treasure : MonoBehaviour
 {
     [SerializeField] private List<Item> Loot = new List<Item>();
     public bool randomlyGenerateLoot = false;
+    public UnityEvent OnLooted;
 
     private void Start()
     {
@@ -29,6 +31,7 @@ public class Treasure : MonoBehaviour
     }
     public Item LootItem()
     {
+        OnLooted?.Invoke();
         Item loot = Loot[0];
         Loot.RemoveAt(0);
         return loot;

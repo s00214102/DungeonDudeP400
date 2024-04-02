@@ -16,6 +16,7 @@ public class HeroData : ScriptableObject
 {
     public int HitPoints;
     public int Damage;
+    public float Speed;
     public float AttackRange;
     public float AttackRate;
     public float InteractRange; // how close to get to something when interacting with it

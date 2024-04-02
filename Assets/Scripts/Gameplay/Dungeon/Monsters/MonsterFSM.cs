@@ -3,6 +3,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(Health))]
 [RequireComponent(typeof(EntityProximityDetection))]
+[RequireComponent(typeof(Attack))]
 // simple script for stationary monsters which attack a hero when theyre in range
 public class MonsterFSM : BaseStateMachine
 {
@@ -14,8 +15,9 @@ public class MonsterFSM : BaseStateMachine
     }
     private MobState CurrentState;
     private Health health;
+    internal Attack attack;
     private EntityProximityDetection detection;
-    private Transform Target;
+    internal Transform Target;
     private Dictionary<MobState, BaseState> States = new Dictionary<MobState, BaseState>();
     private FSM_Manager _manager;
     private bool _managed = false;
@@ -24,6 +26,7 @@ public class MonsterFSM : BaseStateMachine
     {
         health = GetComponent<Health>();
         detection = GetComponent<EntityProximityDetection>();
+        attack = GetComponent<Attack>();
 
         _manager = GetComponentInParent<FSM_Manager>();
         if (_manager != null)
@@ -37,7 +40,6 @@ public class MonsterFSM : BaseStateMachine
     void Start()
     {
         InitiliazeStates();
-
         SetState(0);
     }
     public void ManagerUpdate()
@@ -77,30 +79,27 @@ public class MonsterFSM : BaseStateMachine
 
         base.SetState(newState);
     }
+    public void StartInvoke(string methodName, float repeatRate)
+    {
+        InvokeRepeating(methodName, 0, repeatRate);
+    }
 }
 
 public class SimpleAttackMob_Attack_State : BaseState
 {
     Health targetHealth;
+    MonsterFSM controller;
     public SimpleAttackMob_Attack_State(MonsterFSM controller) : base(controller)
     {
         this.controller = controller;
     }
     public override void Enter()
     {
-        Debug.Log("Entered attack state");
-        targetHealth = controller.Target.GetComponent<Health>();
-        targetHealth.EntityDied.AddListener(StopAttacking);
-        controller.StartAttacking();
-    }
-    private void StopAttacking()
-    {
-        controller.StopAttacking();
-        controller.SetState((int)HeroState.Explore);
+        controller.attack.StartAttacking();
     }
     public override void Exit()
     {
-        targetHealth.EntityDied.RemoveListener(StopAttacking);
+        controller.attack.StopAttacking();
         base.Exit();
     }
 }

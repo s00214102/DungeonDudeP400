@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   HitPoints: 20
   Damage: 2
+  Speed: 2
   AttackRange: 2.5
   AttackRate: 0.8
   InteractRange: 1
