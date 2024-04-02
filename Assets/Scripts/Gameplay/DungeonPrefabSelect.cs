@@ -31,6 +31,9 @@ public class DungeonPrefabSelect : MonoBehaviour
 	private Vector3 hideSelectionMenuPosition;
 	public GameObject btnHide;
 	public GameObject btnShow;
+
+	[SerializeField] private BoxCollider spawnArea;
+
 	private void Start()
 	{
 		cam = Camera.main;
@@ -73,13 +76,19 @@ public class DungeonPrefabSelect : MonoBehaviour
 
 				if (Physics.Raycast(ray, out rayhit))
 				{
-					//Instantiate(selectedPrefab, rayhit.point, Quaternion.identity);
-					NavMeshHit navhit;
-					if (NavMesh.SamplePosition(rayhit.point, out navhit, Mathf.Infinity, NavMesh.AllAreas))
+					// is the rayhit point within the bounds of the box collider?
+					if (spawnArea.bounds.Contains(rayhit.point))
 					{
-						Instantiate(selectedPrefab, navhit.position, Quaternion.identity);
-						SpendEnergy();
+						//Instantiate(selectedPrefab, rayhit.point, Quaternion.identity);
+						NavMeshHit navhit;
+						if (NavMesh.SamplePosition(rayhit.point, out navhit, Mathf.Infinity, NavMesh.AllAreas))
+						{
+							Instantiate(selectedPrefab, navhit.position, Quaternion.identity);
+							SpendEnergy();
+						}
 					}
+					else
+						ParticleManager.SpawnParticle(rayhit.point, ParticleManager.Particle.BloodSplatter);
 				}
 
 				//mousePosition = cam.ScreenToWorldPoint(mousePosition);

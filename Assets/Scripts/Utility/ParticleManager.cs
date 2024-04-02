@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public static class ParticleManager
@@ -8,6 +9,12 @@ public static class ParticleManager
     {
         BloodSplatter,
         Sweat
+    }
+    public static void SpawnParticle(Vector3 position, Particle particle)
+    {
+        GameObject tempObj = new GameObject();
+        tempObj.transform.position = position;
+        SpawnParticle(tempObj.transform, particle);
     }
     public static void SpawnParticle(Transform t, Particle particle)
     {
