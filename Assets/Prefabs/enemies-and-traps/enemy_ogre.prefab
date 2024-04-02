@@ -26,7 +26,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 530914961672932117}
   m_LocalRotation: {x: -0.18919055, y: -0, z: -0, w: 0.9819404}
-  m_LocalPosition: {x: -0.97, y: 2.06, z: 0.37}
+  m_LocalPosition: {x: -0.97, y: 1.04, z: 0.37}
   m_LocalScale: {x: 0.7, y: 1, z: 0.7}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -109,7 +109,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 711011735471099495}
   m_LocalRotation: {x: -0.18919055, y: -0, z: -0, w: 0.9819404}
-  m_LocalPosition: {x: 0.99, y: 2.06, z: 0.36999893}
+  m_LocalPosition: {x: 0.99, y: 1.04, z: 0.36999893}
   m_LocalScale: {x: 0.7, y: 1, z: 0.7}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -192,7 +192,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 837354846858369434}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 3.23, z: 0.54}
+  m_LocalPosition: {x: 0, y: 2.21, z: 0.54}
   m_LocalScale: {x: 0.890115, y: 0.890115, z: 0.890115}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -379,7 +379,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3102839878413283813}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.5, z: 0}
+  m_LocalPosition: {x: 0, y: 0.48, z: 0}
   m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -469,7 +469,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4801397850918365836}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 28.51, y: 0.00000047683716, z: 39}
+  m_LocalPosition: {x: 28.51, y: 0, z: 39}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -479,7 +479,7 @@ Transform:
   - {fileID: 6167929644835427114}
   - {fileID: 5342776213159538228}
   m_Father: {fileID: 0}
-  m_RootOrder: 17
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &1420575793463930731
 BoxCollider:
@@ -501,7 +501,7 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 1.6, y: 3, z: 1.6}
-  m_Center: {x: 0, y: 1.5, z: 0}
+  m_Center: {x: 0, y: 0.5, z: 0}
 --- !u!114 &7387742478156748698
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -619,6 +619,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   agent: {fileID: 0}
   isMoving: 0
+  isSlowed: 0
+  baseSpeed: 1
   DestinationReached:
     m_PersistentCalls:
       m_Calls: []

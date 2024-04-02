@@ -9,10 +9,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6649088369752721891}
-  - component: {fileID: 7316545415996529683}
+  - component: {fileID: -71103169886294100}
+  - component: {fileID: 4152212657024054414}
   - component: {fileID: 8049268809395788172}
   - component: {fileID: 6536057606768353052}
-  - component: {fileID: -71103169886294100}
   - component: {fileID: 8711429294866979538}
   - component: {fileID: 2417010429557940046}
   - component: {fileID: 1235786336464189797}
@@ -38,9 +38,9 @@ Transform:
   - {fileID: 1609651571369550199}
   - {fileID: 7647996925841907288}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 20
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7316545415996529683
+--- !u!114 &-71103169886294100
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -49,9 +49,38 @@ MonoBehaviour:
   m_GameObject: {fileID: 4038278560688981384}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5bbd651cab84f344494ca0c68409a3a6, type: 3}
+  m_Script: {fileID: 11500000, guid: 9a256de144020ef4fa6dfa8833de8d3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  OnAttack:
+    m_PersistentCalls:
+      m_Calls: []
+  OnFinishedAttacking:
+    m_PersistentCalls:
+      m_Calls: []
+  projectilePrefab: {fileID: 2979269501823911284, guid: 16422779c7666744b8ca66058f537b19,
+    type: 3}
+  projectileMoveSpeed: 5
+  projectileOrigin: {fileID: 4120998520979166000}
+--- !u!114 &4152212657024054414
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4038278560688981384}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 20608d71e6f462642911bcded4d48166, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Health: 10
+  Damage: 1
+  Speed: 0
+  AttackRate: 1
+  AttackRange: 5
+  SearchRange: 5
+  StopDistance: 0
 --- !u!114 &8049268809395788172
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -85,21 +114,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Health: {fileID: 0}
   isDestroyed: 0
---- !u!114 &-71103169886294100
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4038278560688981384}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9a256de144020ef4fa6dfa8833de8d3c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  attackRange: 6
-  attackDamage: 1
-  attackRate: 1
 --- !u!114 &8711429294866979538
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -139,7 +153,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 2, z: 1}
+  m_Size: {x: 0.8, y: 2, z: 0.8}
   m_Center: {x: 0, y: 0.5, z: 0}
 --- !u!195 &1235786336464189797
 NavMeshAgent:

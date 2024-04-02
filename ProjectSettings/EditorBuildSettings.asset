@@ -53,4 +53,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Tests/enemy and trap tests/TestBarrier.unity
     guid: 979a71df31a20014792bf7595a3bf2c6
+  - enabled: 1
+    path: Assets/Scenes/Tests/enemy and trap tests/TestEnemies.unity
+    guid: d61ee693315f8234eb8b278979329c7c
+  - enabled: 1
+    path: Assets/Scenes/Tests/TestEmpty.unity
+    guid: 45a016511ba77fa4fb7c40697973fecf
   m_configObjects: {}

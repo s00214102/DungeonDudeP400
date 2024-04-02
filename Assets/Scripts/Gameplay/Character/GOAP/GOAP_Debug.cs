@@ -1,3 +1,4 @@
+#if UNITY_EDITOR
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
@@ -31,20 +32,21 @@ public class GOAP_Debug : MonoBehaviour
 	{
 		ActionImage.sprite = ActionImages[action];
 	}
-	// private void OnGUI()
-	// {
-	// 	if (Selection.activeGameObject == gameObject)
-	// 	{
-	// 		// Start Y position for drawing text
-	// 		float currentY = displayRect.y;
+	private void OnGUI()
+	{
+		if (Selection.activeGameObject == gameObject)
+		{
+			// Start Y position for drawing text
+			float currentY = displayRect.y;
 
-	// 		foreach (Component goal in Goals)
-	// 		{
-	// 			// For each component, draw its ToString() return value on the screen
-	// 			GUI.Label(new Rect(displayRect.x, currentY, displayRect.width, displayRect.height), goal.ToString());
-	// 			// Increment the Y position for the next component
-	// 			currentY += displayRect.height;
-	// 		}
-	// 	}
-	// }
+			foreach (Component goal in Goals)
+			{
+				// For each component, draw its ToString() return value on the screen
+				GUI.Label(new Rect(displayRect.x, currentY, displayRect.width, displayRect.height), goal.ToString());
+				// Increment the Y position for the next component
+				currentY += displayRect.height;
+			}
+		}
+	}
 }
+#endif

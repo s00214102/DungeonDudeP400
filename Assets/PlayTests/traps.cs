@@ -8,40 +8,30 @@ using UnityEngine.TestTools;
 
 public class traps
 {
-	private GameObject hero;
-	private GameObject barrier;
 
-	[SetUp]
-	public void SetUp()
-	{
-		SceneManager.sceneLoaded += MySetup;
-	}
-	[TearDown]
-	public void TearDown()
-	{
-		SceneManager.sceneLoaded -= MySetup;
-	}
-	private void MySetup(Scene scene, LoadSceneMode mode)
-	{
-		hero = GameObject.Find("GOAP_Hero");
-		Assert.IsNotNull(hero, $"GameObject with name GOAP_Hero not found.");
-
-		barrier = GameObject.Find("Barrier");
-		Assert.IsNotNull(barrier, $"GameObject with name Barrier not found.");
-
-		// give the hero the aggressive trait so he attacks
-	}
 	[UnityTest]
 	public IEnumerator hero_attacks_barrier()
 	{
 		SceneManager.LoadScene("TestBarrier", LoadSceneMode.Single);
+		yield return new WaitForSeconds(0.1f);
+
+		GameObject hero = GameObject.Find("GOAP_Hero");
+		Assert.IsNotNull(hero, $"GameObject with name GOAP_Hero not found.");
+
+		GameObject barrier = GameObject.Find("Barrier");
+		Assert.IsNotNull(barrier, $"GameObject with name Barrier not found.");
 		// this scene doesnt contain a goal so that the hero wont prioritise the gotogoal action
 		// instead make him manually move to a predefined position
 		CharacterMovement movement = hero.GetComponent<CharacterMovement>();
+		Assert.IsNotNull(movement, $"CharacterMovement component not found.");
+
 		GameObject goal = GameObject.Find("FakeGoal");
-		movement.MoveTo(goal.transform.position);
+		Assert.IsNotNull(goal, $"GameObject with name FakeGoal not found.");
 
 		Health barrierHealth = barrier.GetComponent<Health>();
+		Assert.IsNotNull(barrierHealth, $"Health component not found.");
+
+		movement.MoveTo(goal.transform.position);
 
 		Time.timeScale = 10.0f;
 		float time = 0;

@@ -16,20 +16,25 @@ public class character_movement
     public IEnumerator can_reach_destination_via_navmesh()
     {
         // confirm its position is near enough to the finish object
-        GameObject character = GameObject.Find("character");
-        CharacterMovement movement = character.GetComponent<CharacterMovement>();
+        GameObject hero = GameObject.Find("GOAP_Hero");
+        Assert.IsNotNull(hero, $"GameObject with name GOAP_Hero not found.");
+
+        CharacterMovement movement = hero.GetComponent<CharacterMovement>();
+        Assert.IsNotNull(movement, $"CharacterMovement component not found.");
+
         GameObject finish = GameObject.Find("finish");
+        Assert.IsNotNull(finish, $"GameObject with name finish not found.");
+
         bool destinationReached = false;
         movement.DestinationReached.AddListener(() => { destinationReached = true; });
         movement.MoveTo(finish.transform.position);
-        Time.timeScale = 10.0f;
-        float timeoutDuration = 10f; // Timeout duration in seconds
-        float startTime = Time.time; // Record the start time
 
-        // Wait until the destination is reached or timeout occurs
-        while (!destinationReached && Time.time - startTime < timeoutDuration)
+        Time.timeScale = 10.0f;
+        float time = 0;
+        while (!destinationReached && time < 20)
         {
-            yield return null; // Wait for the next frame
+            time += Time.fixedDeltaTime;
+            yield return new WaitForFixedUpdate();
         }
         Time.timeScale = 1f;
         Assert.IsTrue(destinationReached, "Destination was not reached in time.");

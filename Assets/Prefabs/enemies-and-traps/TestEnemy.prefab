@@ -18,6 +18,7 @@ GameObject:
   - component: {fileID: 6536057606768353052}
   - component: {fileID: -71103169886294100}
   - component: {fileID: 8711429294866979538}
+  - component: {fileID: 6890975900023092260}
   m_Layer: 0
   m_Name: TestEnemy
   m_TagString: Enemy
@@ -191,9 +192,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a256de144020ef4fa6dfa8833de8d3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackRange: 4
-  attackDamage: 1
-  attackRate: 1
+  OnAttack:
+    m_PersistentCalls:
+      m_Calls: []
+  OnFinishedAttacking:
+    m_PersistentCalls:
+      m_Calls: []
+  projectilePrefab: {fileID: 2979269501823911284, guid: 16422779c7666744b8ca66058f537b19,
+    type: 3}
+  projectileMoveSpeed: 15
+  projectileOrigin: {fileID: 6649088369752721891}
 --- !u!114 &8711429294866979538
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -214,6 +222,25 @@ MonoBehaviour:
   closestTargetFrequency: 1
   entities: []
   closestTarget: {fileID: 0}
+--- !u!114 &6890975900023092260
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4038278560688981384}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 20608d71e6f462642911bcded4d48166, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Health: 10
+  Damage: 1
+  Speed: 4
+  AttackRate: 1
+  AttackRange: 5
+  SearchRange: 5
+  StopDistance: 3
 --- !u!1001 &1363404645717261110
 PrefabInstance:
   m_ObjectHideFlags: 0

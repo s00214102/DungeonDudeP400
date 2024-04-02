@@ -39,6 +39,7 @@ public class Health : MonoBehaviour
     {
         currentHealth -= damage;
         healthBar.SetHealth(currentHealth);
+        ParticleManager.SpawnParticle(transform, ParticleManager.Particle.BloodSplatter);
         if (currentHealth <= 0)
         {
             healthBar.SetHealth(0);

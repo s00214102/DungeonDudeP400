@@ -234,7 +234,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8bb530b2d789c9c49b9835017b6f7395, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 25
+  damage: 5
   uses: 10
   disarmDifficulty: 2
   targets: []

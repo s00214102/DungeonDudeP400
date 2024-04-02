@@ -27,6 +27,7 @@ public class MimicTrap : Trap
 				healthComponent.TakeDamage(damage);
 			}
 		}
-		Disarm();
+		if (!treasure.HasLoot())
+			DestroyTrap();
 	}
 }

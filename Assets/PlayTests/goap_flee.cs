@@ -144,7 +144,15 @@ public class goap_flee
 	[UnityTest]
 	public IEnumerator hero_fear_lowers_passively()
 	{
-		yield return Setup();
+		//load an empty scene with only a hero in it
+		SceneManager.LoadScene("TestEmpty", LoadSceneMode.Single);
+		yield return new WaitForSeconds(0.2f);
+
+		hero = GameObject.Find("GOAP_Hero");
+		Assert.IsNotNull(hero, $"GameObject with name GOAP_Hero not found.");
+
+		heroStatus = hero.GetComponent<HeroStatus>();
+		Assert.IsNotNull(heroStatus, $"heroStatus component not found.");
 
 		// manually add fear to the hero status
 		heroStatus.AddFear(10);

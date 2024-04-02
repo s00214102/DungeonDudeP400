@@ -142,6 +142,8 @@ public class SimpleMonster : MonoBehaviour
     }
     private bool InAttackRange()
     {
+        if (detection.closestTarget == null)
+            return false;
         float dist = Vector3.Distance(transform.position, detection.closestTarget.transform.position);
         return dist <= data.AttackRange;
     }

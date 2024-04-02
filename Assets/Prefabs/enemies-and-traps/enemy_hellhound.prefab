@@ -655,7 +655,7 @@ Transform:
   - {fileID: 2409388652211227384}
   - {fileID: 4872919581083475639}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 16
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &1790706630077883135
 BoxCollider:
@@ -709,7 +709,7 @@ MonoBehaviour:
   AttackRate: 0.5
   AttackRange: 3
   SearchRange: 12
-  StopDistance: 3
+  StopDistance: 4
 --- !u!114 &6313422100373317652
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -795,6 +795,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   agent: {fileID: 0}
   isMoving: 0
+  isSlowed: 0
+  baseSpeed: 1
   DestinationReached:
     m_PersistentCalls:
       m_Calls: []

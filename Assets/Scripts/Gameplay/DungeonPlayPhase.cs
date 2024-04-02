@@ -14,9 +14,9 @@ public class DungeonPlayPhase : MonoBehaviour
 
 	[SerializeField] private List<GameObject> SpawnedHeroes = new();
 
-	public int heroesToSpawn = 10; // Number of heroes to spawn
-	public float spawnInterval = 1f; // Base spawn interval
-	public float spawnIntervalVariation = 1f; // Variation in spawn interval
+	internal int heroesToSpawn = 10; // Number of heroes to spawn
+	internal float spawnInterval = 1f; // Base spawn interval
+	internal float spawnIntervalVariation = 1f; // Variation in spawn interval
 
 	[HideInInspector] public GameplayController gameplayController;
 
@@ -24,8 +24,12 @@ public class DungeonPlayPhase : MonoBehaviour
 	{
 		Helper.SetChildrenActive(this.gameObject, true);
 		StartCoroutine(SpawnHeroes());
+		InvokeRepeating("RegenEnergy", 0, 1);
 	}
-
+	private void RegenEnergy()
+	{
+		gameplayController.prefabSelect.RegenEnergy();
+	}
 	private IEnumerator SpawnHeroes()
 	{
 		while (heroesToSpawn > 0)
@@ -48,7 +52,7 @@ public class DungeonPlayPhase : MonoBehaviour
 		heroHealth.EntityDied.AddListener(() => RemoveDeadHero(hero));
 		// player should gain some energy since the hero died
 		// call DungeonPrefabSelect.GainEnergy through the gameplay controller
-		heroHealth.EntityDied.AddListener(() => gameplayController.prefabSelect.GainEnergy());
+		heroHealth.EntityDied.AddListener(() => gameplayController.prefabSelect.GainEnergy(20));
 	}
 
 	private void RemoveDeadHero(GameObject hero)

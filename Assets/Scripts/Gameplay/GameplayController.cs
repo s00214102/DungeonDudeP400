@@ -18,11 +18,19 @@ public class GameplayController : MonoBehaviour
 
 	// Components to enable/disable based on game state
 	private DungeonSetupPhase setupPhase;
-	public DungeonPlayPhase playPhase;
+	[HideInInspector] public DungeonPlayPhase playPhase;
 	private DungeonWinPhase winPhase;
 	private DungeonLosePhase losePhase;
-	public DungeonPrefabSelect prefabSelect;
+	[HideInInspector] public DungeonPrefabSelect prefabSelect;
 	private GameObject goal;
+
+	[SerializeField] private float timeToCount;
+	[SerializeField] private int heroesToSpawn = 10; // Number of heroes to spawn
+	[SerializeField] private float spawnInterval = 1f; // Base spawn interval
+	[SerializeField] private float spawnIntervalVariation = 1f; // Variation in spawn interval
+	[SerializeField] private int startingEnergy = 500;
+	[SerializeField] private int energyRegenPerSecond = 10;
+
 
 	private void Awake()
 	{
@@ -37,6 +45,14 @@ public class GameplayController : MonoBehaviour
 		// pass a reference of the GameplayController to each
 		setupPhase.gameplayController = this;
 		playPhase.gameplayController = this;
+
+		setupPhase.timeToCount = this.timeToCount;
+		playPhase.heroesToSpawn = this.heroesToSpawn;
+		playPhase.spawnInterval = this.spawnInterval;
+		playPhase.spawnIntervalVariation = this.spawnIntervalVariation;
+
+		prefabSelect.startingEnergy = this.startingEnergy;
+		prefabSelect.energyRegenPerSecond = this.energyRegenPerSecond;
 	}
 
 	void Start()

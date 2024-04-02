@@ -1,3 +1,4 @@
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.AI;
@@ -7,7 +8,8 @@ using UnityEngine.InputSystem;
 public class DungeonPrefabSelect : MonoBehaviour
 {
 	// players energy, used to purchase things
-	[SerializeField] private int startingEnergy;
+	internal int startingEnergy;
+	internal int energyRegenPerSecond;
 	[SerializeField] private int currentEnergy;
 	private int costToDeduce;
 	[SerializeField] private TMP_Text txtEnergy;
@@ -46,11 +48,14 @@ public class DungeonPrefabSelect : MonoBehaviour
 		// set starting text for energy
 		currentEnergy = startingEnergy;
 		txtEnergy.text = currentEnergy.ToString();
+
+
 	}
 	private void Update()
 	{
 		SpawnPrefabOnClick();
 	}
+
 	private void SpawnPrefabOnClick()
 	{
 		// Check if the left mouse button is clicked, and is not over a UI element
@@ -90,10 +95,14 @@ public class DungeonPrefabSelect : MonoBehaviour
 		//update text field
 		txtEnergy.text = currentEnergy.ToString();
 	}
-	public void GainEnergy()
+	public void GainEnergy(int amount)
 	{
-		currentEnergy += 20;
+		currentEnergy += amount;
 		txtEnergy.text = currentEnergy.ToString();
+	}
+	public void RegenEnergy()
+	{
+		GainEnergy(energyRegenPerSecond);
 	}
 	private bool CanAfford()
 	{

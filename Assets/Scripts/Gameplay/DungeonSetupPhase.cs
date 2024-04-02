@@ -10,7 +10,7 @@ using UnityEngine.InputSystem;
 public class DungeonSetupPhase : MonoBehaviour
 {
 	[SerializeField] private TMP_Text txtTime;
-	[SerializeField] private float timeToCount;
+	internal float timeToCount;
 
 	public UnityEvent TimerFinished;
 	private void OnTimerFinished() { TimerFinished?.Invoke(); }

@@ -24,6 +24,10 @@ public class Action_Loot : Action_Base
 	{
 		base.OnActivated(_linkedGoal);
 
+		MoveToLoot();
+	}
+	private void MoveToLoot()
+	{
 		goap_debug.ChangeActionImage(2);
 
 		var result = knowledge.RecallFirstUsableItem("Treasure");
@@ -36,8 +40,9 @@ public class Action_Loot : Action_Base
 	}
 	private void Loot()
 	{
+		movement.DestinationReached.RemoveListener(Loot);
 		// when the hero reaches the treasure they will try to find loot
-		goap_debug.ChangeActionImage(6);
+		goap_debug.ChangeActionImage(3);
 		movement.StopMoving();
 		isLooting = true;
 	}
@@ -51,7 +56,7 @@ public class Action_Loot : Action_Base
 		lootTimer = 0;
 	}
 
-	private bool isLooting = false;
+	public bool isLooting = false;
 	private float lootTimer = 0;
 	private float lootTimeToCount = 2;
 	public override void OnTick()
@@ -70,6 +75,8 @@ public class Action_Loot : Action_Base
 				{
 					//TODO image of the looted item floats above their head
 					inventory.AddItem(treasure.LootItem());
+					goap_debug.ChangeActionImage(6);
+
 					// after looting the last item, the hero will remember there are no more (item no longer useable)
 					if (!treasure.HasLoot())
 						knowledge.ForgetItem(treasure.gameObject);
@@ -79,8 +86,10 @@ public class Action_Loot : Action_Base
 					//TODO hero is angry/disapointed that there was no loot
 					knowledge.ForgetItem(treasure.gameObject);
 				}
-				OnLooted();
 				isLooting = false;
+				lootTimer = 0;
+				MoveToLoot();
+				OnLooted();
 			}
 		}
 	}

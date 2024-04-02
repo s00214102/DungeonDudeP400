@@ -20,6 +20,7 @@ public class Goal_Base : MonoBehaviour, IGoal
     protected HeroStatus status;
     protected Action_Base LinkedAction;
     protected GOAP_Hero_Data data;
+    protected GOAP_Planner planner;
 
     private void Awake()
     {
@@ -29,6 +30,7 @@ public class Goal_Base : MonoBehaviour, IGoal
         data = GetComponent<GOAP_Hero_Data>();
         health = GetComponent<Health>();
         status = GetComponent<HeroStatus>();
+        planner = GetComponent<GOAP_Planner>();
     }
 
     private void Start()

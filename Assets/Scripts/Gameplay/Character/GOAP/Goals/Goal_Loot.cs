@@ -6,6 +6,8 @@ using UnityEngine;
 // looting priority is tied to a heroes greed (personality trait)
 public class Goal_Loot : Goal_Base
 {
+	//Action_Loot action_Loot;
+
 	public int Priority = 0; // Define the priority of this goal
 
 	public override int OnCalculatePriority()
@@ -23,6 +25,9 @@ public class Goal_Loot : Goal_Base
 		// try to find lootable treasure
 		var result = knowledge.RecallFirstUsableItem("Treasure");
 		// if a useable treasure item cant be found, set priority to 0
+		// make sure the treasure isnt already in use
+		// check if this hero is already looting to ignore this check
+		//|| (!action_Loot.isLooting && result.item.GameObject.GetComponent<Treasure>().inUse)
 		if (!result.found)
 		{
 			Priority = 0;
@@ -34,16 +39,16 @@ public class Goal_Loot : Goal_Base
 			switch (data.HeroTraits.Greed)
 			{
 				case 0:
-					Priority = 10;
+					Priority = 20;
 					break;
 				case 1:
-					Priority = 30;
+					Priority = 35;
 					break;
 				case 2:
 					Priority = 70;
 					break;
 				case 3:
-					Priority = 999;
+					Priority = 200;
 					break;
 				default:
 					Priority = 0;
@@ -56,6 +61,9 @@ public class Goal_Loot : Goal_Base
 	{
 		base.OnGoalActivated(_LinkedAction);
 		// Additional activation logic here
+		//if (action_Loot == null)
+		//	action_Loot = (Action_Loot)_LinkedAction;
+
 	}
 
 	public override void OnGoalDeactivated()

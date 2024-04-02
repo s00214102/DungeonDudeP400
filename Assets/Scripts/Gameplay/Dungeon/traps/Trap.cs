@@ -43,12 +43,16 @@ public class Trap : MonoBehaviour
 	// the trap disarm difficulty make it take longer
 	// once a hero starts to disarm it just takes time
 	// there is a chance they fail and hurt themselves
-	public virtual void Disarm()
+	protected virtual void Disarm()
 	{
 		uses--;
 		if (uses <= 0)
 		{
 			Destroy(gameObject);
 		}
+	}
+	protected virtual void DestroyTrap()
+	{
+		Helper.DisableGameObject(this.gameObject);
 	}
 }
