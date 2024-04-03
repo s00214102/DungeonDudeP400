@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 8711429294866979538}
   - component: {fileID: 2417010429557940046}
   - component: {fileID: 1235786336464189797}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: enemy_turret
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -38,7 +38,7 @@ Transform:
   - {fileID: 1609651571369550199}
   - {fileID: 7647996925841907288}
   m_Father: {fileID: 0}
-  m_RootOrder: 20
+  m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &-71103169886294100
 MonoBehaviour:
@@ -60,7 +60,7 @@ MonoBehaviour:
       m_Calls: []
   projectilePrefab: {fileID: 2979269501823911284, guid: 16422779c7666744b8ca66058f537b19,
     type: 3}
-  projectileMoveSpeed: 5
+  projectileMoveSpeed: 15
   projectileOrigin: {fileID: 4120998520979166000}
 --- !u!114 &4152212657024054414
 MonoBehaviour:
@@ -97,7 +97,7 @@ MonoBehaviour:
   currentHealth: 0
   healthBar: {fileID: 1609651571325590229}
   isDead: 0
-  EntityDied:
+  OnDied:
     m_PersistentCalls:
       m_Calls: []
 --- !u!114 &6536057606768353052
@@ -128,10 +128,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: Hero
   range: 5
-  frequency: 1
+  frequency: 0.5
   startDelay: 0
   closestTargetStartDelay: 0
-  closestTargetFrequency: 1
+  closestTargetFrequency: 0.5
   entities: []
   closestTarget: {fileID: 0}
 --- !u!65 &2417010429557940046

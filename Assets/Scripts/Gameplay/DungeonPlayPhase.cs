@@ -49,10 +49,10 @@ public class DungeonPlayPhase : MonoBehaviour
 		RandomizeHero(hero);
 		SpawnedHeroes.Add(hero);
 		Health heroHealth = hero.GetComponent<Health>();
-		heroHealth.EntityDied.AddListener(() => RemoveDeadHero(hero));
+		heroHealth.OnDied.AddListener(() => RemoveDeadHero(hero));
 		// player should gain some energy since the hero died
 		// call DungeonPrefabSelect.GainEnergy through the gameplay controller
-		heroHealth.EntityDied.AddListener(() => gameplayController.prefabSelect.GainEnergy(20));
+		heroHealth.OnDied.AddListener(() => gameplayController.prefabSelect.GainEnergy(20));
 	}
 
 	private void RemoveDeadHero(GameObject hero)
@@ -61,7 +61,7 @@ public class DungeonPlayPhase : MonoBehaviour
 		SpawnedHeroes.Remove(hero);
 		Health heroHealth = hero.GetComponent<Health>();
 		//TODO check if RemoveAllListeners removes all listeners everywhere or just for this component
-		heroHealth.EntityDied.RemoveAllListeners();
+		heroHealth.OnDied.RemoveAllListeners();
 		WinConditionMet();
 	}
 

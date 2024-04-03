@@ -89,6 +89,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63ea22d26d891634f80b7e578c122026, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &4045803592894318033
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5028849008384271912}
+  m_Layer: 6
+  m_Name: eyes
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5028849008384271912
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4045803592894318033}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.158, z: 0.519}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4157536005491957607}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4333739488811297658
 GameObject:
   m_ObjectHideFlags: 0
@@ -130,6 +161,7 @@ GameObject:
   - component: {fileID: 3707872956686025513}
   - component: {fileID: 8237151600296083744}
   - component: {fileID: 240735153692186581}
+  - component: {fileID: 4583032079723278749}
   m_Layer: 6
   m_Name: GOAP_Hero
   m_TagString: Hero
@@ -153,7 +185,7 @@ Transform:
   - {fileID: 6044638844695789460}
   - {fileID: 4157536005491957607}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &142851222693443848
 MonoBehaviour:
@@ -236,11 +268,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d27d0453a098d341b9fab3efcadac7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Entities: []
-  closestTarget: {fileID: 0}
-  ItemMemories: []
   Entrance: {fileID: 0}
   Goal: {fileID: 0}
+  ItemMemories: []
+  enemyMemories: []
+  closestEnemy: {fileID: 0}
+  highestAlertEnemy: {fileID: 0}
+  maxDistance: 10
+  minAlertLevel: 0
+  maxAlertLevel: 100
 --- !u!114 &6772580263836245763
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -451,6 +487,7 @@ MonoBehaviour:
   Looted:
     m_PersistentCalls:
       m_Calls: []
+  isLooting: 0
 --- !u!114 &2089143765705171956
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -659,6 +696,29 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4333739488811297658}
   m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &4583032079723278749
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4333739488811297658}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31fa01611f7d72c43bdc18cb422feeb3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  eyes: {fileID: 5028849008384271912}
+  rayCount: 9
+  horizontalAngle: 90
+  verticalAngle: 15
+  rayLength: 7
+  mask:
+    serializedVersion: 2
+    m_Bits: 192
+  OnSight:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &4575418606774756367
 GameObject:
   m_ObjectHideFlags: 0
@@ -901,6 +961,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5807019916007012161}
+  - {fileID: 5028849008384271912}
   m_Father: {fileID: 559697946407237191}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

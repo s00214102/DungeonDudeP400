@@ -61,7 +61,7 @@ public class GameplayController : MonoBehaviour
 		// check win and lose conditions here, to be cleaner
 		// DungeonHeroSpawner has the info we need to check for win con
 		playPhase.OnWinConditionMet.AddListener(WinGame);
-		goal.GetComponent<Health>().EntityDied.AddListener(LoseGame);
+		goal.GetComponent<Health>().OnDied.AddListener(LoseGame);
 	}
 	// Called by the play/try again buttons in win and lose phase
 	public void PlayAgain()

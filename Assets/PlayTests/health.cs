@@ -54,7 +54,7 @@ public class health
 		Assert.IsNotNull(hero, $"Health component not found.");
 
 		bool died = false;
-		health.EntityDied.AddListener(() => { died = true; });
+		health.OnDied.AddListener(() => { died = true; });
 
 		Time.timeScale = 10.0f;
 		float time = 0;

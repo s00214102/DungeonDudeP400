@@ -34,7 +34,7 @@ public class Health : MonoBehaviour
         healthBar.SetMaxHealth(maxHealth);
     }
     // subscribe to this to be notified when target dies
-    public UnityEvent EntityDied;
+    public UnityEvent OnDied;
     public void TakeDamage(int damage)
     {
         currentHealth -= damage;
@@ -43,7 +43,7 @@ public class Health : MonoBehaviour
         if (currentHealth <= 0)
         {
             healthBar.SetHealth(0);
-            EntityDied.Invoke();
+            OnDied.Invoke();
             isDead = true;
 
             gameObject.SetActive(false);

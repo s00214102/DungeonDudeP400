@@ -38,64 +38,64 @@ public class HeroProximityDetection : MonoBehaviour
         {
             foreach (var hit in hits)
             {
-                // Enemy search
-                if (hit.CompareTag("Enemy"))
-                {
-                    Entity entity;
-                    if (hit.TryGetComponent<Entity>(out entity))
-                    {
-                        if (!knowledge.Entities.Contains(entity))
-                        {
-                            knowledge.Entities.Add(entity);
-                        }
-                    }
-                    else
-                        Debug.Log($"{hit.name} missing Entity component?");
-                }
-                // Treasure search
-                if (hit.CompareTag("Treasure"))
-                {
-                    knowledge.RememberItem("Treasure", hit.gameObject, true);
-                }
-                // Angel search
-                if (hit.CompareTag("Angel"))
-                {
-                    knowledge.RememberItem("Angel", hit.gameObject, true);
-                }
+                // // Enemy search
+                // if (hit.CompareTag("Enemy"))
+                // {
+                //     Entity entity;
+                //     if (hit.TryGetComponent<Entity>(out entity))
+                //     {
+                //         if (!knowledge.Entities.Contains(entity))
+                //         {
+                //             knowledge.Entities.Add(entity);
+                //         }
+                //     }
+                //     else
+                //         Debug.Log($"{hit.name} missing Entity component?");
+                // }
+                // // Treasure search
+                // if (hit.CompareTag("Treasure"))
+                // {
+                //     knowledge.RememberItem("Treasure", hit.gameObject, true);
+                // }
+                // // Angel search
+                // if (hit.CompareTag("Angel"))
+                // {
+                //     knowledge.RememberItem("Angel", hit.gameObject, true);
+                // }
             }
         }
     }
 
     private void FindClosestEntity()
     {
-        //Debug.Log("Finding closest target.");
-        if (knowledge.Entities == null || knowledge.Entities.Count <= 0)
-            return;
+        // //Debug.Log("Finding closest target.");
+        // if (knowledge.Entities == null || knowledge.Entities.Count <= 0)
+        //     return;
 
-        if (knowledge.Entities.Count == 1)
-            knowledge.closestTarget = knowledge.Entities[0];
+        // if (knowledge.Entities.Count == 1)
+        //     knowledge.closestTarget = knowledge.Entities[0];
 
-        float minDistance = Mathf.Infinity;
-        foreach (var target in knowledge.Entities)
-        {
-            // clean up
-            if (target.Health.isDead || target.isDestroyed)
-            {
-                //if (target == closestTarget)
-                knowledge.closestTarget = null;
-                knowledge.Entities.Remove(target);
-                return;
-            }
-            else
-            {
-                float dist = Vector3.Distance(target.transform.position, transform.position);
-                if (dist < minDistance && !target.Health.isDead)
-                {
-                    minDistance = dist;
-                    knowledge.closestTarget = target;
-                }
-            }
-        }
+        // float minDistance = Mathf.Infinity;
+        // foreach (var target in knowledge.Entities)
+        // {
+        //     // clean up
+        //     if (target.Health.isDead || target.isDestroyed)
+        //     {
+        //         //if (target == closestTarget)
+        //         knowledge.closestTarget = null;
+        //         knowledge.Entities.Remove(target);
+        //         return;
+        //     }
+        //     else
+        //     {
+        //         float dist = Vector3.Distance(target.transform.position, transform.position);
+        //         if (dist < minDistance && !target.Health.isDead)
+        //         {
+        //             minDistance = dist;
+        //             knowledge.closestTarget = target;
+        //         }
+        //     }
+        // }
     }
 
     private void OnDrawGizmos()

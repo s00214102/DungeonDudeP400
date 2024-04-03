@@ -22,8 +22,8 @@ public class Attack : MonoBehaviour
 	{
 		if (detection.closestTarget.TryGetComponent(out targetHealth))
 		{
-			targetHealth.EntityDied.AddListener(StopAttacking); // if the target entity dies, stop attacking
-			health.EntityDied.AddListener(StopAttacking); // if this entity dies, stop attacking
+			targetHealth.OnDied.AddListener(StopAttacking); // if the target entity dies, stop attacking
+			health.OnDied.AddListener(StopAttacking); // if this entity dies, stop attacking
 			InvokeRepeating("AttackTarget", 0, data.AttackRate);
 		}
 		else
@@ -34,8 +34,8 @@ public class Attack : MonoBehaviour
 	public void StopAttacking()
 	{
 		CancelInvoke("AttackTarget");
-		targetHealth.EntityDied.RemoveListener(StopAttacking);
-		health.EntityDied.RemoveListener(StopAttacking);
+		targetHealth.OnDied.RemoveListener(StopAttacking);
+		health.OnDied.RemoveListener(StopAttacking);
 		OnFinishedAttacking?.Invoke();
 	}
 	private void AttackTarget()

@@ -22,7 +22,8 @@ public class Action_Attack : Action_Base
 		goap_debug.ChangeActionImage(5);
 		base.OnActivated(_linkedGoal);
 
-		if (knowledge.closestTarget != null)
+		var result = knowledge.RecallHighestAlertEnemy();
+		if (result.found)
 			InvokeRepeating("AttackTarget", 0, data.HeroData.AttackRate);
 	}
 	public override void OnDeactived()
@@ -34,7 +35,10 @@ public class Action_Attack : Action_Base
 	private void AttackTarget()
 	{
 		if (enemyHealth == null)
-			enemyHealth = knowledge.closestTarget.GetComponent<Health>();
+			{
+				var result = knowledge.RecallHighestAlertEnemy();
+				enemyHealth = result.enemy.GetComponent<Health>();
+				}
 		if (enemyHealth != null && !enemyHealth.isDead)
 		{
 			enemyHealth.TakeDamage(data.HeroData.Damage);

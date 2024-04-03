@@ -15,7 +15,8 @@ public class Goal_Engage : Goal_Base
     {
         Priority = 0;
 
-        if (knowledge.closestTarget != null)
+        var result = knowledge.RecallHighestAlertEnemy();
+        if (result.found)
         {
             switch (data.HeroTraits.Aggression)
             {
@@ -40,7 +41,8 @@ public class Goal_Engage : Goal_Base
 
     public override bool CanRun()
     {
-        if (knowledge.closestTarget == null)
+        var result = knowledge.RecallHighestAlertEnemy();
+        if (!result.found)
             return false;
         return true;
     }

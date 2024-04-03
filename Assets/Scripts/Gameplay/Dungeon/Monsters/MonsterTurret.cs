@@ -40,10 +40,9 @@ public class MonsterTurret : MonoBehaviour
 	}
 	private void AttackTarget()
 	{
-		if (detection.closestTarget == null)
+		if (detection.closestTarget == null || health.isDead)
 			return;
-		if (health.isDead)
-			return;
+
 		if (Helper.InRange(this.transform.position, detection.closestTarget.transform.position, attackRange))
 		{
 			Health targetHealth;
@@ -70,7 +69,7 @@ public class MonsterTurret : MonoBehaviour
 	{
 		GameObject sphere = Instantiate(projectilePrefab, projectileOrigin.position, Quaternion.identity);
 
-		while (sphere != null && Vector3.Distance(sphere.transform.position, targetPosition) > 0.01f)
+		while (sphere != null && Vector3.Distance(sphere.transform.position, targetPosition) > 0.5f)
 		{
 			// Move the sphere towards the target position
 			sphere.transform.position = Vector3.MoveTowards(sphere.transform.position, targetPosition, projectileMoveSpeed * Time.deltaTime);

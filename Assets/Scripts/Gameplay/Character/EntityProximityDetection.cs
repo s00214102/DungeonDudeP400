@@ -9,10 +9,10 @@ public class EntityProximityDetection : MonoBehaviour
 {
     [SerializeField] string target = "name of target"; // name of the tag on the entity you want to search for
     public float range = 1; // the range of detection
-    [SerializeField] float frequency = 1; // how long to wait between searches
+    [SerializeField] float frequency = 0.5f; // how long to wait between searches
     [SerializeField] float startDelay = 0; // how long to wait before starting the search
     [SerializeField] float closestTargetStartDelay = 0; // how long to wait before starting the search
-    [SerializeField] float closestTargetFrequency = 1; // wait between closest target calculation
+    [SerializeField] float closestTargetFrequency = 0.5f; // wait between closest target calculation
     [SerializeField] private List<Entity> entities = new List<Entity>();
     public List<Entity> Entities { get => entities; }
     public Entity closestTarget; // closest 
@@ -38,6 +38,8 @@ public class EntityProximityDetection : MonoBehaviour
                         if (!entities.Contains(entity))
                         {
                             entities.Add(entity);
+                            Health entityHealth = entity.gameObject.GetComponent<Health>();
+                            //entityHealth.OnDied.AddListener(delegate{ForgetEntity(entity);});
                         }
                     }
                     else
@@ -46,10 +48,26 @@ public class EntityProximityDetection : MonoBehaviour
             }
         }
     }
+    // private void ForgetEntity(Entity entity){
 
+    //     if(entity==closestTarget)
+    //         closestTarget=null;
+
+    //     Entities.Remove(entity);
+    // }
     private void FindClosestTarget()
     {
-        //Debug.Log("Finding closest target.");
+        // clean up the list first (remove dead entities)
+        for (int i = entities.Count - 1; i >= 0; i--)
+        {
+            GameObject obj = entities[i].gameObject;
+            if (obj.GetComponent<Health>().isDead)
+            {
+                entities.RemoveAt(i);
+                //Destroy(obj);
+            }
+        }
+
         if (entities == null || entities.Count <= 0)
             return;
 
@@ -59,22 +77,11 @@ public class EntityProximityDetection : MonoBehaviour
         float minDistance = Mathf.Infinity;
         foreach (var target in entities)
         {
-            // clean up
-            if (target.Health.isDead)
+            float dist = Vector3.Distance(target.transform.position, transform.position);
+            if (dist < minDistance && !target.Health.isDead)
             {
-                //if (target == closestTarget)
-                closestTarget = null;
-                entities.Remove(target);
-                return;
-            }
-            else
-            {
-                float dist = Vector3.Distance(target.transform.position, transform.position);
-                if (dist < minDistance && !target.Health.isDead)
-                {
-                    minDistance = dist;
-                    closestTarget = target;
-                }
+                minDistance = dist;
+                closestTarget = target;
             }
         }
     }

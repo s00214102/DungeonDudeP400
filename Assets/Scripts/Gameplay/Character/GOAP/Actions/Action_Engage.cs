@@ -18,8 +18,10 @@ public class Action_Engage : Action_Base
 	{
 		goap_debug.ChangeActionImage(4);
 		base.OnActivated(_linkedGoal);
-		//movement.DestinationReached.AddListener(ReachedDestination);
-		movement.MoveTo(knowledge.closestTarget.transform.position);
+
+		var result = knowledge.RecallHighestAlertEnemy();
+		if(result.found)
+			movement.MoveTo(result.enemy.transform.position);
 	}
 
 	public override void OnDeactived()

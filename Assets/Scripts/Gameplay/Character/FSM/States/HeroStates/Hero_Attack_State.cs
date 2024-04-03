@@ -14,7 +14,7 @@ public class Hero_Attack_State : BaseState
     {
         Debug.Log("Entered attack state");
         enemy = controller.Target.GetComponent<Health>();
-        enemy.EntityDied.AddListener(StopAttacking);
+        enemy.OnDied.AddListener(StopAttacking);
         controller.StartAttacking();
     }
     private void StopAttacking()
@@ -24,7 +24,7 @@ public class Hero_Attack_State : BaseState
     }
     public override void Exit()
     {
-        enemy.EntityDied.RemoveListener(StopAttacking);
+        enemy.OnDied.RemoveListener(StopAttacking);
         base.Exit();
     }
 

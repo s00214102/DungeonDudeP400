@@ -33,7 +33,9 @@ public class hero_proximity_detection
 		Assert.IsNotNull(hero, $"GameObject with name ClosestEnemy not found.");
 
 		// is the closest enemy the one we expected?
-		bool result = knowledge.closestTarget.gameObject == closestEnemy;
+		//TODO upgrade to the new knowledge system
+		//bool result = knowledge.closestTarget.gameObject == closestEnemy;
+		bool result = false;
 		Assert.IsTrue(result, "The closest enemy found was not what was expected.");
 	}
 	[UnityTest]

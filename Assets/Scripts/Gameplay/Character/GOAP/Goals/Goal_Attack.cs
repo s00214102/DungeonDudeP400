@@ -13,19 +13,23 @@ public class Goal_Attack : Goal_Base
 	public override void OnTickGoal()
 	{
 		currentPriority = 0;
+
 		// if we have a target and are close enough
-		if (knowledge.closestTarget != null && IsEnemyInAttackRange())
+		var result = knowledge.RecallHighestAlertEnemy();
+        if (result.found && IsEnemyInAttackRange())
 			currentPriority = AttackPriority;
 	}
 	public override bool CanRun()
 	{
-		if (knowledge.closestTarget == null)
+		var result = knowledge.RecallHighestAlertEnemy();
+		if (!result.found)
 			return false;
 		return true;
 	}
 	private bool IsEnemyInAttackRange()
 	{
-		float dist = Vector3.Distance(transform.position, knowledge.closestTarget.transform.position);
+		var result = knowledge.RecallHighestAlertEnemy();
+		float dist = Vector3.Distance(transform.position, result.enemy.transform.position);
 		return dist <= data.HeroData.AttackRange;
 	}
 	public override string ToString()

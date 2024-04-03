@@ -42,7 +42,7 @@ public class DungeonHeroSpawner : MonoBehaviour
 		RandomizeHero(hero);
 		SpawnedHeroes.Add(hero);
 		Health heroHealth = hero.GetComponent<Health>();
-		heroHealth.EntityDied.AddListener(() => RemoveDeadHero(hero));
+		heroHealth.OnDied.AddListener(() => RemoveDeadHero(hero));
 	}
 
 	private void RemoveDeadHero(GameObject hero)
@@ -50,7 +50,7 @@ public class DungeonHeroSpawner : MonoBehaviour
 		SpawnedHeroes.Remove(hero);
 		Health heroHealth = hero.GetComponent<Health>();
 		//TODO check if RemoveAllListeners removes all listeners everywhere or just for this component
-		heroHealth.EntityDied.RemoveAllListeners();
+		heroHealth.OnDied.RemoveAllListeners();
 		WinConditionMet();
 	}
 
