@@ -633,7 +633,7 @@ GameObject:
   - component: {fileID: 739802601219394922}
   - component: {fileID: 2141645102414399258}
   - component: {fileID: 6448557920190385238}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: enemy_hellhound
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -726,7 +726,7 @@ MonoBehaviour:
   currentHealth: 0
   healthBar: {fileID: 1575939618961617759}
   isDead: 0
-  EntityDied:
+  OnDied:
     m_PersistentCalls:
       m_Calls: []
 --- !u!114 &8596698378501848147

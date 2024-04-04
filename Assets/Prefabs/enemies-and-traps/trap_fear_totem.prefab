@@ -605,7 +605,7 @@ GameObject:
   - component: {fileID: 720182702086550120}
   - component: {fileID: 7632783878069733577}
   - component: {fileID: 4899763798436126712}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: trap_fear_totem
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -657,7 +657,7 @@ MonoBehaviour:
   currentHealth: 0
   healthBar: {fileID: 5558570315206737014}
   isDead: 0
-  EntityDied:
+  OnDied:
     m_PersistentCalls:
       m_Calls: []
 --- !u!114 &6259873695589366486

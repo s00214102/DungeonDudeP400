@@ -101,7 +101,7 @@ GameObject:
   - component: {fileID: 311693323915724105}
   - component: {fileID: 235858178004189697}
   - component: {fileID: 8304221304866351539}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: enemy_zombie
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -171,10 +171,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20608d71e6f462642911bcded4d48166, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Health: 10
   Damage: 2
   Speed: 2
   AttackRate: 1
   AttackRange: 1.5
+  SearchRange: 5
   StopDistance: 1
 --- !u!114 &4151482951896110169
 MonoBehaviour:
@@ -192,7 +194,7 @@ MonoBehaviour:
   currentHealth: 0
   healthBar: {fileID: 5219602873144994381}
   isDead: 0
-  EntityDied:
+  OnDied:
     m_PersistentCalls:
       m_Calls: []
 --- !u!114 &3858895940736470611
@@ -261,6 +263,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   agent: {fileID: 0}
   isMoving: 0
+  isSlowed: 0
+  baseSpeed: 1
   DestinationReached:
     m_PersistentCalls:
       m_Calls: []

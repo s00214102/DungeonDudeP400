@@ -168,7 +168,7 @@ Transform:
   m_Children:
   - {fileID: 3929484069170891663}
   m_Father: {fileID: 0}
-  m_RootOrder: 20
+  m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
 --- !u!114 &5788098659691734745
 MonoBehaviour:
@@ -183,5 +183,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 10
+  padding: {x: 0, y: 0}
+  offset: {x: 15, y: 0}
   minXZLimits: {x: 10, y: -12}
   maxXZLimits: {x: 35, y: 30}

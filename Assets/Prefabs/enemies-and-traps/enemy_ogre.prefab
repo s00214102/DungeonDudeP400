@@ -454,7 +454,7 @@ GameObject:
   - component: {fileID: 6259170355436920151}
   - component: {fileID: 3662703911409640233}
   - component: {fileID: 8401129538028160149}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: enemy_ogre
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -550,7 +550,7 @@ MonoBehaviour:
   currentHealth: 0
   healthBar: {fileID: 1134838369146394409}
   isDead: 0
-  EntityDied:
+  OnDied:
     m_PersistentCalls:
       m_Calls: []
 --- !u!114 &1263997260273598460

@@ -19,7 +19,7 @@ GameObject:
   - component: {fileID: -71103169886294100}
   - component: {fileID: 8711429294866979538}
   - component: {fileID: 6890975900023092260}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: TestEnemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -141,7 +141,7 @@ MonoBehaviour:
   currentHealth: 0
   healthBar: {fileID: 1609651571325590229}
   isDead: 0
-  EntityDied:
+  OnDied:
     m_PersistentCalls:
       m_Calls: []
 --- !u!195 &6167919252996941059

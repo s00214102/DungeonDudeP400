@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 5488144546916732177}
   - component: {fileID: 4217517799203399092}
   - component: {fileID: 415273867652743375}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: trap_barrier
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -53,7 +53,7 @@ MonoBehaviour:
   currentHealth: 0
   healthBar: {fileID: 8778991163787938374}
   isDead: 0
-  EntityDied:
+  OnDied:
     m_PersistentCalls:
       m_Calls: []
 --- !u!114 &5488144546916732177

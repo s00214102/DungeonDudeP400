@@ -252,7 +252,7 @@ GameObject:
   - component: {fileID: 481950492186884326}
   - component: {fileID: 5952327342995671099}
   - component: {fileID: 4860414270339278312}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: trap_mimic
   m_TagString: Untagged
   m_Icon: {fileID: 0}

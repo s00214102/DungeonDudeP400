@@ -4,6 +4,7 @@ using UnityEngine.SceneManagement;
 // attach to a gameobject in a level
 // controls the flow of the gameplay
 
+[RequireComponent(typeof(BoxCollider))]
 public class GameplayController : MonoBehaviour
 {
 	public enum GameState
@@ -30,7 +31,7 @@ public class GameplayController : MonoBehaviour
 	[SerializeField] private float spawnIntervalVariation = 1f; // Variation in spawn interval
 	[SerializeField] private int startingEnergy = 500;
 	[SerializeField] private int energyRegenPerSecond = 10;
-
+	public BoxCollider dungeonBounds;
 
 	private void Awake()
 	{
@@ -41,6 +42,8 @@ public class GameplayController : MonoBehaviour
 		losePhase = GameObject.Find("DungeonLosePhase").GetComponent<DungeonLosePhase>();
 		prefabSelect = GameObject.Find("PrefabSelectController").GetComponent<DungeonPrefabSelect>();
 		goal = GameObject.Find("Goal");
+
+		dungeonBounds = GetComponent<BoxCollider>();
 
 		// pass a reference of the GameplayController to each
 		setupPhase.gameplayController = this;
