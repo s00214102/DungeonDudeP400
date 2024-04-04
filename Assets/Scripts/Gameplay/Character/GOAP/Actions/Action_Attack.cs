@@ -6,6 +6,9 @@ public class Action_Attack : Action_Base
 {
 	List<System.Type> SupportedGoals = new List<System.Type> { typeof(Goal_Attack) };
 	Health enemyHealth = null;
+	//TODO bad place to put these variables?
+	public GameObject projectilePrefab;
+	private float projectileMoveSpeed = 15f;
 	public UnityEvent AttackFinished;
 	private void OnAttackFinished() { AttackFinished?.Invoke(); }
 
@@ -48,6 +51,9 @@ public class Action_Attack : Action_Base
 				}
 		if (enemyHealth != null && !enemyHealth.isDead)
 		{
+			GameObject sphere = Instantiate(projectilePrefab, transform.position, Quaternion.identity);
+			sphere.GetComponent<Projectile>().targetPosition = enemyHealth.transform.position;
+
 			enemyHealth.TakeDamage(data.HeroData.Damage);
 			OnAttackFinished();
 		}

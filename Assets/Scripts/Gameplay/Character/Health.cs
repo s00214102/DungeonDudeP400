@@ -14,6 +14,7 @@ public class Health : MonoBehaviour
     [SerializeField] private HealthBar healthBar;
     private GameObject dpuObject;
     public bool isDead = false; // tag as destroyed when hp reaches 0, these entities can be temporarily disable and then pernamentaly destroyed later
+    private CharacterSenses senses;
 
     private void Awake()
     {
@@ -22,6 +23,7 @@ public class Health : MonoBehaviour
         {
             Debug.LogWarning("Health component could not find the DamagePopUp file in resources folder.");
         }
+        senses = GetComponent<CharacterSenses>();
     }
     private void Start()
     {
@@ -35,10 +37,19 @@ public class Health : MonoBehaviour
     }
     // subscribe to this to be notified when target dies
     public UnityEvent OnDied;
+    public void TakeDamage(GameObject attacker, int damage){
+        // if this character has senses, feel the damage 
+        if(senses!=null)
+            senses.Feel(attacker, damage);
+        
+        TakeDamage(damage);
+    }
     public void TakeDamage(int damage)
     {
         currentHealth -= damage;
         healthBar.SetHealth(currentHealth);
+
+
         ParticleManager.SpawnParticle(transform, ParticleManager.Particle.BloodSplatter);
         if (currentHealth <= 0)
         {

@@ -10,6 +10,8 @@ public class Attack : MonoBehaviour
 	private EntityProximityDetection detection;
 	internal Health targetHealth;
 	private MonsterData data;
+	public GameObject projectilePrefab;
+	private float projectileMoveSpeed = 15f;
 	public UnityEvent OnAttack;
 	public UnityEvent OnFinishedAttacking;
 	private void Awake()
@@ -43,7 +45,10 @@ public class Attack : MonoBehaviour
 		// only attack if there is a target
 		if (targetHealth != null)
 		{
-			targetHealth.TakeDamage(data.Damage);
+			GameObject sphere = Instantiate(projectilePrefab, this.transform.position, Quaternion.identity);
+				sphere.GetComponent<Projectile>().targetPosition = detection.closestTarget.transform.position;
+
+			targetHealth.TakeDamage(this.gameObject,data.Damage);
 			OnAttack?.Invoke();
 		}
 		else

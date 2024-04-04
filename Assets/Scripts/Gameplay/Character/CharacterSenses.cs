@@ -13,6 +13,7 @@ public class CharacterSenses : MonoBehaviour {
         bool hitSomething = false;
         public UnityEvent<GameObject> OnSight;
         public UnityEvent<GameObject> OnHear;
+        public UnityEvent<GameObject, int> OnFeel;
     
     /// <summary>
     /// To make a sound a character just performs an overlap sphere check around itself to find characters that can hear
@@ -29,7 +30,14 @@ public class CharacterSenses : MonoBehaviour {
         guessedPosition.z+=randomZ;
         OnHear?.Invoke(sound);
     }
-
+    public void Feel(GameObject touch, int damage){
+        float randomX = Random.Range(-1, 1);
+        float randomZ = Random.Range(-1, 1);
+        Vector3 guessedPosition = touch.transform.position;
+        guessedPosition.x+=randomX;
+        guessedPosition.z+=randomZ;
+        OnFeel?.Invoke(touch, damage);
+    }
     private void Update() {
         hitSomething = CastVisionRays();
     }

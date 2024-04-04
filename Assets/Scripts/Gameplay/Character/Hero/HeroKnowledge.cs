@@ -23,6 +23,7 @@ public class HeroKnowledge : MonoBehaviour
 		// listen to character senses
 		senses.OnSight.AddListener(ProcessSight);
 		senses.OnHear.AddListener(ProcessSound);
+		senses.OnFeel.AddListener(ProcessTouch);
 	}
 	private void ProcessSight(GameObject seenObject)
 	{
@@ -43,7 +44,8 @@ public class HeroKnowledge : MonoBehaviour
 		if (seenObject.CompareTag("Angel"))
 			RememberItem("Angel", seenObject, true);
 	}
-	private void ProcessSound(GameObject heardObject){
+	private void ProcessSound(GameObject heardObject)
+	{
 		if (heardObject.CompareTag("Enemy"))
 		{
 			// how alerted are we? (how close is the target)
@@ -52,7 +54,18 @@ public class HeroKnowledge : MonoBehaviour
 			RememberEnemy("Enemy", heardObject, alertLevel);
 		}
 	}
-	
+	private void ProcessTouch(GameObject feltObject, int damage)
+	{
+		if (feltObject.CompareTag("Enemy"))
+		{
+			// how alerted are we? (how close is the target)
+			float alertLevel = CalculateAlertLevel(feltObject.transform, damage);
+
+			//TODO the enemy can be rememberd as their specific type by passing that as the name, but i need a consistent way to tell
+			RememberEnemy("Enemy", feltObject, alertLevel);
+		}
+	}
+
 	#region Item Memory
 	public List<ItemMemory> ItemMemories = new List<ItemMemory>();
 	public void RememberItem(string objectType, GameObject gameObject, bool itemIsUsable)
@@ -176,10 +189,11 @@ public class HeroKnowledge : MonoBehaviour
 		else
 		{
 			enemyMemories.Add(new EnemyMemory(enemyType, gameObject, gameObject.transform.position, alertLevel));
-			gameObject.GetComponent<Health>().OnDied.AddListener(delegate{ForgetEnemy(gameObject);});
+			gameObject.GetComponent<Health>().OnDied.AddListener(delegate { ForgetEnemy(gameObject); });
 		}
 	}
-	private void ForgetEnemy(GameObject enemy){
+	private void ForgetEnemy(GameObject enemy)
+	{
 		var existingMemory = enemyMemories.FirstOrDefault(memory => memory.GameObject == enemy);
 		if (existingMemory != null)
 			enemyMemories.Remove(existingMemory);
@@ -246,7 +260,8 @@ public class HeroKnowledge : MonoBehaviour
 		return (false, null);
 	}
 	//TODO write this function to set the value using invoke repeating instead of alot of update calls
-	private void SetHighestAlertEnemy(){
+	private void SetHighestAlertEnemy()
+	{
 
 	}
 	// alert level values
@@ -269,6 +284,14 @@ public class HeroKnowledge : MonoBehaviour
 		float alertLevel = Mathf.Lerp(maxAlertLevel, minAlertLevel, distance / maxDistance);
 
 		return alertLevel;
+	}
+	private float CalculateAlertLevel(Transform enemy, int damage){
+		float alertLevel = CalculateAlertLevel(enemy);
+		// add more alert based on the damage value
+		//TODO handy to know what the max damage of any monster is at this point
+		float additionalAlertFromDamage = Mathf.Clamp(damage * 2f, 10f, 30f);
+
+		return alertLevel+additionalAlertFromDamage;
 	}
 	#endregion
 }

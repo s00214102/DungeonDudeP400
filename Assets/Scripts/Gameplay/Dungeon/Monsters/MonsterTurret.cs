@@ -20,7 +20,7 @@ public class MonsterTurret : MonoBehaviour
 	public float rotationSpeed = 5f; // how fast the turret turns to face the target
 
 	public GameObject projectilePrefab;
-	public float projectileMoveSpeed = 5f;
+	private float projectileMoveSpeed = 15f;
 	public Transform projectileOrigin;
 
 	private void Awake()
@@ -58,9 +58,11 @@ public class MonsterTurret : MonoBehaviour
 			{
 				OnAttack?.Invoke();
 
-				StartCoroutine(ShootProjectile(detection.closestTarget.transform.position));
+				GameObject sphere = Instantiate(projectilePrefab, projectileOrigin.position, Quaternion.identity);
+				sphere.GetComponent<Projectile>().targetPosition = detection.closestTarget.transform.position;
+				//StartCoroutine(ShootProjectile(detection.closestTarget.transform.position));
 
-				targetHealth.TakeDamage(attackDamage);
+				targetHealth.TakeDamage(this.gameObject,attackDamage);
 				OnFinishedAttacking?.Invoke();
 			}
 		}
@@ -70,19 +72,5 @@ public class MonsterTurret : MonoBehaviour
 			direction.y = 0;
 			Quaternion targetRotation = Quaternion.LookRotation(direction);
         	transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
-	}
-	// Coroutine to move the sphere from its current position to the target position
-	private IEnumerator ShootProjectile(Vector3 targetPosition)
-	{
-		GameObject sphere = Instantiate(projectilePrefab, projectileOrigin.position, Quaternion.identity);
-
-		while (sphere != null && Vector3.Distance(sphere.transform.position, targetPosition) > 0.5f)
-		{
-			// Move the sphere towards the target position
-			sphere.transform.position = Vector3.MoveTowards(sphere.transform.position, targetPosition, projectileMoveSpeed * Time.deltaTime);
-
-			yield return null;
-		}
-		Destroy(sphere);
 	}
 }

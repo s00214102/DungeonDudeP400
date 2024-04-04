@@ -529,7 +529,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Health: 100
-  Damage: 5
+  Damage: 3
   Speed: 1
   AttackRate: 3
   AttackRange: 2
@@ -566,6 +566,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b37f4135d417ef44e91bbc416089dd95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  projectilePrefab: {fileID: 2979269501823911284, guid: 16422779c7666744b8ca66058f537b19,
+    type: 3}
   OnAttack:
     m_PersistentCalls:
       m_Calls: []
