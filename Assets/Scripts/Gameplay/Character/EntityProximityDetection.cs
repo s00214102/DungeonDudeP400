@@ -58,6 +58,7 @@ public class EntityProximityDetection : MonoBehaviour
     private void FindClosestTarget()
     {
         // clean up the list first (remove dead entities)
+        closestTarget=null;
         for (int i = entities.Count - 1; i >= 0; i--)
         {
             GameObject obj = entities[i].gameObject;

@@ -32,7 +32,14 @@ public class Action_Attack : Action_Base
 		CancelInvoke("AttackTarget");
 		enemyHealth = null;
 	}
-	private void AttackTarget()
+    public override void OnTick()
+    {
+        // face target
+		var result = knowledge.RecallHighestAlertEnemy();
+		if (result.found)
+			this.gameObject.transform.rotation = Helper.RotateToFaceTargetOverTime(this.gameObject.transform, result.enemy.transform, 5f);
+    }
+    private void AttackTarget()
 	{
 		if (enemyHealth == null)
 			{

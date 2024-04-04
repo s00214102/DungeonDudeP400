@@ -24,6 +24,7 @@ public class SimpleMonster : MonoBehaviour
 
     private FSM_Manager _manager;
     private bool _managed = false;
+    [SerializeField]private float turnSpeed = 5f;
 
     private void Awake()
     {
@@ -138,7 +139,10 @@ public class SimpleMonster : MonoBehaviour
             EnterSearchState();
         }
         else
-            transform.LookAt(detection.closestTarget.transform);
+           { 
+            transform.rotation = Helper.RotateToFaceTargetOverTime(this.transform, detection.closestTarget.transform,turnSpeed);
+            //transform.LookAt(detection.closestTarget.transform);
+            }
     }
     private bool InAttackRange()
     {

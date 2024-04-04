@@ -22,6 +22,10 @@ static public class Helper
 			SetChildrenActive(child.gameObject, isActive); // Recursively call for all children
 		}
 	}
+	/// <summary>
+	/// Custom method to cancel all invokes and coroutines on all components and children then sets this gameobject to not active.
+	/// </summary>
+	/// <param name="gameObject"></param>
 	public static void DisableGameObject(GameObject gameObject)
 	{
 		CancelInvokesAndCoroutinesRecursively(gameObject);
@@ -44,5 +48,19 @@ static public class Helper
 		{
 			CancelInvokesAndCoroutinesRecursively(child.gameObject);
 		}
+	}
+	/// <summary>
+	/// Rotate to face a target over time. Call in Update and assign your transform.rotation to the return value.
+	/// </summary>
+	/// <param name="origin"></param>
+	/// <param name="target"></param>
+	/// <param name="rotationSpeed"></param>
+	/// <returns></returns>
+		public static Quaternion RotateToFaceTargetOverTime(Transform origin,Transform target, float rotationSpeed){
+			Vector3 direction = target.position - origin.position;
+			direction.y = 0;
+			Quaternion targetRotation = Quaternion.LookRotation(direction);
+        	//origin.rotation = Quaternion.Lerp(origin.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+			return Quaternion.Lerp(origin.rotation, targetRotation, rotationSpeed * Time.deltaTime);
 	}
 }

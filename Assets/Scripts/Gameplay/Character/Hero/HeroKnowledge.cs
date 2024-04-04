@@ -22,6 +22,7 @@ public class HeroKnowledge : MonoBehaviour
 
 		// listen to character senses
 		senses.OnSight.AddListener(ProcessSight);
+		senses.OnHear.AddListener(ProcessSound);
 	}
 	private void ProcessSight(GameObject seenObject)
 	{
@@ -42,7 +43,15 @@ public class HeroKnowledge : MonoBehaviour
 		if (seenObject.CompareTag("Angel"))
 			RememberItem("Angel", seenObject, true);
 	}
-	
+	private void ProcessSound(GameObject heardObject){
+		if (heardObject.CompareTag("Enemy"))
+		{
+			// how alerted are we? (how close is the target)
+			float alertLevel = CalculateAlertLevel(heardObject.transform);
+			//TODO the enemy can be rememberd as their specific type by passing that as the name, but i need a consistent way to tell
+			RememberEnemy("Enemy", heardObject, alertLevel);
+		}
+	}
 	
 	#region Item Memory
 	public List<ItemMemory> ItemMemories = new List<ItemMemory>();
@@ -244,6 +253,11 @@ public class HeroKnowledge : MonoBehaviour
 	[SerializeField] float maxDistance = 10f; // Maximum distance at which the alert level is 0
 	[SerializeField] float minAlertLevel = 0f; // Minimum alert level
 	[SerializeField] float maxAlertLevel = 100f; // Maximum alert level
+	/// <summary>
+	/// Calculate alert level based on distance to the target.
+	/// </summary>
+	/// <param name="enemy"></param>
+	/// <returns></returns>
 	private float CalculateAlertLevel(Transform enemy)
 	{
 		float distance = Vector3.Distance(this.transform.position, enemy.position);

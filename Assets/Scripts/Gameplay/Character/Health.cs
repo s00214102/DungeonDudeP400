@@ -46,7 +46,8 @@ public class Health : MonoBehaviour
             OnDied.Invoke();
             isDead = true;
 
-            gameObject.SetActive(false);
+            Helper.DisableGameObject(this.gameObject);
+            //gameObject.SetActive(false);
             //Destroy(this.gameObject);
         }
 

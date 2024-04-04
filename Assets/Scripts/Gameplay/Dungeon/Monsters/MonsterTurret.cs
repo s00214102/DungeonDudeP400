@@ -17,6 +17,7 @@ public class MonsterTurret : MonoBehaviour
 	float attackRange = 2;
 	int attackDamage = 1;
 	float attackRate = 1;
+	public float rotationSpeed = 5f; // how fast the turret turns to face the target
 
 	public GameObject projectilePrefab;
 	public float projectileMoveSpeed = 5f;
@@ -38,6 +39,11 @@ public class MonsterTurret : MonoBehaviour
 		// if closestTarget is not null, check if it is in range to attack
 		InvokeRepeating("AttackTarget", attackRate, attackRate);
 	}
+	private void Update() {
+		// if we have a target, turn to face them
+		if(detection.closestTarget!=null)
+			RotateToFaceTargetOverTime();
+	}
 	private void AttackTarget()
 	{
 		if (detection.closestTarget == null || health.isDead)
@@ -54,15 +60,16 @@ public class MonsterTurret : MonoBehaviour
 
 				StartCoroutine(ShootProjectile(detection.closestTarget.transform.position));
 
-				//transform.LookAt(detection.closestTarget.transform);
-				Vector3 direction = detection.closestTarget.transform.position - transform.position;
-				direction.y = 0;
-				transform.rotation = Quaternion.LookRotation(direction);
-
 				targetHealth.TakeDamage(attackDamage);
 				OnFinishedAttacking?.Invoke();
 			}
 		}
+	}
+	private void RotateToFaceTargetOverTime(){
+			Vector3 direction = detection.closestTarget.transform.position - transform.position;
+			direction.y = 0;
+			Quaternion targetRotation = Quaternion.LookRotation(direction);
+        	transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
 	}
 	// Coroutine to move the sphere from its current position to the target position
 	private IEnumerator ShootProjectile(Vector3 targetPosition)

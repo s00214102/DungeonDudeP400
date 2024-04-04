@@ -515,6 +515,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentState: 0
+  turnSpeed: 5
 --- !u!114 &2912740358763246851
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -528,11 +529,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Health: 100
-  Damage: 10
+  Damage: 5
   Speed: 1
-  AttackRate: 2
+  AttackRate: 3
   AttackRange: 2
-  SearchRange: 6
+  SearchRange: 4
   StopDistance: 2
 --- !u!114 &8271764806816438328
 MonoBehaviour:
@@ -810,6 +811,7 @@ GameObject:
   - component: {fileID: 8735747195308580732}
   - component: {fileID: 2261132770580385641}
   - component: {fileID: 264774159750675763}
+  - component: {fileID: 5127228248750325420}
   m_Layer: 5
   m_Name: HealthBar
   m_TagString: Untagged
@@ -835,7 +837,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 3.931}
+  m_AnchoredPosition: {x: 0, y: 3.33}
   m_SizeDelta: {x: 25.5, y: 8.1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &8735747195308580732
@@ -901,3 +903,15 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &5127228248750325420
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8759288797088779553}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 63ea22d26d891634f80b7e578c122026, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

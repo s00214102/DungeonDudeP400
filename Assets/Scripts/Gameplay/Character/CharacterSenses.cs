@@ -12,17 +12,22 @@ public class CharacterSenses : MonoBehaviour {
         [SerializeField] LayerMask mask;
         bool hitSomething = false;
         public UnityEvent<GameObject> OnSight;
+        public UnityEvent<GameObject> OnHear;
     
     /// <summary>
     /// To make a sound a character just performs an overlap sphere check around itself to find characters that can hear
     /// if it finds any it calls this method passing itself as a reference
     /// </summary>
-    /// <param name="gameObject"></param>
-    private void Awake() {
+    /// <param name="sound"></param>
 
-    }
-    public void Hear(GameObject gameObject){
-
+    public void Hear(GameObject sound){
+        // something was heard, but we dont know exactly where (add some variance to its position)
+        float randomX = Random.Range(-1, 1);
+        float randomZ = Random.Range(-1, 1);
+        Vector3 guessedPosition = sound.transform.position;
+        guessedPosition.x+=randomX;
+        guessedPosition.z+=randomZ;
+        OnHear?.Invoke(sound);
     }
 
     private void Update() {
