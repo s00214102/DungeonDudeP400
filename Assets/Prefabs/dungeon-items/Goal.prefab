@@ -72,7 +72,7 @@ MonoBehaviour:
   currentHealth: 0
   healthBar: {fileID: 2224710089616242564}
   isDead: 0
-  EntityDied:
+  OnDied:
     m_PersistentCalls:
       m_Calls: []
 --- !u!1001 &1901269821485962855
