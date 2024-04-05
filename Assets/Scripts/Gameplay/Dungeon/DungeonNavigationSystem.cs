@@ -1,28 +1,28 @@
+using System.Collections.Generic;
 using CodeMonkey.Utils;
-using Codice.Client.GameUI.Update;
 using UnityEngine;
 
-public class DungeonGrid
+public class DungeonNavigationSystem : MonoBehaviour
 {
-    private int width; // Grid size along the X axis
-    private int height; // Grid size along the Z axis
-    private float cellSize; // Size of each cell
+	//private DungeonGrid grid;
+	public GameObject testCharacter;
+	private Dictionary<Vector3Int, List<GameObject>> occupantsByPosition = new Dictionary<Vector3Int, List<GameObject>>(); // Dictionary to store occupants by position
+	
+	[SerializeField] private int width; // Grid size along the X axis
+    [SerializeField] private int height; // Grid size along the Z axis
+    [SerializeField] private float cellSize; // Size of each cell
     private DungeonCell[,] gridArray;
     private TextMesh[,] debugArray;
-    public DungeonGrid(int width, int height, float cellSize)
-    {
-        this.width = width;
-        this.height = height;
-        this.cellSize = cellSize;
+	private void Awake() {
+		//grid = new DungeonGrid(100,100,1f);
 
-        gridArray = new DungeonCell[width, height];
+		gridArray = new DungeonCell[width, height];
         debugArray = new TextMesh[width, height];
 
         for (int x = 0; x < gridArray.GetLength(0); x++)
         {
             for (int y = 0; y < gridArray.GetLength(1); y++)
             {
-
                 DungeonCell dungeonCell = new DungeonCell(x, y);
                 gridArray[x,y]=dungeonCell;
 
@@ -31,20 +31,27 @@ public class DungeonGrid
                 5, Color.white, TextAnchor.MiddleCenter);
                 debugArray[x, y].transform.rotation = Quaternion.Euler(90f, 0f, 0f);
 
-                dungeonCell.textMesh = debugArray[x, y];
-
                 Debug.DrawLine(GetWorldPosition(x, y), GetWorldPosition(x, y + 1), Color.white, 100f);
                 Debug.DrawLine(GetWorldPosition(x, y), GetWorldPosition(x + 1, y), Color.white, 100f);
             }
         }
         Debug.DrawLine(GetWorldPosition(0, height), GetWorldPosition(width, height), Color.white, 100f);
         Debug.DrawLine(GetWorldPosition(width, 0), GetWorldPosition(width, height), Color.white, 100f);
-    }
-    public void SetValue(int x, int z, int value)
+	}
+	private void Start()
+	{
+
+	}
+	private void Update() {
+		// if(testCharacter!=null)
+		// 	grid.TestHighLightCellContainingCharacter(testCharacter.transform.position);
+
+		
+	}
+	public void SetValue(int x, int z, int value)
     {
         if (x > 0 && z > 0 && x < width && z < height)
         {
-            //Debug.Log(gridArray[x,z].movementCost);
             gridArray[x, z].movementCost = value;
             debugArray[x, z].text = value.ToString();
         }
@@ -58,10 +65,13 @@ public class DungeonGrid
         x = Mathf.FloorToInt(worldPosition.x / cellSize);
         z = Mathf.FloorToInt(worldPosition.z / cellSize);
     }
-    public void TestHighLightCellContainingCharacter(Vector3 position)
-    {
-        int x, z;
-        GetXZ(position, out x, out z);
-        SetValue(x,z,99);
-    }
+	private void OnDrawGizmosSelected()
+	{
+		// Gizmos.color = Color.red;
+		// foreach (var cell in dungeonCells)
+		// {
+		// 	Gizmos.DrawSphere(cell.transform.position, 0.05f);
+		// 	Gizmos.DrawWireCube(cell.transform.position, new Vector3(cellSize, cellSize, cellSize));
+		// }
+	}
 }

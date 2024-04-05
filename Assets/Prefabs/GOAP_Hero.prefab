@@ -324,7 +324,7 @@ MonoBehaviour:
   currentHealth: 0
   healthBar: {fileID: 6044638844722988086}
   isDead: 0
-  EntityDied:
+  OnDied:
     m_PersistentCalls:
       m_Calls: []
 --- !u!114 &2934180254228399709
@@ -561,6 +561,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c6c5e519443e4942b5512ab8446b765, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  projectilePrefab: {fileID: 2979269501823911284, guid: 16422779c7666744b8ca66058f537b19,
+    type: 3}
   AttackFinished:
     m_PersistentCalls:
       m_Calls: []
@@ -717,6 +719,12 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 192
   OnSight:
+    m_PersistentCalls:
+      m_Calls: []
+  OnHear:
+    m_PersistentCalls:
+      m_Calls: []
+  OnFeel:
     m_PersistentCalls:
       m_Calls: []
 --- !u!1 &4575418606774756367

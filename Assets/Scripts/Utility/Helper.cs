@@ -1,3 +1,4 @@
+using System.Xml.XPath;
 using UnityEngine;
 
 static public class Helper
@@ -56,11 +57,12 @@ static public class Helper
 	/// <param name="target"></param>
 	/// <param name="rotationSpeed"></param>
 	/// <returns></returns>
-		public static Quaternion RotateToFaceTargetOverTime(Transform origin,Transform target, float rotationSpeed){
-			Vector3 direction = target.position - origin.position;
-			direction.y = 0;
-			Quaternion targetRotation = Quaternion.LookRotation(direction);
-        	//origin.rotation = Quaternion.Lerp(origin.rotation, targetRotation, rotationSpeed * Time.deltaTime);
-			return Quaternion.Lerp(origin.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+	public static Quaternion RotateToFaceTargetOverTime(Transform origin, Transform target, float rotationSpeed)
+	{
+		Vector3 direction = target.position - origin.position;
+		direction.y = 0;
+		Quaternion targetRotation = Quaternion.LookRotation(direction);
+		//origin.rotation = Quaternion.Lerp(origin.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+		return Quaternion.Lerp(origin.rotation, targetRotation, rotationSpeed * Time.deltaTime);
 	}
 }
