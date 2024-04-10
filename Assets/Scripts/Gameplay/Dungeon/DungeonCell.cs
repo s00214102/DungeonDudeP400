@@ -1,46 +1,29 @@
-
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class DungeonCell
 {
-	public int movementCost = 1; // Movement cost of the cell
+	private int baseCost = 0; // set a base cost for a cell
+	public int movementCost = 0; // final value used as arc cost
 	public bool isWalkable = true; // Whether the cell is walkable
+	public Vector3 worldPositionCenter;
 	public int xPos;
 	public int zPos;
-	public TextMesh textMesh;
-	private List<GameObject> occupants = new();
 
-	public DungeonCell(int x, int z)
+	public DungeonCell(int x, int z, float cellSize)
 	{
 		xPos = x;
 		zPos = z;
-		movementCost = 0;
+		worldPositionCenter = new Vector3(x + cellSize / 2, 0, z + cellSize / 2);
 	}
-
-	// Method to add an occupant to the cell
-	public void AddOccupant(GameObject occupant)
-	{
-		if (!occupants.Contains(occupant))
-		{
-			occupants.Add(occupant);
-			UpdateMovementCost();
-		}
-	}
-
-	// Method to remove an occupant from the cell
-	public void RemoveOccupant(Vector3Int position, GameObject occupant)
-	{
-		if (occupants.Contains(occupant))
-		{
-			occupants.Remove(occupant);
-			UpdateMovementCost();
-		}
-	}
-
 	// Method to update the movement cost based on the number of occupants
-	private void UpdateMovementCost()
+	public void UpdateMovementCost(int count)
 	{
-		movementCost = occupants.Count;
+		movementCost = count + baseCost;
+	}
+	public void SetIsWalkable(bool value)
+	{
+		isWalkable = value;
 	}
 }

@@ -23,15 +23,14 @@ public class DungeonGrid
             for (int y = 0; y < gridArray.GetLength(1); y++)
             {
 
-                DungeonCell dungeonCell = new DungeonCell(x, y);
-                gridArray[x,y]=dungeonCell;
+                DungeonCell dungeonCell = new DungeonCell(x, y, cellSize);
+                gridArray[x, y] = dungeonCell;
 
-                debugArray[x, y] = UtilsClass.CreateWorldText(dungeonCell.movementCost.ToString(),
-                null, GetWorldPosition(x, y) + new Vector3(cellSize, 0, cellSize) * 0.5f,
-                5, Color.white, TextAnchor.MiddleCenter);
+                debugArray[x, y] = UtilsClass.CreateWorldText($"({x},{y})", null,
+                GetWorldPosition(x, y) + new Vector3(cellSize, 0, cellSize) * 0.5f, 5, Color.white, TextAnchor.MiddleCenter);
                 debugArray[x, y].transform.rotation = Quaternion.Euler(90f, 0f, 0f);
 
-                dungeonCell.textMesh = debugArray[x, y];
+                //dungeonCell.textMesh = debugArray[x, y];
 
                 Debug.DrawLine(GetWorldPosition(x, y), GetWorldPosition(x, y + 1), Color.white, 100f);
                 Debug.DrawLine(GetWorldPosition(x, y), GetWorldPosition(x + 1, y), Color.white, 100f);
@@ -46,7 +45,7 @@ public class DungeonGrid
         {
             //Debug.Log(gridArray[x,z].movementCost);
             gridArray[x, z].movementCost = value;
-            debugArray[x, z].text = value.ToString();
+            //debugArray[x, z].text = value.ToString();
         }
     }
     private Vector3 GetWorldPosition(int x, int z)
@@ -62,6 +61,6 @@ public class DungeonGrid
     {
         int x, z;
         GetXZ(position, out x, out z);
-        SetValue(x,z,99);
+        SetValue(x, z, 99);
     }
 }

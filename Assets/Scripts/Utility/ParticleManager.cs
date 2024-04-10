@@ -8,7 +8,8 @@ public static class ParticleManager
     public enum Particle
     {
         BloodSplatter,
-        Sweat
+        Sweat,
+        Confetti
     }
     public static void SpawnParticle(Vector3 position, Particle particle)
     {

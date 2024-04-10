@@ -50,3 +50,8 @@ MonoBehaviour:
     particleSystemPrefab: {fileID: 3422602939267544886, guid: 51ff4730a3cfc8543a1d18ee3ddd2072,
       type: 3}
     objects: []
+  - particle: 2
+    material: {fileID: 2100000, guid: 5830fac070d60e54e8a4227e2c095392, type: 2}
+    particleSystemPrefab: {fileID: 3422602939267544886, guid: 51ff4730a3cfc8543a1d18ee3ddd2072,
+      type: 3}
+    objects: []

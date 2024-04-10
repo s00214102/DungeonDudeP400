@@ -8,7 +8,9 @@ public class GOAP_Hero_Data : MonoBehaviour
 	private void Awake()
 	{
 		GetComponent<Health>().SetMaxHealth(HeroData.HitPoints);
-		GetComponent<CharacterMovement>().baseSpeed = HeroData.Speed;
+		CharacterMovement movement = GetComponent<CharacterMovement>();
+		if (movement != null)
+			movement.baseSpeed = HeroData.Speed;
 	}
 	public void AssignClass(HeroData data)
 	{
