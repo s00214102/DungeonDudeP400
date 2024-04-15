@@ -9,6 +9,7 @@ TagManager:
   - Treasure
   - Angel
   - Goal
+  - Block
   layers:
   - Default
   - TransparentFX

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
-public class DungeonCharacterMovement : MonoBehaviour
+public class DungeonCharacterMovement_old : MonoBehaviour
 {
 	Rigidbody body;
 	public GameObject testGoal;
@@ -14,7 +14,6 @@ public class DungeonCharacterMovement : MonoBehaviour
 	[HideInInspector] public DungeonCharacterManager manager;
 	[HideInInspector] public DungeonNavigationSystem navigationSystem;
 	[HideInInspector] public float cellSize;
-	private DungeonCell[,] knownCells; // this characters vesrion of the dungeon grid, only containing the cells they know about
 
 	private void Awake()
 	{
@@ -26,10 +25,6 @@ public class DungeonCharacterMovement : MonoBehaviour
 	}
 	private void Start()
 	{
-		knownCells = new DungeonCell[navigationSystem.width, navigationSystem.height];
-		// pass current position to a function in DungeonNavSystem which returns a dungeon cell with a 2D array position so i can add it to knownCells
-
-
 		if (testGoal != null && testMove)
 			MoveTo(testGoal.transform.position);
 	}
@@ -37,14 +32,23 @@ public class DungeonCharacterMovement : MonoBehaviour
 	{
 
 	}
-	// to move the character i set isMoving to true, some other logic rotates the character towards its target. this is bad but it is what it is
 	private bool isMoving = false;
 	public void DoFixedUpdate()
 	{
 		if (isMoving)
 			body.AddForce(transform.forward * moveSpeed * Time.deltaTime, ForceMode.Force);
 	}
-	// order the character to move to a position on the grid, starts the coroutine which handles movement
+
+	// public void FixedUpdate()
+	// {
+	// 	if (body != null)
+	// 		body.AddForce(transform.forward * moveSpeed * Time.deltaTime, ForceMode.Force);
+	// 	if (manager != null)
+	// 		manager.UpdateCharacterPosition(this.gameObject);
+	// }
+
+	// move to a position on the grid
+
 	public void MoveTo(Vector3 targetPos)
 	{
 		// move to each position in turn until at goal
@@ -52,7 +56,6 @@ public class DungeonCharacterMovement : MonoBehaviour
 	}
 
 	private List<Vector3> debugPath;
-	// construct a path to the target position
 	private IEnumerator MoveToTargetPositions(Vector3 targetPos)
 	{
 		isMoving = true;
