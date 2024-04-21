@@ -31,6 +31,7 @@ public class Action_Flee : Action_Base
 	{
 		// when the hero reaches the entrance they leave the dungeon
 		movement.StopMoving();
+		health.TakeDamage(9999);
 		OnDungeonExited();
 	}
 	public override void OnDeactived()

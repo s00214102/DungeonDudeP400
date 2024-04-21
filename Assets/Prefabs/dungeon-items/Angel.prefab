@@ -426,7 +426,7 @@ GameObject:
   - component: {fileID: 7636979645798037028}
   - component: {fileID: 6339559685236253602}
   - component: {fileID: 4998659118100387169}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Angel
   m_TagString: Angel
   m_Icon: {fileID: 0}

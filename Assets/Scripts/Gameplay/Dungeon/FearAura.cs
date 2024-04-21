@@ -6,8 +6,8 @@ using UnityEngine;
 [RequireComponent(typeof(EntityProximityDetection))]
 public class FearAura : MonoBehaviour
 {
-    // fear aura radius
-    [SerializeField] private float fearRadius = 1;
+    // fear aura radius (no need for this, just use proximity detection)
+    //[SerializeField] private float fearRadius = 1;
     // fear damage value
     [SerializeField] private int fearDamage = 10;
     // how often to apply the fear damage
@@ -31,14 +31,9 @@ public class FearAura : MonoBehaviour
         {
             foreach (var entity in detection.Entities)
             {
-                // check the distance between the entity using the fear radius
-                float dist = Vector3.Distance(entity.transform.position, transform.position);
-                if (dist < fearRadius)
-                {
-                    HeroStatus heroStatus;
-                    if (entity.gameObject.TryGetComponent<HeroStatus>(out heroStatus))
-                        heroStatus.AddFear(fearDamage);
-                }
+                HeroStatus heroStatus;
+                if (entity.gameObject.TryGetComponent<HeroStatus>(out heroStatus))
+                    heroStatus.AddFear(fearDamage);
             }
         }
     }

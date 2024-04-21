@@ -27,8 +27,6 @@ public class DungeonNavigationSystem : MonoBehaviour
         CreateGrid();
     }
 
-
-
     private void Start()
     {
         // calculate each cells list of known cells

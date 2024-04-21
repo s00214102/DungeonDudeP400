@@ -9,6 +9,7 @@ public class goap_flee
 {
 	private GameObject hero;
 	private GameObject enemy;
+	private Health hero_health;
 	private Health enemy_health;
 	private Entity enemy_entity;
 	private EntityProximityDetection enemy_detection;
@@ -37,6 +38,9 @@ public class goap_flee
 
 		hero = GameObject.Find("GOAP_Hero");
 		Assert.IsNotNull(hero, $"GameObject with name GOAP_Hero not found.");
+
+		hero_health = hero.GetComponent<Health>();
+		Assert.IsNotNull(hero_health, $"hero_health component not found.");
 
 		heroStatus = hero.GetComponent<HeroStatus>();
 		Assert.IsNotNull(heroStatus, $"heroStatus component not found.");
@@ -173,14 +177,18 @@ public class goap_flee
 		yield return Setup();
 
 		//TODO the hero should leave the dungeon when reaching the entrance
+		// what happens when a hero 'exits' the dungeon? this needs to align with the gameplay controller
+		// as a quick fix for now, when the hero reaches the entrance, they will die
+		// this can be done through the flee action
+		// when they reach the entrance, take 9999 damage
 		Time.timeScale = 10.0f;
 		float time = 0;
-		while (time < 10)
+		while (!hero_health.isDead && time < 20)
 		{
 			time += Time.fixedDeltaTime;
 			yield return new WaitForFixedUpdate();
 		}
 		Time.timeScale = 1.0f;
-		Assert.IsTrue(false, "condition not met.");
+		Assert.IsTrue(hero_health.isDead, "Hero should be dead after reaching the entrance.");
 	}
 }

@@ -185,7 +185,7 @@ Transform:
   - {fileID: 6044638844695789460}
   - {fileID: 4157536005491957607}
   m_Father: {fileID: 0}
-  m_RootOrder: 13
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &142851222693443848
 MonoBehaviour:
@@ -243,7 +243,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 4333739488811297658}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.45
+  m_Radius: 0.5
   m_Speed: 2
   m_Acceleration: 8
   avoidancePriority: 50
@@ -710,6 +710,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31fa01611f7d72c43bdc18cb422feeb3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  debugRays: 1
   eyes: {fileID: 5028849008384271912}
   rayCount: 9
   horizontalAngle: 90
