@@ -9,6 +9,7 @@ public class GameplayController : MonoBehaviour
 {
 	public enum GameState
 	{
+		Tutorial,
 		Setup,
 		Play,
 		Win,
@@ -18,6 +19,7 @@ public class GameplayController : MonoBehaviour
 	public GameState CurrentState { get; private set; }
 
 	// Components to enable/disable based on game state
+
 	private DungeonSetupPhase setupPhase;
 	[HideInInspector] public DungeonPlayPhase playPhase;
 	private DungeonWinPhase winPhase;

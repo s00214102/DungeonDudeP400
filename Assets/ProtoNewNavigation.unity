@@ -14689,6 +14689,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2752464016503717314, guid: 6dbe0d3bed60af644b9374c74a4c20be,
         type: 3}
+      propertyPath: debugGrid
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2752464016503717314, guid: 6dbe0d3bed60af644b9374c74a4c20be,
+        type: 3}
       propertyPath: gridSizeX
       value: 10
       objectReference: {fileID: 0}

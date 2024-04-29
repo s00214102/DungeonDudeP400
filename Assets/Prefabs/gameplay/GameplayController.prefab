@@ -48,11 +48,11 @@ MonoBehaviour:
   playPhase: {fileID: 0}
   prefabSelect: {fileID: 0}
   timeToCount: 30
-  heroesToSpawn: 10
+  heroesToSpawn: 20
   spawnInterval: 3
   spawnIntervalVariation: 1
-  startingEnergy: 500
-  energyRegenPerSecond: 10
+  startingEnergy: 250
+  energyRegenPerSecond: 2
   dungeonBounds: {fileID: 0}
 --- !u!65 &596150747655655435
 BoxCollider:
