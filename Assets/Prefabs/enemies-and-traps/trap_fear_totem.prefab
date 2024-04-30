@@ -666,7 +666,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c8ab8518783ae94ca70d09014113ed9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 100
+  maxHealth: 14
   currentHealth: 0
   healthBar: {fileID: 5558570315206737014}
   isDead: 0
@@ -731,7 +731,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92ed7b7d1f048f349bad55db6b6eab23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fearRadius: 2
   fearDamage: 5
   fearFrequency: 0.5
 --- !u!65 &4899763798436126712

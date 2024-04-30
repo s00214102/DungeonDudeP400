@@ -25,6 +25,7 @@ public class GameplayController : MonoBehaviour
 	private DungeonWinPhase winPhase;
 	private DungeonLosePhase losePhase;
 	[HideInInspector] public DungeonPrefabSelect prefabSelect;
+	[HideInInspector] public DTutorialPhase tutorialPhase;
 	private GameObject goal;
 
 	[SerializeField] private float timeToCount;
@@ -38,6 +39,7 @@ public class GameplayController : MonoBehaviour
 	private void Awake()
 	{
 		// find the required gameobjects for each state
+		tutorialPhase = GameObject.Find("DungeonTutorialPhase").GetComponent<DTutorialPhase>();
 		setupPhase = GameObject.Find("DungeonSetupPhase").GetComponent<DungeonSetupPhase>();
 		playPhase = GameObject.Find("DungeonPlayPhase").GetComponent<DungeonPlayPhase>();
 		winPhase = GameObject.Find("DungeonWinPhase").GetComponent<DungeonWinPhase>();
@@ -50,6 +52,7 @@ public class GameplayController : MonoBehaviour
 		// pass a reference of the GameplayController to each
 		setupPhase.gameplayController = this;
 		playPhase.gameplayController = this;
+		tutorialPhase.gameplayController = this;
 
 		setupPhase.timeToCount = this.timeToCount;
 		playPhase.heroesToSpawn = this.heroesToSpawn;
@@ -58,6 +61,8 @@ public class GameplayController : MonoBehaviour
 
 		prefabSelect.startingEnergy = this.startingEnergy;
 		prefabSelect.energyRegenPerSecond = this.energyRegenPerSecond;
+
+		Helper.DisableGameObject(prefabSelect.gameObject);
 	}
 
 	void Start()
@@ -81,6 +86,11 @@ public class GameplayController : MonoBehaviour
 	{
 		Application.Quit();
 	}
+	public void BeginGame()
+	{
+		// begin button on tutorial UI clicked, move to setup phase
+		SetGameState(GameState.Setup);
+	}
 
 	public void StartGame()
 	{
@@ -103,12 +113,13 @@ public class GameplayController : MonoBehaviour
 	void InitialState()
 	{
 		// deactivate all gameobjects after getting references to them
+		tutorialPhase.gameObject.SetActive(false);
 		setupPhase.gameObject.SetActive(false);
 		playPhase.gameObject.SetActive(false);
 		winPhase.gameObject.SetActive(false);
 		losePhase.gameObject.SetActive(false);
 		// Start the game in the setup phase
-		SetGameState(GameState.Setup);
+		SetGameState(GameState.Tutorial);
 	}
 
 	void SetGameState(GameState newState)
@@ -127,8 +138,13 @@ public class GameplayController : MonoBehaviour
 	{
 		switch (state)
 		{
+			case GameState.Tutorial:
+				tutorialPhase.gameObject.SetActive(true);
+				tutorialPhase.Begin();
+				break;
 			case GameState.Setup:
 				setupPhase.gameObject.SetActive(true);
+				prefabSelect.gameObject.SetActive(true);
 				setupPhase.Begin();
 				break;
 			case GameState.Play:
@@ -152,6 +168,9 @@ public class GameplayController : MonoBehaviour
 	{
 		switch (state)
 		{
+			case GameState.Tutorial:
+				Helper.DisableGameObject(tutorialPhase.gameObject);
+				break;
 			case GameState.Setup:
 				Helper.DisableGameObject(setupPhase.gameObject);
 				break;
