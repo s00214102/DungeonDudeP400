@@ -235,7 +235,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 5
-  uses: 10
+  uses: 4
   disarmDifficulty: 2
   targets: []
   OnTargetAdded:

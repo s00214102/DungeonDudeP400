@@ -9,10 +9,8 @@ public class Action_Flee : Action_Base
 	{
 		return SupportedGoals;
 	}
-
 	public UnityEvent DungeonExited;
 	protected virtual void OnDungeonExited() { DungeonExited?.Invoke(); }
-
 	public override float GetCost()
 	{
 		return 0f;

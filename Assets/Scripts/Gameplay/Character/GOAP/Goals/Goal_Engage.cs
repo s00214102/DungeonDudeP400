@@ -5,7 +5,6 @@ using UnityEngine;
 public class Goal_Engage : Goal_Base
 {
     private int Priority = 0;
-
     public override int OnCalculatePriority()
     {
         return Priority;

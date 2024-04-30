@@ -4,12 +4,10 @@ public class Goal_Attack : Goal_Base
 {
 	private int AttackPriority = 80;
 	private int currentPriority = 0;
-
 	public override int OnCalculatePriority()
 	{
 		return currentPriority;
 	}
-
 	public override void OnTickGoal()
 	{
 		currentPriority = 0;

@@ -640,7 +640,7 @@ Transform:
   - {fileID: 8374172078547945380}
   - {fileID: 2320256605578447147}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &331061823144903862
 MonoBehaviour:
@@ -666,7 +666,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c8ab8518783ae94ca70d09014113ed9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 14
+  maxHealth: 20
   currentHealth: 0
   healthBar: {fileID: 5558570315206737014}
   isDead: 0

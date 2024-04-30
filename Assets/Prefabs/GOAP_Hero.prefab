@@ -148,6 +148,7 @@ GameObject:
   - component: {fileID: 5700118842201857986}
   - component: {fileID: 4603613459818604225}
   - component: {fileID: 6076377008878842286}
+  - component: {fileID: 146828607880708750}
   - component: {fileID: 5299260543174347276}
   - component: {fileID: 2089143765705171956}
   - component: {fileID: 4493202282102929446}
@@ -157,6 +158,7 @@ GameObject:
   - component: {fileID: 8463412585482004980}
   - component: {fileID: 5636170893864489618}
   - component: {fileID: 2356337818217166803}
+  - component: {fileID: 3353491057978029767}
   - component: {fileID: 4418177927841097623}
   - component: {fileID: 3707872956686025513}
   - component: {fileID: 8237151600296083744}
@@ -185,7 +187,7 @@ Transform:
   - {fileID: 6044638844695789460}
   - {fileID: 4157536005491957607}
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &142851222693443848
 MonoBehaviour:
@@ -472,6 +474,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Priority: 0
   maxPriority: 120
+--- !u!114 &146828607880708750
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4333739488811297658}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b7e83d62e37abed46880793778a6bd00, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &5299260543174347276
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -594,6 +608,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DungeonExited:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &3353491057978029767
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4333739488811297658}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d8f1cd7c17093f4c875ff55d5d9d6a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  projectilePrefab: {fileID: 2979269501823911284, guid: 16422779c7666744b8ca66058f537b19,
+    type: 3}
+  AttackFinished:
     m_PersistentCalls:
       m_Calls: []
 --- !u!114 &4418177927841097623

@@ -8,17 +8,14 @@ public class Goal_Flee : Goal_Base
 {
 	public int Priority = 0; // Define the priority of this goal
 	[SerializeField] private int maxPriority = 120;
-
 	public override int OnCalculatePriority()
 	{
 		return Priority;
 	}
-
 	public override bool CanRun()
 	{
 		return true; // Set this to true or false based on the condition
 	}
-
 	public override void OnTickGoal()
 	{
 		if (knowledge.Entrance == null)
@@ -26,7 +23,6 @@ public class Goal_Flee : Goal_Base
 			Priority = 0;
 			return;
 		}
-
 		// calculate flee priority based on the heroes current level of fear
 		// express the heroes fear as a percentage of maxPriority
 		// the fear value can be between 0-100

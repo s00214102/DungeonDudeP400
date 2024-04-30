@@ -22,7 +22,6 @@ public class CharacterSenses : MonoBehaviour
     /// if it finds any it calls this method passing itself as a reference
     /// </summary>
     /// <param name="sound"></param>
-
     public void Hear(GameObject sound)
     {
         // something was heard, but we dont know exactly where (add some variance to its position)

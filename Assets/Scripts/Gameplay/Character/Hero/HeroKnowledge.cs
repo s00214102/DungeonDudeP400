@@ -27,13 +27,11 @@ public class HeroKnowledge : MonoBehaviour
 	}
 	private void ProcessSight(GameObject seenObject)
 	{
-		//TODO move what happens with the detected collider to its own component using an event
 		// did we hit an enemy?
 		if (seenObject.CompareTag("Enemy"))
 		{
 			// how alerted are we? (how close is the target)
 			float alertLevel = CalculateAlertLevel(seenObject.transform);
-			//TODO the enemy can be rememberd as their specific type by passing that as the name, but i need a consistent way to tell
 			RememberEnemy("Enemy", seenObject, alertLevel);
 		}
 

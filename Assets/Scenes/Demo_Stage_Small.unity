@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028334, g: 0.2257134, b: 0.30692226, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -29501,7 +29501,7 @@ PrefabInstance:
     - target: {fileID: 200381478310719456, guid: 4d9629ede5a71e2488923e6857f4dd28,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 7.3406067
+      value: 7.340576
       objectReference: {fileID: 0}
     - target: {fileID: 1064688936082692153, guid: 4d9629ede5a71e2488923e6857f4dd28,
         type: 3}
@@ -29522,6 +29522,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 69
+      objectReference: {fileID: 0}
+    - target: {fileID: 1201541241751424928, guid: 4d9629ede5a71e2488923e6857f4dd28,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -3.9624634
       objectReference: {fileID: 0}
     - target: {fileID: 1639861253262037162, guid: 4d9629ede5a71e2488923e6857f4dd28,
         type: 3}
@@ -29824,6 +29829,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2983698391674513660, guid: 1a44a3ecabc0b794e9003fa235368c3a,
+        type: 3}
+      propertyPath: heroesToSpawn
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 2983698391674513660, guid: 1a44a3ecabc0b794e9003fa235368c3a,
+        type: 3}
+      propertyPath: startingEnergy
+      value: 200
+      objectReference: {fileID: 0}
     - target: {fileID: 3459061603131570927, guid: 1a44a3ecabc0b794e9003fa235368c3a,
         type: 3}
       propertyPath: m_Name
@@ -30071,11 +30086,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1573028482558621937, guid: a44777a26dfaf8b48a8cae4239c64701,
-        type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 2900073067635077088, guid: a44777a26dfaf8b48a8cae4239c64701,
         type: 3}
       propertyPath: invokeCube
@@ -30100,16 +30110,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: DungeonSetupPhase
-      objectReference: {fileID: 0}
-    - target: {fileID: 4193119267581670726, guid: a44777a26dfaf8b48a8cae4239c64701,
-        type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4212063222024525597, guid: a44777a26dfaf8b48a8cae4239c64701,
-        type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7848215435190822303, guid: a44777a26dfaf8b48a8cae4239c64701,
         type: 3}

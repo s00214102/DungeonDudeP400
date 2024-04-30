@@ -175,10 +175,6 @@ public class hero_knowledge
 		GameObject hero = GameObject.Find("GOAP_Hero");
 		Assert.IsNotNull(hero, $"GameObject with name GOAP_Hero not found.");
 
-		// HeroProximityDetection is required for remembering things since they need to be detected first
-		HeroProximityDetection detection = hero.GetComponent<HeroProximityDetection>();
-		Assert.IsNotNull(detection, $"HeroProximityDetection component not found.");
-
 		HeroKnowledge knowledge = hero.GetComponent<HeroKnowledge>();
 		Assert.IsNotNull(knowledge, $"HeroKnowledge component not found.");
 

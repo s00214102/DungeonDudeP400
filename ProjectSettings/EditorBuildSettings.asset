@@ -62,4 +62,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Tests/TestSenses.unity
     guid: f6b59d2c93c2c474ea5192305f62df9d
+  - enabled: 1
+    path: Assets/Scenes/Tests/TestCrystal.unity
+    guid: e65d58bc9c8642a46ac3d87bd11b19e8
   m_configObjects: {}
