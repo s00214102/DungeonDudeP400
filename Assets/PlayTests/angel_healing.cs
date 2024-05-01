@@ -38,7 +38,7 @@ public class angel_healing
 		bool action_heal_finished = false;
 		action_Heal.Healed.AddListener(() => { action_heal_finished = true; });
 
-		Time.timeScale = 5.0f;
+		Time.timeScale = 3.0f;
 		float time = 0;
 		bool hpDropped = false;
 		while (!hpDropped && (health.CurrentHealth > 30 || time < 15))

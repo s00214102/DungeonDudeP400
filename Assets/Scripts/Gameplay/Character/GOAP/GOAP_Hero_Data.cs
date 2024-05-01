@@ -10,7 +10,10 @@ public class GOAP_Hero_Data : MonoBehaviour
 		GetComponent<Health>().SetMaxHealth(HeroData.HitPoints);
 		CharacterMovement movement = GetComponent<CharacterMovement>();
 		if (movement != null)
+		{
 			movement.baseSpeed = HeroData.Speed;
+			//movement.agent.stoppingDistance = HeroData.InteractRange;
+		}
 	}
 	public void AssignClass(HeroData data)
 	{

@@ -26,15 +26,12 @@ public class Action_Wander : Action_Base
 
 	private void ReachedDestination()
 	{
-		movement.StopMoving();
+		//movement.StopMoving();
 		Wander();
 	}
 	private void Wander()
 	{
-		if (movement.isMoving)
-			return;
-		if (!movement.MoveToRandomLocation(WanderRange))
-			Wander();
+		movement.MoveToRandomLocation(WanderRange);
 	}
 	public override void OnDeactived()
 	{

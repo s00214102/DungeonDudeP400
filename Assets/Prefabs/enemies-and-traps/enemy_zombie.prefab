@@ -175,7 +175,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Health: 10
-  Damage: 2
+  Damage: 3
   Speed: 2
   AttackRate: 1
   AttackRange: 1.5

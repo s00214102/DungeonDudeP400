@@ -24,7 +24,7 @@ public class CharacterMovement : MonoBehaviour
     {
         float dist = Vector3.Distance(transform.position, agent.destination);
 
-        return dist <= agent.stoppingDistance;
+        return dist <= agent.stoppingDistance + 0.5f;
     }
     public virtual void MoveTo(GameObject target, float stopRange)
     {
@@ -58,8 +58,9 @@ public class CharacterMovement : MonoBehaviour
         {
             if (HasReachedDestination())
             {
-                StopMoving();
+                Debug.Log("Destination reached");
                 OnDestinationReached();
+                //StopMoving();
             }
         }
     }
@@ -76,7 +77,7 @@ public class CharacterMovement : MonoBehaviour
         agent.speed = baseSpeed;
     }
     // find a random walkable location on the nav mesh within a range
-    public bool MoveToRandomLocation(float range)
+    public void MoveToRandomLocation(float range)
     {
         // Generate a random direction and distance
         Vector3 randomDirection = Random.insideUnitSphere * range;
@@ -88,10 +89,7 @@ public class CharacterMovement : MonoBehaviour
         if (NavMesh.SamplePosition(randomDirection, out hit, range, NavMesh.AllAreas))
         {
             targetPosition = hit.position;
-            MoveTo(targetPosition, agent.stoppingDistance);
-            return true;
+            MoveTo(targetPosition);
         }
-
-        return false;
     }
 }

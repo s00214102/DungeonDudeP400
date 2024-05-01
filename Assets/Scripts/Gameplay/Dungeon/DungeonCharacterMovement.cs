@@ -84,19 +84,17 @@ public class DungeonCharacterMovement : MonoBehaviour
 			{
 				// Move to the next position
 				currentPositionIndex++;
-
-				// Check if we've reached the final position
-				if (currentPositionIndex >= path.Count)
-				{
-					isMoving = false;
-					reachedGoal = true;
-					Debug.Log("Reached the final position!");
-					//spawn confetti
-					ParticleManager.SpawnParticle(transform.position + new Vector3(0, 3, 0), ParticleManager.Particle.Confetti);
-					yield break;
-				}
 			}
-
+			// Check if we've reached the final position
+			if (currentPositionIndex >= path.Count - 1)
+			{
+				isMoving = false;
+				reachedGoal = true;
+				Debug.Log("Reached the final position!");
+				//spawn confetti
+				ParticleManager.SpawnParticle(transform.position + new Vector3(0, 3, 0), ParticleManager.Particle.Confetti);
+				yield break;
+			}
 			yield return null;
 		}
 	}
@@ -168,18 +166,16 @@ public class DungeonCharacterMovement : MonoBehaviour
 			{
 				// Move to the next position
 				currentPositionIndex++;
-
-				// Check if we've reached the final position
-				if (currentPositionIndex >= targetPositions.Count)
-				{
-					isMoving = false;
-					reachedGoal = true;
-					Debug.Log("Reached the final position!");
-					//spawn confetti
-					ParticleManager.SpawnParticle(transform.position + new Vector3(0, 3, 0), ParticleManager.Particle.Confetti);
-				}
 			}
-
+			// Check if we've reached the final position
+			if (currentPositionIndex >= targetPositions.Count)
+			{
+				isMoving = false;
+				reachedGoal = true;
+				Debug.Log("Reached the final position!");
+				//spawn confetti
+				ParticleManager.SpawnParticle(transform.position + new Vector3(0, 3, 0), ParticleManager.Particle.Confetti);
+			}
 			yield return null;
 		}
 	}

@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Goal_Attack : Goal_Base
 {
-	private int AttackPriority = 80;
+	private int attackPriority = 80;
 	private int currentPriority = 0;
 	public override int OnCalculatePriority()
 	{
@@ -14,8 +14,8 @@ public class Goal_Attack : Goal_Base
 
 		// if we have a target and are close enough
 		var result = knowledge.RecallHighestAlertEnemy();
-        if (result.found && IsEnemyInAttackRange())
-			currentPriority = AttackPriority;
+		if (result.found && IsEnemyInAttackRange())
+			currentPriority = attackPriority;
 	}
 	public override bool CanRun()
 	{

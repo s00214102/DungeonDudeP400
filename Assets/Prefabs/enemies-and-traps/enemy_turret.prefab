@@ -58,9 +58,9 @@ MonoBehaviour:
   OnFinishedAttacking:
     m_PersistentCalls:
       m_Calls: []
+  rotationSpeed: 5
   projectilePrefab: {fileID: 2979269501823911284, guid: 16422779c7666744b8ca66058f537b19,
     type: 3}
-  projectileMoveSpeed: 15
   projectileOrigin: {fileID: 4120998520979166000}
 --- !u!114 &4152212657024054414
 MonoBehaviour:
@@ -75,11 +75,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Health: 10
-  Damage: 1
+  Damage: 2
   Speed: 0
   AttackRate: 1
-  AttackRange: 5
-  SearchRange: 5
+  AttackRange: 6
+  SearchRange: 6
   StopDistance: 0
 --- !u!114 &8049268809395788172
 MonoBehaviour:

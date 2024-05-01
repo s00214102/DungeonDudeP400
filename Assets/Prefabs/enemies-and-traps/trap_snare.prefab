@@ -69,7 +69,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 10
-  uses: 3
+  uses: 2
   disarmDifficulty: 2
   targets: []
   OnTargetAdded:
