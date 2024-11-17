@@ -13,9 +13,14 @@ public class DungeonGridEditor : Editor
 
 		GUILayout.Label("Select a cell on the grid and click 'view' to view its seeable neighbours.");
 		EditorGUILayout.BeginHorizontal();
+
 		cellPos = EditorGUILayout.Vector3Field("Cell", cellPos);
-		if (GUILayout.Button("View"))
+		if (GUILayout.Button("Seeable cells"))
 			_navSystem.VisualizeCellNeighbours(cellPos);
+
+		if (GUILayout.Button("Raycasts"))
+			_navSystem.DebugSeeableCellsFromCell(cellPos);
+
 		EditorGUILayout.EndHorizontal();
 
 		if (GUILayout.Button("Create Grid"))

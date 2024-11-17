@@ -14,7 +14,7 @@ public class DungeonCharacterMovement : MonoBehaviour
 	[HideInInspector] public DungeonCharacterManager manager;
 	[HideInInspector] public DungeonNavigationSystem navigationSystem;
 	[HideInInspector] public float cellSize;
-	private DungeonCell[,] knownCells; // this characters vesrion of the dungeon grid, only containing the cells they know about
+	private DungeonCell[,] knownCells; // this characters version of the dungeon grid, only containing the cells they know about
 
 	private void Awake()
 	{
@@ -63,6 +63,7 @@ public class DungeonCharacterMovement : MonoBehaviour
 		while (!reachedGoal)
 		{
 			// construct a path
+			//TODO lessen the number of calls to construct a new path, doesnt need to be every frame
 			List<Vector3> path = navigationSystem.ConstructPath(transform.position, targetPos);
 			debugPath = path;
 
