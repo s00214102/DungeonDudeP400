@@ -2,6 +2,7 @@ using System;
 using System.Diagnostics;
 using System.Collections.Generic;
 using UnityEngine;
+using NSubstitute;
 
 public static class DungeonPathfinding
 {
@@ -186,7 +187,9 @@ public static class DungeonPathfinding
 				}
 			}
 		}
-
+		openSet = null;
+		gCost.Clear();
+		cameFrom.Clear();
 		return lowestCostPath;
 	}
 

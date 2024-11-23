@@ -7,31 +7,48 @@ public class DungeonCharacterManager : MonoBehaviour
 	internal DungeonNavigationSystem navigationSystem;
 	[SerializeField] private List<GameObject> characters = new List<GameObject>();
 
-	private void Awake()
+
+	public void Init(DungeonNavigationSystem navigationSystem)
 	{
-		navigationSystem = GameObject.Find("DungeonNavigation").GetComponent<DungeonNavigationSystem>();
+		Debug.Log("Initializing DungeonCharacterManager.");
+
+		this.navigationSystem = navigationSystem;
+
+		DungeonNavAgentExploreMove[] agents = GetComponentsInChildren<DungeonNavAgentExploreMove>();
+
+		foreach (var agent in agents)
+		{
+			agent.Init(this, navigationSystem);
+			characters.Add(agent.gameObject);
+		}
 	}
+
 	private void Start()
 	{
 		// Add all child gameobjects to the list
-		foreach (Transform child in transform)
-		{
-			DungeonCharacterMovement characterMovement;
-			if (child.TryGetComponent<DungeonCharacterMovement>(out characterMovement))
-			{
-				characters.Add(child.gameObject);
-				// characterMovement.manager = this;
-				// characterMovement.navigationSystem = navigationSystem;
-				// characterMovement.cellSize = navigationSystem.cellSize;
-			}
-		}
+
+		// foreach (Transform child in transform)
+		// {
+		// 	DungeonCharacterMovement characterMovement;
+		// 	if (child.TryGetComponent<DungeonCharacterMovement>(out characterMovement))
+		// 	{
+		// 		characters.Add(child.gameObject);
+		// 	}
+		// }
 	}
+
 	public void UpdateCharacterPosition(GameObject character)
 	{
 		var result = navigationSystem.UpdateCharacterPosition(character);
 		if (result.successful)
-			character.GetComponent<DungeonCharacterMovement>().StartBoundsCheck(result.position);
+		{
+			character.GetComponent<DungeonNavAgentExploreMove>().StartBoundsCheck(result.position);
+			// the agent has entered a new cell, add the current cells seeable cells to the agents list of known cells
+			character.GetComponent<DungeonNavAgentExploreMove>().UpdateKnownCells(
+				navigationSystem.dungeonGrid[result.position.x, result.position.y].SeeableCells);
+		}
 	}
+
 	private void FixedUpdate()
 	{
 		// Call the Update function of each gameobject in the list
@@ -41,12 +58,10 @@ public class DungeonCharacterManager : MonoBehaviour
 			{
 				// Update characters positions
 				//obj.SendMessage("DoFixedUpdate", SendMessageOptions.DontRequireReceiver);
-				characters[i].GetComponent<DungeonCharacterMovement>().DoFixedUpdate();
+				characters[i].GetComponent<DungeonNavAgentExploreMove>().DoFixedUpdate();
 
 				// Update characters navigation system position
-				var result = navigationSystem.UpdateCharacterPosition(characters[i]);
-				if (result.successful)
-					characters[i].GetComponent<DungeonCharacterMovement>().StartBoundsCheck(result.position);
+				UpdateCharacterPosition(characters[i]);
 			}
 		}
 		// foreach (GameObject obj in characters)

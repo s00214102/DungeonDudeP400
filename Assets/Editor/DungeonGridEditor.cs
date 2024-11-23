@@ -30,7 +30,7 @@ public class DungeonGridEditor : Editor
 		if (GUILayout.Button("Start Cell Calculation"))
 		{
 			//_navSystem.StartSeeableCellCalculation();
-			_navSystem.PopulateSeeableCellsForEditor();
+			_navSystem.PopulateSeeableCells();
 		}
 		if (GUILayout.Button("Stop Cell Calculation"))
 		{

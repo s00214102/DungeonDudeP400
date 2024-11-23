@@ -7730,11 +7730,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Hero_Agent
       objectReference: {fileID: 0}
-    - target: {fileID: 357319772453599082, guid: f6d3d4167d845f840b4fbd70104bf5dc,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 2514305158067609497, guid: f6d3d4167d845f840b4fbd70104bf5dc,
         type: 3}
       propertyPath: m_RootOrder
@@ -7743,7 +7738,7 @@ PrefabInstance:
     - target: {fileID: 2514305158067609497, guid: f6d3d4167d845f840b4fbd70104bf5dc,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 9.5
+      value: 9.36
       objectReference: {fileID: 0}
     - target: {fileID: 2514305158067609497, guid: f6d3d4167d845f840b4fbd70104bf5dc,
         type: 3}
@@ -7753,7 +7748,7 @@ PrefabInstance:
     - target: {fileID: 2514305158067609497, guid: f6d3d4167d845f840b4fbd70104bf5dc,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.5
+      value: 0.64
       objectReference: {fileID: 0}
     - target: {fileID: 2514305158067609497, guid: f6d3d4167d845f840b4fbd70104bf5dc,
         type: 3}
@@ -7789,21 +7784,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3371782363343500981, guid: f6d3d4167d845f840b4fbd70104bf5dc,
-        type: 3}
-      propertyPath: debugRays
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4117250267769286084, guid: f6d3d4167d845f840b4fbd70104bf5dc,
-        type: 3}
-      propertyPath: testGoal
-      value: 
-      objectReference: {fileID: 1755021090}
-    - target: {fileID: 4117250267769286084, guid: f6d3d4167d845f840b4fbd70104bf5dc,
-        type: 3}
-      propertyPath: testMove
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -14717,6 +14697,11 @@ PrefabInstance:
       propertyPath: debugWalkableCells
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2752464016503717314, guid: 6dbe0d3bed60af644b9374c74a4c20be,
+        type: 3}
+      propertyPath: dungeonCharacterManager
+      value: 
+      objectReference: {fileID: 2090833236}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

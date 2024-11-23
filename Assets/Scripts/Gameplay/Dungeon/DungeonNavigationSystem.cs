@@ -22,49 +22,43 @@ public class DungeonNavigationSystem : MonoBehaviour
     public int height; // Grid size along the Z axis
     [HideInInspector] public float cellSize; // Size of each cell
     [SerializeField] private bool debugWalkableCells; // toggle walkable cell debug draws
-    [SerializeField] private DungeonCell[,] gridArray; // the full dungeon grid
+    public DungeonCell[,] dungeonGrid; // the full dungeon grid
     private TextMesh[,] debugCostArray;
     [SerializeField] private GameObject levelLayout;
+    [SerializeField] private DungeonCharacterManager dungeonCharacterManager;
+
     private void Awake()
     {
+        Init();
+    }
+
+    private void Init()
+    {
+        Debug.Log("Initializing DungeonNavigationSystem.");
         CreateGrid();
-    }
-
-    private void Start()
-    {
-        // calculate each cells list of known cells
-        //SeeableCellsTest();
-        //PopulateSeeableCells();
-        //StartCoroutine(PopulateSeeableCellsWithDelay(0.5f));
-    }
-
-    private void Update()
-    {
-        // if(testCharacter!=null)
-        // 	grid.TestHighLightCellContainingCharacter(testCharacter.transform.position);
-
-
+        PopulateSeeableCells();
+        dungeonCharacterManager.Init(this);
     }
 
     public void CreateGrid()
     {
-        gridArray = new DungeonCell[width, height];
+        dungeonGrid = new DungeonCell[width, height];
         debugCostArray = new TextMesh[width, height];
 
         List<DungeonBlock> blocks = levelLayout.GetComponentsInChildren<DungeonBlock>().ToList();
 
-        for (int x = 0; x < gridArray.GetLength(0); x++)
+        for (int x = 0; x < dungeonGrid.GetLength(0); x++)
         {
-            for (int y = 0; y < gridArray.GetLength(1); y++)
+            for (int y = 0; y < dungeonGrid.GetLength(1); y++)
             {
                 DungeonCell dungeonCell = new DungeonCell(x, y, cellSize);
-                gridArray[x, y] = dungeonCell;
+                dungeonGrid[x, y] = dungeonCell;
 
                 // debug cost
                 if (debugCost)
                 {
                     debugCostArray[x, y] = UtilsClass.CreateWorldText(dungeonCell.movementCost.ToString(), null,
-                    GetWorldPosition(x, y) + new Vector3(cellSize, 0, cellSize) * 0.5f, 5, Color.white, TextAnchor.MiddleCenter);
+                    GetWorldPosFromCellCoords(x, y) + new Vector3(cellSize, 0, cellSize) * 0.5f, 5, Color.white, TextAnchor.MiddleCenter);
                     debugCostArray[x, y].transform.rotation = Quaternion.Euler(90f, 0f, 0f);
                 }
             }
@@ -76,9 +70,9 @@ public class DungeonNavigationSystem : MonoBehaviour
             MarkCellAsNotWalkable(block.transform.position);
             // block world position to cell grid position
             int x, z;
-            GetXZ(block.transform.position, out x, out z);
+            GetCellCoordsFromWorldPos(block.transform.position, out x, out z);
             if (IsXZInBounds(x, z))
-                AddDebugSphere(notWalkableCellSpheres, gridArray[x, z].worldPositionCenter, Color.magenta, 2.0f);
+                AddDebugSphere(notWalkableCellSpheres, dungeonGrid[x, z].worldPositionCenter, Color.magenta, 2.0f);
         }
     }
 
@@ -86,7 +80,7 @@ public class DungeonNavigationSystem : MonoBehaviour
     public (bool successful, Vector3Int position) UpdateCharacterPosition(GameObject character)
     {
         int x, z;
-        GetXZ(character.transform.position, out x, out z);
+        GetCellCoordsFromWorldPos(character.transform.position, out x, out z);
         if (!IsXZInBounds(x, z))
         {
             Debug.LogWarning($"Character position ({x},{z}) not in bounds after converting world position.");
@@ -105,13 +99,13 @@ public class DungeonNavigationSystem : MonoBehaviour
             occupantsByPosition[cellPosition].Add(character);
 
             // update the cells movement cost
-            gridArray[x, z].UpdateMovementCost(GetMovementCost(cellPosition));
+            dungeonGrid[x, z].UpdateMovementCost(GetMovementCost(cellPosition));
 
             // setting a cell to not walkable when a character occupies it, not recommended
             //gridArray[cellPosition.x, cellPosition.z].SetIsWalkable(false);
 
             // update debug showing the movement cost
-            UpdateDebugMovementCost(x, z, gridArray[x, z].movementCost);
+            UpdateDebugMovementCost(x, z, dungeonGrid[x, z].movementCost);
 
             return (true, new Vector3Int(x, 0, z)); ;
         }
@@ -126,12 +120,12 @@ public class DungeonNavigationSystem : MonoBehaviour
             occupantsByPosition[cellPosition].Remove(character);
 
         // update the cells movement cost, the number of occupants * 2
-        gridArray[cellPosition.x, cellPosition.z].UpdateMovementCost(GetMovementCost(cellPosition));
+        dungeonGrid[cellPosition.x, cellPosition.z].UpdateMovementCost(GetMovementCost(cellPosition));
         //TODO set a cell back to walkable when the character leaves it, this may cause issues, check how many characters are in a cell before setting isWalkable
         //gridArray[cellPosition.x, cellPosition.z].SetIsWalkable(true);
 
         // update debug showing the movement cost
-        UpdateDebugMovementCost(cellPosition.x, cellPosition.z, gridArray[cellPosition.x, cellPosition.z].movementCost);
+        UpdateDebugMovementCost(cellPosition.x, cellPosition.z, dungeonGrid[cellPosition.x, cellPosition.z].movementCost);
 
         // Check if there are no more characters in the cell
         if (occupantsByPosition[cellPosition].Count == 0)
@@ -139,6 +133,48 @@ public class DungeonNavigationSystem : MonoBehaviour
             occupantsByPosition.Remove(cellPosition);
         }
     }
+
+    // store agent paths in a dict, accessed by their id
+    public Dictionary<int, List<Vector3>> agentPaths = new();
+    // Create a path for an agent to move from its current position to a target position
+    public void CreatePathToTargetForAgent(int agentId, Vector3 startPosition, Vector3 endPosition)
+    {
+        // convert positions to vector3int and check if they are in bounds
+        #region Full grid bounds check
+        int startX, startZ;
+        GetCellCoordsFromWorldPos(startPosition, out startX, out startZ);
+        if (!IsXZInBounds(startX, startZ))
+        {
+            Debug.LogWarning($"Couldnt create path, position ({startX},{startZ}) is out of bounds.");
+            //return new List<Vector3>();
+        }
+        Vector3Int start = new Vector3Int(startX, 0, startZ);
+
+        int endX, endZ;
+        GetCellCoordsFromWorldPos(endPosition, out endX, out endZ);
+        if (!IsXZInBounds(endX, endZ))
+        {
+            Debug.LogWarning($"Couldnt create path, position ({endX},{endZ}) is out of bounds.");
+            //return new List<Vector3>();
+        }
+        Vector3Int end = new Vector3Int(endX, 0, endZ);
+        #endregion
+
+        // modify the path position to be in the center of each cell
+        //List<Vector3> rawPath = DungeonPathfinding.BreadthFirstSearch2(gridArray, start, end);
+        //List<Vector3> rawPath = DungeonPathfinding.BestCostFirstSearch(gridArray, start, end);
+        List<Vector3> rawPath = DungeonPathfinding.AStarSearch(dungeonGrid, start, end);
+
+        // remake the path and center each position
+        List<Vector3> centerPath = new();
+        foreach (Vector3 pos in rawPath)
+        {
+            centerPath.Add(new Vector3(pos.x + cellSize / 2, 0, pos.z + cellSize / 2));
+        }
+        agentPaths[agentId] = centerPath;
+        //return centerPath;
+    }
+
     // get the movement cost 
     private int GetMovementCost(Vector3Int cellPosition)
     {
@@ -154,10 +190,10 @@ public class DungeonNavigationSystem : MonoBehaviour
     public void MarkCellAsNotWalkable(Vector3 position)
     {
         int x, z;
-        GetXZ(position, out x, out z);
+        GetCellCoordsFromWorldPos(position, out x, out z);
         if (IsXZInBounds(x, z))
         {
-            gridArray[x, z].isWalkable = false;
+            dungeonGrid[x, z].isWalkable = false;
         }
     }
 
@@ -169,62 +205,43 @@ public class DungeonNavigationSystem : MonoBehaviour
             return false;
     }
 
-    private Vector3 GetWorldPosition(int x, int z)
+    private Vector3 GetWorldPosFromCellCoords(int x, int z)
     {
         return new Vector3(x, 0, z) * cellSize;
     }
 
-    private void GetXZ(Vector3 worldPosition, out int x, out int z)
+    private void GetCellCoordsFromWorldPos(Vector3 worldPosition, out int x, out int z)
     {
         x = Mathf.FloorToInt(worldPosition.x / cellSize);
         z = Mathf.FloorToInt(worldPosition.z / cellSize);
     }
-
-    // rename something like: construct path to goal for agent
-    public List<Vector3> ConstructPath(Vector3 startPosition, Vector3 endPosition)
+    //TODO should use Vector2Int
+    public Vector2 GetCellCoordsFromWorldPos(Vector3 worldPosition)
     {
-        // convert positions to vector3int and check if they are in bounds
-        #region Full grid bounds check
-        int startX, startZ;
-        GetXZ(startPosition, out startX, out startZ);
-        if (!IsXZInBounds(startX, startZ))
-        {
-            Debug.LogWarning($"Couldnt create path, position ({startX},{startZ}) is out of bounds.");
-            return new List<Vector3>();
-        }
-        Vector3Int start = new Vector3Int(startX, 0, startZ);
+        int x = Mathf.FloorToInt(worldPosition.x / cellSize);
+        int z = Mathf.FloorToInt(worldPosition.z / cellSize);
+        return new Vector2(x, z);
+    }
 
-        int endX, endZ;
-        GetXZ(endPosition, out endX, out endZ);
-        if (!IsXZInBounds(endX, endZ))
-        {
-            Debug.LogWarning($"Couldnt create path, position ({endX},{endZ}) is out of bounds.");
-            return new List<Vector3>();
-        }
-        Vector3Int end = new Vector3Int(endX, 0, endZ);
-        #endregion
-
-        // modify the path position to be in the center of each cell
-        //List<Vector3> rawPath = DungeonPathfinding.BreadthFirstSearch2(gridArray, start, end);
-        //List<Vector3> rawPath = DungeonPathfinding.BestCostFirstSearch(gridArray, start, end);
-        List<Vector3> rawPath = DungeonPathfinding.AStarSearch(gridArray, start, end);
-
-        // remake the path and center each position
-        List<Vector3> centerPath = new();
-        foreach (Vector3 pos in rawPath)
-        {
-            centerPath.Add(new Vector3(pos.x + cellSize / 2, 0, pos.z + cellSize / 2));
-        }
-        return centerPath;
+    /// <summary>
+    /// 
+    /// </summary>
+    public List<DungeonCell> GetSeeableCellsFromPosition(Vector3 currentPos)
+    {
+        // get the current cell the agent is in from the current position
+        Vector2 coords = GetCellCoordsFromWorldPos(currentPos);
+        DungeonCell currentCell = dungeonGrid[(int)coords.x, (int)coords.y];
+        List<DungeonCell> newCells = currentCell.SeeableCells;
+        return currentCell.SeeableCells;
     }
 
     #region Seeable Cell Calculation
     private void SeeableCellsTest()
     {
-        for (int x = 0; x < gridArray.GetLength(0); x++)
-            for (int z = 0; z < gridArray.GetLength(1); z++)
+        for (int x = 0; x < dungeonGrid.GetLength(0); x++)
+            for (int z = 0; z < dungeonGrid.GetLength(1); z++)
             {
-                Debug.DrawLine(gridArray[x, z].worldPositionCenter, gridArray[x, z].worldPositionCenter + new Vector3(0, 1, 0), Color.red, 1);
+                Debug.DrawLine(dungeonGrid[x, z].worldPositionCenter, dungeonGrid[x, z].worldPositionCenter + new Vector3(0, 1, 0), Color.red, 1);
             }
     }
     public void StartSeeableCellCalculation()
@@ -239,26 +256,26 @@ public class DungeonNavigationSystem : MonoBehaviour
     {
         int range = 5;
         // Iterate over each cell in the grid array
-        for (int x = 0; x < gridArray.GetLength(0); x++)
+        for (int x = 0; x < dungeonGrid.GetLength(0); x++)
         {
-            for (int z = 0; z < gridArray.GetLength(1); z++)
+            for (int z = 0; z < dungeonGrid.GetLength(1); z++)
             {
-                DungeonCell sourceCell = gridArray[x, z];
+                DungeonCell sourceCell = dungeonGrid[x, z];
                 if (!sourceCell.isWalkable)
                     continue;
 
                 sourceCell.SeeableCells = new List<DungeonCell>();
 
                 // Cast rays from the source cell to other cells within the set range
-                int xMin = Mathf.Clamp(x - range, 0, gridArray.GetLength(0));
-                int xMax = Mathf.Clamp(x + range, 0, gridArray.GetLength(0));
+                int xMin = Mathf.Clamp(x - range, 0, dungeonGrid.GetLength(0));
+                int xMax = Mathf.Clamp(x + range, 0, dungeonGrid.GetLength(0));
                 for (int i = xMin; i < xMax; i++)
                 {
-                    int zMin = Mathf.Clamp(z - range, 0, gridArray.GetLength(1));
-                    int zMax = Mathf.Clamp(z + range, 0, gridArray.GetLength(1));
+                    int zMin = Mathf.Clamp(z - range, 0, dungeonGrid.GetLength(1));
+                    int zMax = Mathf.Clamp(z + range, 0, dungeonGrid.GetLength(1));
                     for (int j = zMin; j < zMax; j++)
                     {
-                        DungeonCell targetCell = gridArray[i, j];
+                        DungeonCell targetCell = dungeonGrid[i, j];
 
                         // Skip if source and target cells are the same or target cell isnt walkable
                         if (sourceCell == targetCell || !targetCell.isWalkable)
@@ -305,23 +322,23 @@ public class DungeonNavigationSystem : MonoBehaviour
 
     // currently using this one
     private bool stopCalculation = false;
-    public void PopulateSeeableCellsForEditor()
+    public void PopulateSeeableCells()
     {
         int stepCounter = 0;
         stopCalculation = false;
         float startTime = Time.realtimeSinceStartup;
         int range = 5;
         // Iterate over each cell in the grid array
-        for (int x = 0; x < gridArray.GetLength(0); x++)
+        for (int x = 0; x < dungeonGrid.GetLength(0); x++)
         {
             if (stopCalculation)
                 break;
-            for (int z = 0; z < gridArray.GetLength(1); z++)
+            for (int z = 0; z < dungeonGrid.GetLength(1); z++)
             {
                 if (stopCalculation)
                     break;
 
-                DungeonCell sourceCell = gridArray[x, z];
+                DungeonCell sourceCell = dungeonGrid[x, z];
                 if (!sourceCell.isWalkable)
                     continue;
 
@@ -329,15 +346,15 @@ public class DungeonNavigationSystem : MonoBehaviour
                     sourceCell.SeeableCells = new List<DungeonCell>();
 
                 // Cast rays from the source cell to other cells within the set range
-                int xMin = Mathf.Clamp(x - range, 0, gridArray.GetLength(0));
-                int xMax = Mathf.Clamp(x + range, 0, gridArray.GetLength(0));
+                int xMin = Mathf.Clamp(x - range, 0, dungeonGrid.GetLength(0));
+                int xMax = Mathf.Clamp(x + range, 0, dungeonGrid.GetLength(0));
                 for (int i = xMin; i < xMax; i++)
                 {
-                    int zMin = Mathf.Clamp(z - range, 0, gridArray.GetLength(1));
-                    int zMax = Mathf.Clamp(z + range, 0, gridArray.GetLength(1));
+                    int zMin = Mathf.Clamp(z - range, 0, dungeonGrid.GetLength(1));
+                    int zMax = Mathf.Clamp(z + range, 0, dungeonGrid.GetLength(1));
                     for (int j = zMin; j < zMax; j++)
                     {
-                        DungeonCell targetCell = gridArray[i, j];
+                        DungeonCell targetCell = dungeonGrid[i, j];
 
                         if (targetCell.SeeableCells == null)
                             targetCell.SeeableCells = new List<DungeonCell>();
@@ -362,7 +379,7 @@ public class DungeonNavigationSystem : MonoBehaviour
                             sourceCell.SeeableCells.Add(targetCell);
                             targetCell.SeeableCells.Add(sourceCell);
                             stepCounter++;
-                            Debug.Log($"{sourcePosition} can see {targetPosition}");
+                            //Debug.Log($"{sourcePosition} can see {targetPosition}");
                         }
 
 
@@ -407,31 +424,31 @@ public class DungeonNavigationSystem : MonoBehaviour
         // Force a repaint so the rays are drawn immediately
         SceneView.RepaintAll();
     }
-    private void PopulateSeeableCells()
+    private void PopulateSeeableCellsOld()
     {
         Time.timeScale = 0.01f;
         int range = 5;
         // Iterate over each cell in the grid array
-        for (int x = 0; x < gridArray.GetLength(0); x++)
+        for (int x = 0; x < dungeonGrid.GetLength(0); x++)
         {
-            for (int z = 0; z < gridArray.GetLength(1); z++)
+            for (int z = 0; z < dungeonGrid.GetLength(1); z++)
             {
-                DungeonCell sourceCell = gridArray[x, z];
+                DungeonCell sourceCell = dungeonGrid[x, z];
                 if (!sourceCell.isWalkable)
                     continue;
 
                 sourceCell.SeeableCells = new List<DungeonCell>();
 
                 // Cast rays from the source cell to other cells within the set range
-                int xMin = Mathf.Clamp(x - range, 0, gridArray.GetLength(0));
-                int xMax = Mathf.Clamp(x + range, 0, gridArray.GetLength(0));
+                int xMin = Mathf.Clamp(x - range, 0, dungeonGrid.GetLength(0));
+                int xMax = Mathf.Clamp(x + range, 0, dungeonGrid.GetLength(0));
                 for (int i = xMin; i < xMax; i++)
                 {
-                    int zMin = Mathf.Clamp(z - range, 0, gridArray.GetLength(1));
-                    int zMax = Mathf.Clamp(z + range, 0, gridArray.GetLength(1));
+                    int zMin = Mathf.Clamp(z - range, 0, dungeonGrid.GetLength(1));
+                    int zMax = Mathf.Clamp(z + range, 0, dungeonGrid.GetLength(1));
                     for (int j = zMin; j < zMax; j++)
                     {
-                        DungeonCell targetCell = gridArray[i, j];
+                        DungeonCell targetCell = dungeonGrid[i, j];
 
                         // Skip if source and target cells are the same
                         if (sourceCell == targetCell || !targetCell.isWalkable)
@@ -464,16 +481,16 @@ public class DungeonNavigationSystem : MonoBehaviour
 #if UNITY_EDITOR
     public void VisualizeCellNeighbours(Vector3 cellPos)
     {
-        if (gridArray == null)
+        if (dungeonGrid == null)
         { Debug.LogWarning("Grid array is null"); return; }
 
         int x, z;
-        GetXZ(cellPos, out x, out z);
+        GetCellCoordsFromWorldPos(cellPos, out x, out z);
 
         if (!IsXZInBounds(x, z))
         { Debug.LogWarning("Cell position not in bounds"); return; }
 
-        DungeonCell targetCell = gridArray[x, z];
+        DungeonCell targetCell = dungeonGrid[x, z];
 
         if (!targetCell.isWalkable)
         { Debug.LogWarning("Cell is not walkable."); return; }
@@ -528,7 +545,7 @@ public class DungeonNavigationSystem : MonoBehaviour
 
     public void DebugSeeableCellsFromCell(Vector3 sourceCellPos)
     {
-        DungeonCell debugSourceCell = gridArray[(int)sourceCellPos.x, (int)sourceCellPos.z];
+        DungeonCell debugSourceCell = dungeonGrid[(int)sourceCellPos.x, (int)sourceCellPos.z];
         int debugRange = 6;
 
         if (debugSourceCell == null || !debugSourceCell.isWalkable)
@@ -539,19 +556,19 @@ public class DungeonNavigationSystem : MonoBehaviour
 
 
         int x, z;
-        GetXZ(debugSourceCell.worldPositionCenter, out x, out z);
+        GetCellCoordsFromWorldPos(debugSourceCell.worldPositionCenter, out x, out z);
 
         // Define range bounds
-        int xMin = Mathf.Clamp(x - debugRange, 0, gridArray.GetLength(0));
-        int xMax = Mathf.Clamp(x + debugRange, 0, gridArray.GetLength(0));
-        int zMin = Mathf.Clamp(z - debugRange, 0, gridArray.GetLength(1));
-        int zMax = Mathf.Clamp(z + debugRange, 0, gridArray.GetLength(1));
+        int xMin = Mathf.Clamp(x - debugRange, 0, dungeonGrid.GetLength(0));
+        int xMax = Mathf.Clamp(x + debugRange, 0, dungeonGrid.GetLength(0));
+        int zMin = Mathf.Clamp(z - debugRange, 0, dungeonGrid.GetLength(1));
+        int zMax = Mathf.Clamp(z + debugRange, 0, dungeonGrid.GetLength(1));
 
         for (int i = xMin; i < xMax; i++)
         {
             for (int j = zMin; j < zMax; j++)
             {
-                DungeonCell targetCell = gridArray[i, j];
+                DungeonCell targetCell = dungeonGrid[i, j];
 
                 if (targetCell == null || !targetCell.isWalkable || debugSourceCell == targetCell)
                     continue;
@@ -673,19 +690,19 @@ public class DungeonNavigationSystem : MonoBehaviour
                 for (int z = 0; z < height; z++)
                 {
                     // draw mesh to show non-walkable cells
-                    if (gridArray != null && debugWalkableCells)
+                    if (dungeonGrid != null && debugWalkableCells)
                     {
-                        if (!gridArray[x, z].isWalkable)
+                        if (!dungeonGrid[x, z].isWalkable)
                             Gizmos.DrawSphere(new Vector3(x + cellSize / 2, 1, z + cellSize / 2), 0.05f);
                     }
                     // draw grid lines
-                    Debug.DrawLine(GetWorldPosition(x, z), GetWorldPosition(x, z + 1), Color.white, 0.1f);
-                    Debug.DrawLine(GetWorldPosition(x, z), GetWorldPosition(x + 1, z), Color.white, 0.1f);
+                    Debug.DrawLine(GetWorldPosFromCellCoords(x, z), GetWorldPosFromCellCoords(x, z + 1), Color.white, 0.1f);
+                    Debug.DrawLine(GetWorldPosFromCellCoords(x, z), GetWorldPosFromCellCoords(x + 1, z), Color.white, 0.1f);
                 }
             }
             // finish drawing grid lines
-            Debug.DrawLine(GetWorldPosition(0, height), GetWorldPosition(width, height), Color.white, 0.1f);
-            Debug.DrawLine(GetWorldPosition(width, 0), GetWorldPosition(width, height), Color.white, 0.1f);
+            Debug.DrawLine(GetWorldPosFromCellCoords(0, height), GetWorldPosFromCellCoords(width, height), Color.white, 0.1f);
+            Debug.DrawLine(GetWorldPosFromCellCoords(width, 0), GetWorldPosFromCellCoords(width, height), Color.white, 0.1f);
         }
         #endregion
     }

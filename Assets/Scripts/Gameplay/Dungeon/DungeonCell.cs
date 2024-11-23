@@ -8,6 +8,7 @@ public class DungeonCell
 	private int baseCost = 0; // set a base cost for a cell
 	public int movementCost = 0; // final value used as arc cost
 	public bool isWalkable = true; // Whether the cell is walkable
+	public bool isPriority = false;
 	[SerializeField] public Vector3 worldPositionCenter;
 	public int xPos;
 	public int zPos;

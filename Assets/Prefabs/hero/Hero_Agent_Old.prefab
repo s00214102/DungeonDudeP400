@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2514305158067609497}
   - component: {fileID: 3362697358215573673}
+  - component: {fileID: 4117250267769286084}
   - component: {fileID: 3371782363343500981}
   - component: {fileID: 5016588978770881459}
   - component: {fileID: 7875063563263007907}
@@ -18,9 +19,8 @@ GameObject:
   - component: {fileID: 3942142748087716455}
   - component: {fileID: 3785286976066882862}
   - component: {fileID: 8199219575638062817}
-  - component: {fileID: 1915631223630005919}
   m_Layer: 6
-  m_Name: Hero_Agent
+  m_Name: Hero_Agent_Old
   m_TagString: Hero
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -58,6 +58,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   HeroData: {fileID: 11400000, guid: 48d96175a47fcc94f8fd9c067d5e5942, type: 2}
   HeroTraits: {fileID: 11400000, guid: 93cd277754951f34f920c28672e6b7ec, type: 2}
+--- !u!114 &4117250267769286084
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 357319772453599082}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2fdf9057cfb4e54c86a3804364945a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  testGoal: {fileID: 0}
+  testMove: 1
+  moveSpeed: 30
+  rotationSpeed: 15
+  finalStoppingDistance: 1
+  manager: {fileID: 0}
+  navigationSystem: {fileID: 0}
+  cellSize: 0
 --- !u!114 &3371782363343500981
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -219,24 +239,6 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 1, z: 0}
---- !u!114 &1915631223630005919
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 357319772453599082}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: adc2b0aeec40e0c4dae633008dc7288a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  moveSpeed: 30
-  rotationSpeed: 15
-  finalStoppingDistance: 1
-  manager: {fileID: 0}
-  navigationSystem: {fileID: 0}
-  cellSize: 0
 --- !u!1 &919216282369527557
 GameObject:
   m_ObjectHideFlags: 0
